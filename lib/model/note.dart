@@ -43,6 +43,10 @@ class Note {
         "priority": priority,
         "done": (done)?1:0,
     };
+
+     void setId(int id){
+       this.id = id;
+     }
     int getId(){
       return this.id;
     }

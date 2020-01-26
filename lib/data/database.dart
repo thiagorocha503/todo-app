@@ -64,6 +64,7 @@ class DBProvider {
     Database dataBase = await this.getDataBase();
     return await dataBase.update("note", nota.toMap(), where: "id=?",whereArgs: [nota.getId()]);
   }
+  
 
   Future<List<Note>> fetchAll() async {
     Database database = await this.getDataBase();

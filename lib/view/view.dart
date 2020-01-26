@@ -16,3 +16,13 @@ class IPageNewNote{
   void cleanField(){}
   void onCadastro(){}
 }
+
+class INoteEdit{
+  void onDropDownItemSelected(String newValue) {}
+   void showSnackBarMessage(String message) {}
+   void cleanField() {}
+   void onClickUpdate(){}
+  void onClickDelete(){}
+  void backPage() {}
+  void getNote(){}
+}

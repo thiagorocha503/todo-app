@@ -15,3 +15,10 @@ class IPresenterTarefaAdd{
   void setView(IPageNewNote view){}
 
 }
+
+class IEditPresenter{
+  void updateNote(Map note){}
+  void delete(int id){return null;}
+  void setView(INoteEdit view){}
+   Future<List> getNoteById(int id){return null;}
+}

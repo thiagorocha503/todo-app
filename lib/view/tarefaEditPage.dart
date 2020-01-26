@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:lista_de_tarefa/presenter/presenter.dart';
-import 'package:lista_de_tarefa/presenter/tarefaAddPresenter.dart';
-import 'package:lista_de_tarefa/util/DateConversion.dart';
+import 'package:lista_de_tarefa/presenter/tarefaEditPresenter.dart';
 import 'package:lista_de_tarefa/view/view.dart';
 
+class TarefaEditPage extends StatefulWidget {
+  final int id;
 
-class TarefaAddPage extends StatefulWidget {
+  TarefaEditPage({Key key, @required this.id}) : super(key: key);
   @override
-  _NoteAddPageState createState() => _NoteAddPageState();
+  _NoteEditPageState createState() => _NoteEditPageState();
 }
 
-class _NoteAddPageState extends State<TarefaAddPage> implements IPageNewNote {
+class _NoteEditPageState extends State<TarefaEditPage> implements INoteEdit {
   bool _checkDone = false;
   TextEditingController _txtTitle = new TextEditingController();
   TextEditingController _txtDescription = new TextEditingController();
@@ -22,59 +23,60 @@ class _NoteAddPageState extends State<TarefaAddPage> implements IPageNewNote {
   BuildContext scaffoldContext;
   List prioridades = ["Normal", "Baixa", "Alta"];
   String prioridadeSelected = "Normal";
-  IPresenterTarefaAdd presenter;
-  
- 
- 
+  IEditPresenter presenter;
 
   @override
-  void onCadastro() {
-   Map note = { 
-     "title":this._txtTitle.text,
-     "description":this._txtDescription.text,
+  void onClickUpdate() {
+    Map note = {
+      "id": widget.id,
+      "title": this._txtTitle.text,
+      "description": this._txtDescription.text,
       "dateStart": this._txtDataStart.text,
-      "dateEnd":this._txtDateEnd.text,
+      "dateEnd": this._txtDateEnd.text,
       "priority": this.getPrioridadeAsInt(this.prioridadeSelected),
-      "done":this._checkDone
-   };
-   debugPrint(note.toString());
-   this.presenter.noteInsert(note);
+      "done": this._checkDone
+    };
+    debugPrint(note.toString());
+    this.presenter.updateNote(note);
   }
 
   @override
-  void initState(){
-    super.initState();
-    this.presenter = new TarefaAddPresenter();
-    this.presenter.setView(this);
-  
-
+  void onClickDelete() {
+    this.presenter.delete(widget.id);
   }
-  void showSnackBarInfo(String message){
-  final SnackBar snackBarInfo = new SnackBar(
-        content: Text(message),
-        duration: Duration(seconds: 3),
+  
+   @override
+  void getNote() async {
     
-            );
-     Scaffold.of(this.scaffoldContext).showSnackBar(snackBarInfo);
+  }
 
- }
+  @override
+  void initState() {
+    super.initState();
+    this.presenter = new NoteEditPresenter();
+    this.presenter.setView(this);
+    this.getNote();
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
           appBar: AppBar(
-            title: Text("Nova tarefa"),
+            title: Text("Editar tarefa"),
             actions: <Widget>[
               IconButton(
-                  icon: Icon(Icons.check, color: Colors.white),
+                  icon: Icon(Icons.save, color: Colors.white),
                   onPressed: () {
                     if (_formKey.currentState.validate()) {
-                
-                        this.onCadastro();
-                      
-                      
+                      this.onClickUpdate();
                     }
-                  })
+                  }),
+              IconButton(
+                  icon: Icon(Icons.delete_forever),
+                  onPressed: () {
+                    this.onClickDelete();
+                  }),
             ],
             leading: Builder(builder: (BuildContext context) {
               return IconButton(
@@ -229,10 +231,6 @@ class _NoteAddPageState extends State<TarefaAddPage> implements IPageNewNote {
     );
   }
 
-  void backPage(){
-    Navigator.pop(context);
-  }
- 
   @override
   void onDropDownItemSelected(String newValue) {
     setState(() {
@@ -250,7 +248,7 @@ class _NoteAddPageState extends State<TarefaAddPage> implements IPageNewNote {
     if (picked != null && picked != dateStartSelected)
       setState(() {
         this.dateStartSelected = picked;
-        this._txtDataStart.text = DateConversion.dateTimeToDateFormt(picked);
+        this._txtDataStart.text = dateTimeToDateFormt(picked);
       });
   }
 
@@ -264,16 +262,16 @@ class _NoteAddPageState extends State<TarefaAddPage> implements IPageNewNote {
     if (picked != null && picked != dateEndSelected)
       setState(() {
         this.dateEndSelected = picked;
-        this._txtDateEnd.text = DateConversion.dateTimeToDateFormt(picked);
+        this._txtDateEnd.text = dateTimeToDateFormt(picked);
       });
   }
-  
+
   @override
   void showSnackBarMessage(String message) {
     SnackBar snackbar = SnackBar(content: Text(message));
     Scaffold.of(this.scaffoldContext).showSnackBar(snackbar);
   }
-  
+
   @override
   void cleanField() {
     setState(() {
@@ -285,8 +283,8 @@ class _NoteAddPageState extends State<TarefaAddPage> implements IPageNewNote {
     });
   }
 
-  int getPrioridadeAsInt(String prioridade){
-    switch(prioridade){
+  int getPrioridadeAsInt(String prioridade) {
+    switch (prioridade) {
       case "Alta":
         return 1;
       case "Normal":
@@ -298,5 +296,35 @@ class _NoteAddPageState extends State<TarefaAddPage> implements IPageNewNote {
     }
   }
 
-  
+  static String dateTimeToDateFormt(DateTime data) {
+    String day, month, year;
+    if (data.day < 10) {
+      day = "0" + data.day.toString();
+    } else {
+      day = data.day.toString();
+    }
+    if (data.month < 10) {
+      month = "0" + data.month.toString();
+    } else {
+      month = "0" + data.month.toString();
+    }
+    if (data.year < 10) {
+      year = "000" + data.year.toString();
+    } else if (data.year > 10 && data.year < 100) {
+      year = "00" + data.year.toString();
+    } else if (data.year > 100 && data.year < 1000) {
+      year = "0" + data.year.toString();
+    } else {
+      year = data.year.toString();
+    }
+
+    return day + "/" + month + "/" + year;
+  }
+ 
+  @override
+  void backPage() {
+    Navigator.pop(context);
+  }
+
+ 
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lista_de_tarefa/presenter/presenter.dart';
 import 'package:lista_de_tarefa/presenter/tarefaListPresenter.dart';
+import 'package:lista_de_tarefa/view/tarefaEditPage.dart';
 import 'package:lista_de_tarefa/view/tarefaNewPage.dart';
 import 'package:lista_de_tarefa/view/view.dart';
 
@@ -17,7 +18,11 @@ class _TarefaListPageState extends State<TarefaListPage> implements IPageList{
 
   void initList() async {
     notes = new List<Map>();
-    this.notes = await this.presenter.fetchAll();
+    this.presenter.fetchAll().then((onValue){
+      setState(() {
+        notes =onValue;
+      });
+    });
     
   }
 
@@ -35,7 +40,7 @@ class _TarefaListPageState extends State<TarefaListPage> implements IPageList{
   Widget build(BuildContext context) {
     return Scaffold( 
       appBar: AppBar(
-        title: Text("Tarefas"),
+        title: Text("Tarefa"),
         leading: IconButton(
             icon: Icon(Icons.dehaze,
                 color: Theme.of(context).secondaryHeaderColor),
@@ -96,6 +101,9 @@ class _TarefaListPageState extends State<TarefaListPage> implements IPageList{
   Widget builderItemList(int index) {
     return Card(
         child: ListTile(
+            onTap: (){
+              this.onTapListItem(index);
+            },
             leading: Checkbox(
                value: this.notes[index]["done"],
                onChanged: (value){
@@ -117,11 +125,21 @@ class _TarefaListPageState extends State<TarefaListPage> implements IPageList{
     
     );         
   }
+  
+ void onTapListItem(int index){
+   int id = this.notes[index]["id"];
+   Route rota = new MaterialPageRoute(
+      builder: (context) => TarefaEditPage(id:id),
+      );
+    Navigator.push(context, rota);
+     this.onRefresh();
+ }
 
   Widget buildList() {
     return RefreshIndicator(
       onRefresh: onRefresh,
       child: ListView.builder(
+        
         itemCount: this.notes.length,
         itemBuilder: (context, index) {
           return builderItemList(index);
