@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:lista_de_tarefa/presenter/presenter.dart';
 import 'package:lista_de_tarefa/presenter/tarefaEditPresenter.dart';
+import 'package:lista_de_tarefa/util/DateConversion.dart';
 import 'package:lista_de_tarefa/view/view.dart';
 
 class TarefaEditPage extends StatefulWidget {
-  final int id;
+  final Map note;
 
-  TarefaEditPage({Key key, @required this.id}) : super(key: key);
+  TarefaEditPage({Key key, @required this.note}) : super(key: key);
   @override
   _NoteEditPageState createState() => _NoteEditPageState();
 }
@@ -28,7 +29,7 @@ class _NoteEditPageState extends State<TarefaEditPage> implements INoteEdit {
   @override
   void onClickUpdate() {
     Map note = {
-      "id": widget.id,
+      "id": widget.note["id"],
       "title": this._txtTitle.text,
       "description": this._txtDescription.text,
       "dateStart": this._txtDataStart.text,
@@ -42,12 +43,19 @@ class _NoteEditPageState extends State<TarefaEditPage> implements INoteEdit {
 
   @override
   void onClickDelete() {
-    this.presenter.delete(widget.id);
+    this.presenter.delete(widget.note["id"]);
   }
-  
-   @override
-  void getNote() async {
-    
+
+  @override
+  void setField() {
+    debugPrint(widget.note.toString());
+    this._txtTitle.text = widget.note["title"];
+    this._txtDescription.text = widget.note["description"];
+    this._txtDataStart.text = widget.note["dateStart"];
+    this._txtDateEnd.text = widget.note["dateEnd"];
+    this._checkDone = widget.note["done"];
+    this.prioridadeSelected =
+        this.getPrioridadeAsString(widget.note["priority"]);
   }
 
   @override
@@ -55,12 +63,12 @@ class _NoteEditPageState extends State<TarefaEditPage> implements INoteEdit {
     super.initState();
     this.presenter = new NoteEditPresenter();
     this.presenter.setView(this);
-    this.getNote();
+    this.setField();
   }
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
+    return SafeArea(  
       child: Scaffold(
           appBar: AppBar(
             title: Text("Editar tarefa"),
@@ -73,7 +81,7 @@ class _NoteEditPageState extends State<TarefaEditPage> implements INoteEdit {
                     }
                   }),
               IconButton(
-                  icon: Icon(Icons.delete_forever),
+                  icon: Icon(Icons.delete),
                   onPressed: () {
                     this.onClickDelete();
                   }),
@@ -248,7 +256,7 @@ class _NoteEditPageState extends State<TarefaEditPage> implements INoteEdit {
     if (picked != null && picked != dateStartSelected)
       setState(() {
         this.dateStartSelected = picked;
-        this._txtDataStart.text = dateTimeToDateFormt(picked);
+        this._txtDataStart.text = DateConversion.dateTimeToDateFormt(picked);
       });
   }
 
@@ -262,7 +270,7 @@ class _NoteEditPageState extends State<TarefaEditPage> implements INoteEdit {
     if (picked != null && picked != dateEndSelected)
       setState(() {
         this.dateEndSelected = picked;
-        this._txtDateEnd.text = dateTimeToDateFormt(picked);
+        this._txtDateEnd.text = DateConversion.dateTimeToDateFormt(picked);
       });
   }
 
@@ -283,6 +291,16 @@ class _NoteEditPageState extends State<TarefaEditPage> implements INoteEdit {
     });
   }
 
+  String getPrioridadeAsString(int prioridade) {
+    if (prioridade == 1) {
+      return "Alta";
+    } else if (prioridade == 2) {
+      return "Normal";
+    } else {
+      return "Baixa";
+    }
+  }
+
   int getPrioridadeAsInt(String prioridade) {
     switch (prioridade) {
       case "Alta":
@@ -296,35 +314,8 @@ class _NoteEditPageState extends State<TarefaEditPage> implements INoteEdit {
     }
   }
 
-  static String dateTimeToDateFormt(DateTime data) {
-    String day, month, year;
-    if (data.day < 10) {
-      day = "0" + data.day.toString();
-    } else {
-      day = data.day.toString();
-    }
-    if (data.month < 10) {
-      month = "0" + data.month.toString();
-    } else {
-      month = "0" + data.month.toString();
-    }
-    if (data.year < 10) {
-      year = "000" + data.year.toString();
-    } else if (data.year > 10 && data.year < 100) {
-      year = "00" + data.year.toString();
-    } else if (data.year > 100 && data.year < 1000) {
-      year = "0" + data.year.toString();
-    } else {
-      year = data.year.toString();
-    }
-
-    return day + "/" + month + "/" + year;
-  }
- 
   @override
   void backPage() {
     Navigator.pop(context);
   }
-
- 
 }

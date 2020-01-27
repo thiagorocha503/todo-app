@@ -24,5 +24,5 @@ class INoteEdit{
    void onClickUpdate(){}
   void onClickDelete(){}
   void backPage() {}
-  void getNote(){}
+  void setField(){}
 }

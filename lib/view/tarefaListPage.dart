@@ -18,9 +18,10 @@ class _TarefaListPageState extends State<TarefaListPage> implements IPageList{
 
   void initList() async {
     notes = new List<Map>();
-    this.presenter.fetchAll().then((onValue){
+    await this.presenter.fetchAll().then((onValue){
       setState(() {
         notes =onValue;
+        
       });
     });
     
@@ -127,9 +128,8 @@ class _TarefaListPageState extends State<TarefaListPage> implements IPageList{
   }
   
  void onTapListItem(int index){
-   int id = this.notes[index]["id"];
    Route rota = new MaterialPageRoute(
-      builder: (context) => TarefaEditPage(id:id),
+      builder: (context) => TarefaEditPage(note:this.notes[index]),
       );
     Navigator.push(context, rota);
      this.onRefresh();
@@ -152,7 +152,9 @@ class _TarefaListPageState extends State<TarefaListPage> implements IPageList{
     List<Map> newNote = await this.presenter.fetchAll();
     setState(() {
       this.notes = newNote;
-
+      if(notes.length==0){
+          this.showSnackBarInfo("Nehuma tarefa");
+      }
       
     });
   }
