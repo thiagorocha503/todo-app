@@ -1,4 +1,4 @@
-[![Codemagic build status](https://api.codemagic.io/apps/5e2887251645de000f48df08/5e2887251645de000f48df07/status_badge.svg)](https://codemagic.io/apps/5e2887251645de000f48df08/5e2887251645de000f48df07/latest_build)
+[![Codemagic build status](https://api.codemagic.io/apps/5e303a834b601e001758e703/5e303a834b601e001758e702/status_badge.svg)](https://codemagic.io/apps/5e303a834b601e001758e703/5e303a834b601e001758e702/latest_build)
 # lista_de_tarefa
 
 A new Flutter project.
