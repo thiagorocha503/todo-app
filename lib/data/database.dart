@@ -23,7 +23,7 @@ class DBProvider {
     if (_database != null) {
       return _database;
     }
-    _database =  await _initDataBase();
+    _database = await _initDataBase();
     return _database;
   }
 
@@ -53,18 +53,18 @@ class DBProvider {
       },
     );
   }
-  
+
   Future<int> insertNote(Note nota) async {
     Database database = await this.getDataBase();
     int row = await database.insert("note", nota.toMap());
     return row;
   }
-  
+
   Future<int> updateNote(Note nota) async {
     Database dataBase = await this.getDataBase();
-    return await dataBase.update("note", nota.toMap(), where: "id=?",whereArgs: [nota.getId()]);
+    return await dataBase
+        .update("note", nota.toMap(), where: "id=?", whereArgs: [nota.getId()]);
   }
-  
 
   Future<List<Note>> fetchAll() async {
     Database database = await this.getDataBase();
@@ -75,13 +75,22 @@ class DBProvider {
     return notes;
   }
 
-    Future<int> delete(int id) async {
-      Database db = await this.getDataBase();
-      return await db.delete("note",where: "id = ?",whereArgs: [id]);
-    }
+  Future<List<Note>> findByTitle(String title) async {
+    Database db = await this.getDataBase();
+    var result = await db.query("note", where: "title LIKE ?",whereArgs: ['%$title%']);
+    List<Note> notes =
+        (result.isNotEmpty) ? result.map((c) => Note.fromMap(c)).toList() : [];
+    return notes;
+  }
 
-    Future<int> markNote(int id, bool done) async {
-       Database db = await this.getDataBase();
-       return await db.rawUpdate("UPDATE note set done=? WHERE id=?",[((done)?1:0), id ]);
-    }
+  Future<int> delete(int id) async {
+    Database db = await this.getDataBase();
+    return await db.delete("note", where: "id = ?", whereArgs: [id]);
+  }
+
+  Future<int> markNote(int id, bool done) async {
+    Database db = await this.getDataBase();
+    return await db
+        .rawUpdate("UPDATE note set done=? WHERE id=?", [((done) ? 1 : 0), id]);
+  }
 }
