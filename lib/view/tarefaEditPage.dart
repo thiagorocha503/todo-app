@@ -68,6 +68,7 @@ class _NoteEditPageState extends State<TarefaEditPage> implements INoteEdit {
 
   @override
   Widget build(BuildContext context) {
+     //SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light);
     return SafeArea(  
       child: Scaffold(
           appBar: AppBar(

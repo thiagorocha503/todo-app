@@ -36,6 +36,9 @@ class TarefaSearchPage extends SearchDelegate<Map> {
   Widget builListItem(int index, BuildContext context) {
     return Card(
       child: ListTile(
+        onTap: (){
+          close(context, this.notes[index]);
+        },
         leading: Checkbox(
           value: this.notes[index]["done"],
           onChanged: (value) {

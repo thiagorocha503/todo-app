@@ -29,7 +29,10 @@ class _TarefaListPageState extends State<TarefaListPage> implements IPageList {
   @override
   void onClickIconButtonSearch() {
     showSearch(context: context, delegate: TarefaSearchPage()).then((onValue) {
-      debugPrint("valor retornado: $onValue");
+      if(onValue != null){
+        Route route = new MaterialPageRoute(builder: (context) =>TarefaEditPage(note: onValue));
+        Navigator.push(this.scaffoldContext, route);
+      }
     });
   }
 
@@ -44,6 +47,7 @@ class _TarefaListPageState extends State<TarefaListPage> implements IPageList {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      
       appBar: AppBar(
         title: Text("Tarefa"),
         leading: IconButton(

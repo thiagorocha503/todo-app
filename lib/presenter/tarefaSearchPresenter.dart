@@ -11,7 +11,6 @@ class ISearchPresenter{
 class SearchPresenter implements ISearchPresenter{
 
   Future<List<Map>> findByTitle(String title) async {
-    //debugPrint(">>> findbytitle");
     DBProvider db = DBProvider.getDBProvider();
     var result = await db.findByTitle(title);
     List<Map> list = List<Map>();
@@ -25,7 +24,6 @@ class SearchPresenter implements ISearchPresenter{
         "priority": note.priority,
         "done": note.done
       };
-      //debugPrint(">>> $noteMap");
       list.add(noteMap);
     }
     //debugPrint(list.toString());
