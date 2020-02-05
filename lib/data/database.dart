@@ -68,7 +68,7 @@ class DBProvider {
 
   Future<List<Note>> fetchAll() async {
     Database database = await this.getDataBase();
-    var dados = await database.query("note");
+    var dados = await database.query("note", orderBy: 'done');
     List<Note> notes = dados.isNotEmpty
         ? dados.map((value) => Note.fromMap(value)).toList()
         : [];
