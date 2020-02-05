@@ -3,12 +3,10 @@ import 'package:lista_de_tarefa/presenter/tarefaSearchPresenter.dart';
 
 class TarefaSearchPage extends SearchDelegate<Map> {
   List<Map> notes = new List<Map>();
-  Future<List<Map>> futureMap;
   ISearchPresenter presenter;
 
   TarefaSearchPage() {
     this.presenter = new SearchPresenter();
-    futureMap = this.presenter.findByTitle(query);
   }
 
   @override
@@ -63,7 +61,7 @@ class TarefaSearchPage extends SearchDelegate<Map> {
   @override
   Widget buildResults(BuildContext context) {
     return new FutureBuilder<List<Map>>(
-      future: this.futureMap,
+      future: this.presenter.findByTitle(query),
       builder: (context, snapshot) {
         debugPrint("${snapshot.connectionState} ");
         switch (snapshot.connectionState) {
