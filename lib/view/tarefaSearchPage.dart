@@ -63,7 +63,6 @@ class TarefaSearchPage extends SearchDelegate<Map> {
     return new FutureBuilder<List<Map>>(
       future: this.presenter.findByTitle(query),
       builder: (context, snapshot) {
-        debugPrint("${snapshot.connectionState} ");
         switch (snapshot.connectionState) {
           case ConnectionState.none:
           case ConnectionState.waiting:
@@ -76,8 +75,6 @@ class TarefaSearchPage extends SearchDelegate<Map> {
                 return new Text('Error: ${snapshot.error}');
               } else {
                 this.notes = snapshot.data;
-                debugPrint("query $query");
-                debugPrint("> ${snapshot.data.toString()}");
                 return buildList();
               }
             }
@@ -88,6 +85,26 @@ class TarefaSearchPage extends SearchDelegate<Map> {
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    return Container();
+    return new FutureBuilder<List<Map>>(
+      future: this.presenter.findByTitle(query),
+      builder: (context, snapshot) {
+        switch (snapshot.connectionState) {
+          case ConnectionState.none:
+          case ConnectionState.waiting:
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          default:
+            {
+              if (snapshot.hasError) {
+                return new Text('Error: ${snapshot.error}');
+              } else {
+                this.notes = snapshot.data;
+                return buildList();
+              }
+            }
+        }
+      },
+    );
   }
 }
