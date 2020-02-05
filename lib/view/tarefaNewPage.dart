@@ -60,8 +60,7 @@ class _NoteAddPageState extends State<TarefaAddPage> implements IPageNewNote {
  }
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
+    return Scaffold(
           appBar: AppBar(
             title: Text("Nova tarefa"),
             actions: <Widget>[
@@ -85,7 +84,8 @@ class _NoteAddPageState extends State<TarefaAddPage> implements IPageNewNote {
               );
             }),
           ),
-          body: Builder(builder: (context) {
+          body:SafeArea(
+            child: Builder(builder: (context) {
             this.scaffoldContext = context;
             return Form(
               key: _formKey,
