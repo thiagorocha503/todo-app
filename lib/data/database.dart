@@ -83,6 +83,14 @@ class DBProvider {
     return notes;
   }
 
+  Future<List<Note>> findByTitleAndDone(String title, bool done) async {
+    Database db = await this.getDataBase();
+    var result = await db.query("note", where: "title LIKE ? and done = ?",whereArgs: ['%$title%', done?1:0]);
+    List<Note> notes =
+        (result.isNotEmpty) ? result.map((c) => Note.fromMap(c)).toList() : [];
+    return notes;
+  }
+
   Future<int> delete(int id) async {
     Database db = await this.getDataBase();
     return await db.delete("note", where: "id = ?", whereArgs: [id]);
