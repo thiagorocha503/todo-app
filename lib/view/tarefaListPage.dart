@@ -17,6 +17,12 @@ class _TarefaListPageState extends State<TarefaListPage> implements IPageList {
   BuildContext scaffoldContext;
   IPresenterNoteList presenter;
 
+  int _filterSelected = FILTER_NOT_DONE;
+
+  static const int FILTER_NOT_DONE = 1;
+  static const int FILTER_DONE = 2;
+  static const int FILTER_ALL = 3;
+
   void initList() async {
     notes = new List<Map>();
     await this.presenter.fetchAll().then((onValue) {
@@ -61,6 +67,31 @@ class _TarefaListPageState extends State<TarefaListPage> implements IPageList {
               this.onClickIconButtonSearch();
             },
           ),
+           PopupMenuButton(
+            tooltip: "Filtrar",
+            icon: Icon(Icons.filter_list),
+            onSelected: (newValue) {
+              setState(() {
+                this._filterSelected = newValue;
+                print("> $newValue");
+              });
+            },
+            initialValue: this._filterSelected,
+            itemBuilder: (BuildContext context) {
+              return [
+                PopupMenuItem(
+                  value: FILTER_NOT_DONE,
+                  child: Text(this.getFilterAsString(FILTER_NOT_DONE)),
+                ),
+                PopupMenuItem(
+                  value: FILTER_DONE,
+                  child: Text(this.getFilterAsString(FILTER_DONE)),
+                ),
+                PopupMenuItem(
+                    value: FILTER_ALL,
+                    child: Text(this.getFilterAsString(FILTER_ALL)))
+              ];
+            }),
         ],
       ),
       body: Builder(builder: (context) {
@@ -76,7 +107,19 @@ class _TarefaListPageState extends State<TarefaListPage> implements IPageList {
       ),
     );
   }
-
+   String getFilterAsString(int filter) {
+    switch (filter) {
+      case FILTER_NOT_DONE:
+        return "Não concluidos";
+      case FILTER_DONE:
+        return "Concluído";
+      case FILTER_ALL:
+        return "Todos";
+      default:
+        return "filtro invalid";
+    }
+   }
+  
   void showSnackBarInfo(String message) {
     final SnackBar snackBarInfo = new SnackBar(
       content: Text(message),
