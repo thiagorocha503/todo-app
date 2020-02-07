@@ -17,9 +17,15 @@ class _TarefaListPageState extends State<TarefaListPage> implements IPageList {
   BuildContext scaffoldContext;
   IPresenterNoteList presenter;
 
+  int _filterSelected = FILTER_NOT_DONE;
+
+  static const int FILTER_NOT_DONE = 1;
+  static const int FILTER_DONE = 2;
+  static const int FILTER_ALL = 3;
+
   void initList() async {
     notes = new List<Map>();
-    await this.presenter.fetchAll().then((onValue) {
+    await this.presenter.fetchAll(this._filterSelected).then((onValue) {
       setState(() {
         notes = onValue;
       });
@@ -61,6 +67,31 @@ class _TarefaListPageState extends State<TarefaListPage> implements IPageList {
               this.onClickIconButtonSearch();
             },
           ),
+           PopupMenuButton(
+            tooltip: "Filtrar",
+            icon: Icon(Icons.filter_list),
+            onSelected: (newValue) {
+              setState(() {
+                this._filterSelected = newValue;
+                print("> $newValue");
+              });
+            },
+            initialValue: this._filterSelected,
+            itemBuilder: (BuildContext context) {
+              return [
+                PopupMenuItem(
+                  value: FILTER_NOT_DONE,
+                  child: Text(this.getFilterAsString(FILTER_NOT_DONE)),
+                ),
+                PopupMenuItem(
+                  value: FILTER_DONE,
+                  child: Text(this.getFilterAsString(FILTER_DONE)),
+                ),
+                PopupMenuItem(
+                    value: FILTER_ALL,
+                    child: Text(this.getFilterAsString(FILTER_ALL)))
+              ];
+            }),
         ],
       ),
       body: Builder(builder: (context) {
@@ -76,7 +107,19 @@ class _TarefaListPageState extends State<TarefaListPage> implements IPageList {
       ),
     );
   }
-
+   String getFilterAsString(int filter) {
+    switch (filter) {
+      case FILTER_NOT_DONE:
+        return "Não concluidos";
+      case FILTER_DONE:
+        return "Concluído";
+      case FILTER_ALL:
+        return "Todos";
+      default:
+        return "filtro invalid";
+    }
+   }
+  
   void showSnackBarInfo(String message) {
     final SnackBar snackBarInfo = new SnackBar(
       content: Text(message),
@@ -110,6 +153,7 @@ class _TarefaListPageState extends State<TarefaListPage> implements IPageList {
           value: this.notes[index]["done"],
           onChanged: (value) {
             setState(() {
+              this.notes[index]["done"]= value;
               this.onChangedCheckButton(value, index);
             });
           }),
@@ -145,14 +189,9 @@ class _TarefaListPageState extends State<TarefaListPage> implements IPageList {
     );
   }
 
+  @override
   Future<void> onRefresh() async {
-    List<Map> newNote = await this.presenter.fetchAll();
-    setState(() {
-      this.notes = newNote;
-      if (notes.length == 0) {
-        this.showSnackBarInfo("Nehuma tarefa");
-      }
-    });
+    this.presenter.refresh(this._filterSelected);
   }
 
   @override
@@ -167,7 +206,7 @@ class _TarefaListPageState extends State<TarefaListPage> implements IPageList {
   @override
   void onChangedCheckButton(bool value, int index) {
     this.presenter.markNote(this.notes[index]["id"], value);
-    this.onRefresh();
+    //this.onRefresh();
   }
 
   @override
@@ -180,9 +219,12 @@ class _TarefaListPageState extends State<TarefaListPage> implements IPageList {
   }
 
   @override
-  void updateList(List<Map> notes) {
-    setState(() {
-      this.notes = notes;
+  void updateList(List<Map> newNote) {
+     setState(() {
+      this.notes = newNote;
+      if (notes.length == 0) {
+        this.showSnackBarInfo("Nehuma tarefa");
+      }
     });
   }
 }

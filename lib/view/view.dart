@@ -6,6 +6,7 @@ class IPageList{
   void showSnackBarInfo(String title){}
   void onChangedCheckButton(bool value, int index){}
   void onClickIconButtonSearch(){}
+  void onRefresh(){}
   void updateList(List<Map> notes){}
   
 }

@@ -68,7 +68,7 @@ class DBProvider {
 
   Future<List<Note>> fetchAll() async {
     Database database = await this.getDataBase();
-    var dados = await database.query("note");
+    var dados = await database.query("note", orderBy: 'done');
     List<Note> notes = dados.isNotEmpty
         ? dados.map((value) => Note.fromMap(value)).toList()
         : [];
@@ -78,6 +78,14 @@ class DBProvider {
   Future<List<Note>> findByTitle(String title) async {
     Database db = await this.getDataBase();
     var result = await db.query("note", where: "title LIKE ?",whereArgs: ['%$title%']);
+    List<Note> notes =
+        (result.isNotEmpty) ? result.map((c) => Note.fromMap(c)).toList() : [];
+    return notes;
+  }
+
+  Future<List<Note>> findByTitleAndDone(String title, bool done) async {
+    Database db = await this.getDataBase();
+    var result = await db.query("note", where: "title LIKE ? and done = ?",whereArgs: ['%$title%', done?1:0]);
     List<Note> notes =
         (result.isNotEmpty) ? result.map((c) => Note.fromMap(c)).toList() : [];
     return notes;

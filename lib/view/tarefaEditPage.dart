@@ -68,9 +68,8 @@ class _NoteEditPageState extends State<TarefaEditPage> implements INoteEdit {
 
   @override
   Widget build(BuildContext context) {
-     //SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light);
-    return SafeArea(  
-      child: Scaffold(
+    return   
+     Scaffold(
           appBar: AppBar(
             title: Text("Editar tarefa"),
             actions: <Widget>[
@@ -96,7 +95,9 @@ class _NoteEditPageState extends State<TarefaEditPage> implements INoteEdit {
               );
             }),
           ),
-          body: Builder(builder: (context) {
+          body:
+            SafeArea(
+            child: Builder(builder: (context) {
             this.scaffoldContext = context;
             return Form(
               key: _formKey,
