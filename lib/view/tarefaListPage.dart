@@ -25,7 +25,7 @@ class _TarefaListPageState extends State<TarefaListPage> implements IPageList {
 
   void initList() async {
     notes = new List<Map>();
-    await this.presenter.fetchAll().then((onValue) {
+    await this.presenter.fetchAll(this._filterSelected).then((onValue) {
       setState(() {
         notes = onValue;
       });
@@ -153,6 +153,7 @@ class _TarefaListPageState extends State<TarefaListPage> implements IPageList {
           value: this.notes[index]["done"],
           onChanged: (value) {
             setState(() {
+              this.notes[index]["done"]= value;
               this.onChangedCheckButton(value, index);
             });
           }),
@@ -188,14 +189,9 @@ class _TarefaListPageState extends State<TarefaListPage> implements IPageList {
     );
   }
 
+  @override
   Future<void> onRefresh() async {
-    List<Map> newNote = await this.presenter.fetchAll();
-    setState(() {
-      this.notes = newNote;
-      if (notes.length == 0) {
-        this.showSnackBarInfo("Nehuma tarefa");
-      }
-    });
+    this.presenter.refresh(this._filterSelected);
   }
 
   @override
@@ -210,7 +206,7 @@ class _TarefaListPageState extends State<TarefaListPage> implements IPageList {
   @override
   void onChangedCheckButton(bool value, int index) {
     this.presenter.markNote(this.notes[index]["id"], value);
-    this.onRefresh();
+    //this.onRefresh();
   }
 
   @override
@@ -223,9 +219,12 @@ class _TarefaListPageState extends State<TarefaListPage> implements IPageList {
   }
 
   @override
-  void updateList(List<Map> notes) {
-    setState(() {
-      this.notes = notes;
+  void updateList(List<Map> newNote) {
+     setState(() {
+      this.notes = newNote;
+      if (notes.length == 0) {
+        this.showSnackBarInfo("Nehuma tarefa");
+      }
     });
   }
 }

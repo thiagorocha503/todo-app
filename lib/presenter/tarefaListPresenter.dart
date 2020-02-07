@@ -15,9 +15,16 @@ class TarefaListPresent implements IPresenterNoteList {
   }
 
   @override
-  Future<List<Map<dynamic, dynamic>>> fetchAll() async {
+  Future<List<Map<dynamic, dynamic>>> fetchAll(int filter) async {
      DBProvider db = DBProvider.getDBProvider();
-     List<Note> dados = await db.fetchAll();
+     List<Note> dados;
+     if(filter==1){
+       dados = await db.findByTitleAndDone("", false);
+     } else if(filter ==2){
+       dados = await db.findByTitleAndDone("", true);
+     } else if(filter==3){
+       dados = await db.fetchAll();
+     }
      List<Map> notes = List<Map>();
      for(Note note in dados){
        Map noteMap = {
@@ -33,10 +40,6 @@ class TarefaListPresent implements IPresenterNoteList {
      return  notes;
   }
 
-  @override
-  Future<List<Map>> findNoteByTitle(String title) {
-    return null;
-  }
 
   @override
   Future<int> markNote(int id, bool value) async {
@@ -50,9 +53,13 @@ class TarefaListPresent implements IPresenterNoteList {
   }
 
   @override
-  Future<List<Map>> updateList() async {
-   return await this.fetchAll();
+  void refresh(int filter) async {
+    List notes = await this.fetchAll(filter);
+    this.view.updateList(notes);
+
   }
+
+
 
 
 
