@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:lista_de_tarefa/presenter/presenter.dart';
 import 'package:lista_de_tarefa/presenter/tarefaListPresenter.dart';
@@ -38,6 +40,7 @@ class _TarefaListPageState extends State<TarefaListPage> implements IPageList {
       if(onValue != null){
         Route route = new MaterialPageRoute(builder: (context) =>TarefaEditPage(note: onValue));
         Navigator.push(this.scaffoldContext, route);
+        this.onRefresh();
       }
     });
   }
