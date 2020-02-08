@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lista_de_tarefa/presenter/presenter.dart';
 import 'package:lista_de_tarefa/presenter/tarefaAddPresenter.dart';
 import 'package:lista_de_tarefa/util/DateConversion.dart';
+import 'package:lista_de_tarefa/util/validation.dart';
 import 'package:lista_de_tarefa/view/view.dart';
 
 
@@ -133,10 +134,14 @@ class _NoteAddPageState extends State<TarefaAddPage> implements IPageNewNote {
                                 controller: this._txtDataStart,
                                 decoration: InputDecoration(
                                     labelText: "Data de ínicio",
+                                    hintText: "00/00/0000",
                                     border: OutlineInputBorder()),
                                 validator: (value) {
                                   if (value.isEmpty) {
                                     return "Preencha o campo data de ínicio";
+                                  }
+                                  if (!Validation.isDateValida(value)){
+                                    return "Data inválida";
                                   }
                                   return null;
                                 },
@@ -165,10 +170,14 @@ class _NoteAddPageState extends State<TarefaAddPage> implements IPageNewNote {
                                 controller: this._txtDateEnd,
                                 decoration: InputDecoration(
                                     labelText: "Data de término",
+                                    hintText: "00/00/0000",
                                     border: OutlineInputBorder()),
                                 validator: (value) {
                                   if (value.isEmpty) {
                                     return "Preencha o campo data de término";
+                                  }
+                                  if(!Validation.isDateValida(value)){
+                                    return "Data inválida";
                                   }
                                   return null;
                                 },

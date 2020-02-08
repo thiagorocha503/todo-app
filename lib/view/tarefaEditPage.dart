@@ -3,6 +3,7 @@ import 'package:lista_de_tarefa/presenter/presenter.dart';
 import 'package:lista_de_tarefa/presenter/tarefaEditPresenter.dart';
 import 'package:lista_de_tarefa/util/DateConversion.dart';
 import 'package:lista_de_tarefa/view/view.dart';
+import 'package:lista_de_tarefa/util/validation.dart';
 
 class TarefaEditPage extends StatefulWidget {
   final Map note;
@@ -144,11 +145,15 @@ class _NoteEditPageState extends State<TarefaEditPage> implements INoteEdit {
                               child: TextFormField(
                                 controller: this._txtDataStart,
                                 decoration: InputDecoration(
+                                    hintText: "00/00/0000",
                                     labelText: "Data de ínicio",
                                     border: OutlineInputBorder()),
                                 validator: (value) {
                                   if (value.isEmpty) {
                                     return "Preencha o campo data de ínicio";
+                                  }
+                                  if(!Validation.isDateValida(value)){
+                                    return "Data inválida";
                                   }
                                   return null;
                                 },
@@ -176,11 +181,15 @@ class _NoteEditPageState extends State<TarefaEditPage> implements INoteEdit {
                               child: TextFormField(
                                 controller: this._txtDateEnd,
                                 decoration: InputDecoration(
+                                    hintText: "00/00/0000",
                                     labelText: "Data de término",
                                     border: OutlineInputBorder()),
                                 validator: (value) {
                                   if (value.isEmpty) {
                                     return "Preencha o campo data de término";
+                                  }
+                                  if(!Validation.isDateValida(value)){
+                                    return "Data inválida";
                                   }
                                   return null;
                                 },
