@@ -76,7 +76,7 @@ class _TarefaListPageState extends State<TarefaListPage> implements IPageList {
             onSelected: (newValue) {
               setState(() {
                 this._filterSelected = newValue;
-                print("> $newValue");
+                this.onRefresh();
               });
             },
             initialValue: this._filterSelected,
@@ -139,9 +139,10 @@ class _TarefaListPageState extends State<TarefaListPage> implements IPageList {
         action: SnackBarAction(
             label: "desfazer",
             onPressed: () {
-              setState(() {
-                notes.add(this.lastNoteRemoved);
-              });
+            setState(() {
+              this.presenter.addNote(this.lastNoteRemoved);
+              this.onRefresh();
+            });           
             }));
     Scaffold.of(this.scaffoldContext).showSnackBar(undoRemove);
   }

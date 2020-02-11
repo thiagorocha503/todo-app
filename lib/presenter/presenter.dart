@@ -1,10 +1,11 @@
 import 'package:lista_de_tarefa/view/view.dart';
 
-class IPresenterNoteList {
+class IPresenterNoteList{
   Future<int> markNote(int id, bool value) async {return null;}
   void deleteNote(int id) async {}
   Future<List<Map>> fetchAll(int filter) async {return new List<Map>();}
   void setView(IPageList view) {}
+  void addNote(Map note){}
   void refresh(int filter){}
 }
 
