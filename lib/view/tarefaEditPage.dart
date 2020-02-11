@@ -191,6 +191,13 @@ class _NoteEditPageState extends State<TarefaEditPage> implements INoteEdit {
                                   if(!Validation.isDateValida(value)){
                                     return "Data inválida";
                                   }
+                                  if(Validation.isDateValida(this._txtDataStart.text)){
+                                    DateTime dateStart = DateConversion.dateFormtToDateTime(this._txtDataStart.text);
+                                    DateTime dateEnd = DateConversion.dateFormtToDateTime(this._txtDateEnd.text);
+                                    if(dateEnd.compareTo(dateStart) < 0){
+                                      return "Data anterior a data de ínicio";
+                                    }
+                                  }
                                   return null;
                                 },
                               )),

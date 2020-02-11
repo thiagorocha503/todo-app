@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lista_de_tarefa/presenter/presenter.dart';
 import 'package:lista_de_tarefa/presenter/tarefaAddPresenter.dart';
-import 'package:lista_de_tarefa/util/DateConversion.dart';
+import 'package:lista_de_tarefa/util/dateConversion.dart';
 import 'package:lista_de_tarefa/util/validation.dart';
 import 'package:lista_de_tarefa/view/view.dart';
 
@@ -178,6 +178,13 @@ class _NoteAddPageState extends State<TarefaAddPage> implements IPageNewNote {
                                   }
                                   if(!Validation.isDateValida(value)){
                                     return "Data inválida";
+                                  }
+                                  if(Validation.isDateValida(this._txtDataStart.text)){
+                                    DateTime dateStart = DateConversion.dateFormtToDateTime(this._txtDataStart.text);
+                                    DateTime dateEnd = DateConversion.dateFormtToDateTime(this._txtDateEnd.text);
+                                    if(dateEnd.compareTo(dateStart) < 0){
+                                      return "Data anterior a data de ínicio";
+                                    }
                                   }
                                   return null;
                                 },
