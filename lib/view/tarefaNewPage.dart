@@ -151,7 +151,7 @@ class _NoteAddPageState extends State<TarefaAddPage> implements IPageNewNote {
                             flex: 1,
                             child: IconButton(
                               icon: Icon(Icons.calendar_today,
-                                  color: Colors.blue),
+                                  color:Theme.of(context).primaryColor,),
                               onPressed: () {
                                 setState(() {
                                   this._selectDateStart(context);
@@ -195,7 +195,7 @@ class _NoteAddPageState extends State<TarefaAddPage> implements IPageNewNote {
                             child: IconButton(
                               icon: Icon(
                                 Icons.calendar_today,
-                                color: Colors.blue,
+                                color: Theme.of(context).primaryColor,
                               ),
                               onPressed: () {
                                 setState(() {

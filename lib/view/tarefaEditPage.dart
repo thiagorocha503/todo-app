@@ -163,7 +163,7 @@ class _NoteEditPageState extends State<TarefaEditPage> implements INoteEdit {
                             flex: 1,
                             child: IconButton(
                               icon: Icon(Icons.calendar_today,
-                                  color: Colors.blue),
+                                  color: Theme.of(context).primaryColor),
                               onPressed: () {
                                 setState(() {
                                   this._selectDateStart(context);
@@ -207,7 +207,7 @@ class _NoteEditPageState extends State<TarefaEditPage> implements INoteEdit {
                             child: IconButton(
                               icon: Icon(
                                 Icons.calendar_today,
-                                color: Colors.blue,
+                                color: Theme.of(context).primaryColor,
                               ),
                               onPressed: () {
                                 setState(() {
@@ -219,7 +219,7 @@ class _NoteEditPageState extends State<TarefaEditPage> implements INoteEdit {
                     ),
                     Container(
                       padding: EdgeInsets.fromLTRB(15, 10, 15, 10),
-                      child: DropdownButton(
+                      child: DropdownButton(                     
                           isExpanded: true,
                           value: this.prioridadeSelected,
                           items: this.prioridades.map((dropDownValue) {
