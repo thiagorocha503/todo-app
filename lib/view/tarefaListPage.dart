@@ -177,8 +177,13 @@ class _TarefaListPageState extends State<TarefaListPage> implements IPageList {
     Route rota = new MaterialPageRoute(
       builder: (context) => TarefaEditPage(note: this.notes[index]),
     );
-    Navigator.push(context, rota);
-    this.onRefresh();
+    Navigator.push(context, rota).then((onValue){
+      setState(() {
+        this.onRefresh();
+      });
+      
+    });
+ 
   }
 
   Widget buildList() {
