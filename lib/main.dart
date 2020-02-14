@@ -4,6 +4,7 @@ import 'package:lista_de_tarefa/view/tarefaListPage.dart';
 
 void main() {
   runApp(MaterialApp(
+      title: "Lista de tarefas",
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
