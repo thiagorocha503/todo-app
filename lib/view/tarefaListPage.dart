@@ -63,6 +63,7 @@ class _TarefaListPageState extends State<TarefaListPage> implements IPageList {
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.search, color: Colors.white),
+            tooltip: "Pesquisar",
             onPressed: () {
               this.onClickIconButtonSearch();
             },

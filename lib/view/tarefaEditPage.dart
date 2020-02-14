@@ -111,6 +111,7 @@ class _NoteEditPageState extends State<TarefaEditPage> implements INoteEdit {
         actions: <Widget>[
           IconButton(
               icon: Icon(Icons.save, color: Colors.white),
+              tooltip: "Salvar",
               onPressed: () {
                 if (_formKey.currentState.validate()) {
                   this.onClickUpdate();
@@ -118,6 +119,7 @@ class _NoteEditPageState extends State<TarefaEditPage> implements INoteEdit {
               }),
           IconButton(
               icon: Icon(Icons.delete),
+              tooltip: "Remover",
               onPressed: () {
                 this.onClickDelete();
               }),

@@ -67,12 +67,10 @@ class _NoteAddPageState extends State<TarefaAddPage> implements IPageNewNote {
             actions: <Widget>[
               IconButton(
                   icon: Icon(Icons.check, color: Colors.white),
+                  tooltip: "Salvar",
                   onPressed: () {
                     if (_formKey.currentState.validate()) {
-                
-                        this.onCadastro();
-                      
-                      
+                      this.onCadastro();  
                     }
                   })
             ],
