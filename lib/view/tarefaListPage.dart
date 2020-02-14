@@ -60,10 +60,6 @@ class _TarefaListPageState extends State<TarefaListPage> implements IPageList {
     return Scaffold(
       appBar: AppBar(
         title: Text("Tarefas"),
-        leading: IconButton(
-            icon: Icon(Icons.dehaze,
-                color: Theme.of(context).secondaryHeaderColor),
-            onPressed: null),
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.search, color: Colors.white),
