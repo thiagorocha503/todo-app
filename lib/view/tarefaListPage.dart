@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:lista_de_tarefa/presenter/presenter.dart';
 import 'package:lista_de_tarefa/presenter/tarefaListPresenter.dart';
+import 'package:lista_de_tarefa/util/dateConversion.dart';
 import 'package:lista_de_tarefa/view/tarefaEditPage.dart';
 import 'package:lista_de_tarefa/view/tarefaNewPage.dart';
 import 'package:lista_de_tarefa/view/tarefaSearchPage.dart';
@@ -37,8 +38,9 @@ class _TarefaListPageState extends State<TarefaListPage> implements IPageList {
   @override
   void onClickIconButtonSearch() {
     showSearch(context: context, delegate: TarefaSearchPage()).then((onValue) {
-      if(onValue != null){
-        Route route = new MaterialPageRoute(builder: (context) =>TarefaEditPage(note: onValue));
+      if (onValue != null) {
+        Route route = new MaterialPageRoute(
+            builder: (context) => TarefaEditPage(note: onValue));
         Navigator.push(this.scaffoldContext, route);
         this.onRefresh();
       }
@@ -56,9 +58,8 @@ class _TarefaListPageState extends State<TarefaListPage> implements IPageList {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      
       appBar: AppBar(
-        title: Text("Tarefa"),
+        title: Text("Tarefas"),
         leading: IconButton(
             icon: Icon(Icons.dehaze,
                 color: Theme.of(context).secondaryHeaderColor),
@@ -70,31 +71,31 @@ class _TarefaListPageState extends State<TarefaListPage> implements IPageList {
               this.onClickIconButtonSearch();
             },
           ),
-           PopupMenuButton(
-            tooltip: "Filtrar",
-            icon: Icon(Icons.filter_list),
-            onSelected: (newValue) {
-              setState(() {
-                this._filterSelected = newValue;
-                this.onRefresh();
-              });
-            },
-            initialValue: this._filterSelected,
-            itemBuilder: (BuildContext context) {
-              return [
-                PopupMenuItem(
-                  value: FILTER_NOT_DONE,
-                  child: Text(this.getFilterAsString(FILTER_NOT_DONE)),
-                ),
-                PopupMenuItem(
-                  value: FILTER_DONE,
-                  child: Text(this.getFilterAsString(FILTER_DONE)),
-                ),
-                PopupMenuItem(
-                    value: FILTER_ALL,
-                    child: Text(this.getFilterAsString(FILTER_ALL)))
-              ];
-            }),
+          PopupMenuButton(
+              tooltip: "Filtrar",
+              icon: Icon(Icons.filter_list),
+              onSelected: (newValue) {
+                setState(() {
+                  this._filterSelected = newValue;
+                  this.onRefresh();
+                });
+              },
+              initialValue: this._filterSelected,
+              itemBuilder: (BuildContext context) {
+                return [
+                  PopupMenuItem(
+                    value: FILTER_NOT_DONE,
+                    child: Text(this.getFilterAsString(FILTER_NOT_DONE)),
+                  ),
+                  PopupMenuItem(
+                    value: FILTER_DONE,
+                    child: Text(this.getFilterAsString(FILTER_DONE)),
+                  ),
+                  PopupMenuItem(
+                      value: FILTER_ALL,
+                      child: Text(this.getFilterAsString(FILTER_ALL)))
+                ];
+              }),
         ],
       ),
       body: Builder(builder: (context) {
@@ -110,7 +111,8 @@ class _TarefaListPageState extends State<TarefaListPage> implements IPageList {
       ),
     );
   }
-   String getFilterAsString(int filter) {
+
+  String getFilterAsString(int filter) {
     switch (filter) {
       case FILTER_NOT_DONE:
         return "Não concluidos";
@@ -121,8 +123,8 @@ class _TarefaListPageState extends State<TarefaListPage> implements IPageList {
       default:
         return "filtro invalid";
     }
-   }
-  
+  }
+
   void showSnackBarInfo(String message) {
     final SnackBar snackBarInfo = new SnackBar(
       content: Text(message),
@@ -139,51 +141,77 @@ class _TarefaListPageState extends State<TarefaListPage> implements IPageList {
         action: SnackBarAction(
             label: "desfazer",
             onPressed: () {
-            setState(() {
-              this.presenter.addNote(this.lastNoteRemoved);
-              this.onRefresh();
-            });           
+              setState(() {
+                this.presenter.addNote(this.lastNoteRemoved);
+                this.onRefresh();
+              });
             }));
     Scaffold.of(this.scaffoldContext).showSnackBar(undoRemove);
   }
 
+  Color getItemListColor(int index) {
+    // caso concluído
+    if (this.notes[index]["done"]) {
+      return Colors.grey[300];
+    }
+    // caso atrasado
+    DateTime dateEnd = DateConversion.dateFormtToDateTime(this.notes[index]["dateEnd"]);
+    DateTime now = DateTime.now();
+    DateTime today = DateTime(now.year, now.month, now.day);
+    if (dateEnd.compareTo(today)<0){
+      return Colors.red[200];
+    }
+    return Colors.white;
+  }
+
+  Widget getItemListTitle(int index) {
+    if (this.notes[index]['done']) {
+      return Text(
+        this.notes[index]['title'],
+        style: TextStyle(
+            color: Colors.grey, decoration: TextDecoration.lineThrough),
+      );
+    } else {
+      return Text("${this.notes[index]['title']}");
+    }
+  }
+
   Widget builderItemList(int index) {
     return Card(
+        color: this.getItemListColor(index),
         child: ListTile(
-      onTap: () {
-        this.onTapListItem(index);
-      },
-      leading: Checkbox(
-          value: this.notes[index]["done"],
-          onChanged: (value) {
-            setState(() {
-              this.notes[index]["done"]= value;
-              this.onChangedCheckButton(value, index);
-            });
-          }),
-      trailing: IconButton(
-        icon: Icon(Icons.delete),
-        color: Theme.of(context).primaryColor,
-        onPressed: () {
-          this.onClickDelete(index);
-        },
-      ),
-      title: Text(this.notes[index]["title"].toString()),
-      subtitle: Text(this.notes[index]["description"].toString()),
-    ));
+          onTap: () {
+            this.onTapListItem(index);
+          },
+          leading: Checkbox(
+              value: this.notes[index]["done"],
+              onChanged: (value) {
+                setState(() {
+                  this.notes[index]["done"] = value;
+                  this.onChangedCheckButton(value, index);
+                });
+              }),
+          trailing: IconButton(
+            icon: Icon(Icons.delete),
+            color: Theme.of(context).primaryColor,
+            onPressed: () {
+              this.onClickDelete(index);
+            },
+          ),
+          title: this.getItemListTitle(index),
+          subtitle: Text(this.notes[index]["description"].toString()),
+        ));
   }
 
   void onTapListItem(int index) {
     Route rota = new MaterialPageRoute(
       builder: (context) => TarefaEditPage(note: this.notes[index]),
     );
-    Navigator.push(context, rota).then((onValue){
+    Navigator.push(context, rota).then((onValue) {
       setState(() {
         this.onRefresh();
       });
-      
     });
- 
   }
 
   Widget buildList() {
@@ -229,7 +257,7 @@ class _TarefaListPageState extends State<TarefaListPage> implements IPageList {
 
   @override
   void updateList(List<Map> newNote) {
-     setState(() {
+    setState(() {
       this.notes = newNote;
       if (notes.length == 0) {
         this.showSnackBarInfo("Nehuma tarefa");
