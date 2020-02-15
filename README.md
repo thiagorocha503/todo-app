@@ -1,4 +1,4 @@
-[![Codemagic build status](https://api.codemagic.io/apps/5e303a834b601e001758e703/5e303a834b601e001758e702/status_badge.svg)](https://codemagic.io/apps/5e303a834b601e001758e703/5e303a834b601e001758e702/latest_build)
+[![Codemagic build status](https://api.codemagic.io/apps/5e303a834b601e001758e703/5e303a834b601e001758e702/status_badge.svg)](https://codemagic.io/apps/5e303a834b601e001758e703/5e303a834b601e001758e702/latest_build)![build](https://github.com/thiagorocha503/lista-de-tarefa-app/workflows/Flutter%20CI/badge.svg?event=push&pull_request)
 # lista_de_tarefa
 
 A new Flutter project.
