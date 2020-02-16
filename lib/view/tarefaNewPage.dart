@@ -95,6 +95,7 @@ class _NoteAddPageState extends State<TarefaAddPage> implements IPageNewNote {
                     Container(
                       padding: EdgeInsets.fromLTRB(15, 30, 15, 5),
                       child: TextFormField(
+                        key: Key("txtTitle"),
                         validator: (value) {
                           if (value.isEmpty) {
                             return "Preencha o campo titulo";
@@ -109,6 +110,7 @@ class _NoteAddPageState extends State<TarefaAddPage> implements IPageNewNote {
                     Container(
                       padding: EdgeInsets.fromLTRB(15, 10, 15, 5),
                       child: TextFormField(
+                        key: Key("txtDescription"),
                         maxLines: 10,
                         controller: this._txtDescription,
                         decoration: InputDecoration(
@@ -129,6 +131,7 @@ class _NoteAddPageState extends State<TarefaAddPage> implements IPageNewNote {
                           child: Container(
                               padding: EdgeInsets.fromLTRB(15, 10, 15, 5),
                               child: TextFormField(
+                                key: Key("txtDateStart"),
                                 controller: this._txtDataStart,
                                 decoration: InputDecoration(
                                     labelText: "Data de ínicio",
@@ -165,6 +168,7 @@ class _NoteAddPageState extends State<TarefaAddPage> implements IPageNewNote {
                           child: Container(
                               padding: EdgeInsets.fromLTRB(15, 10, 15, 5),
                               child: TextFormField(
+                                key: Key("txtDateEnd"),
                                 controller: this._txtDateEnd,
                                 decoration: InputDecoration(
                                     labelText: "Data de término",
@@ -206,6 +210,7 @@ class _NoteAddPageState extends State<TarefaAddPage> implements IPageNewNote {
                     Container(
                       padding: EdgeInsets.fromLTRB(15, 10, 15, 10),
                       child: DropdownButton(
+                          key:Key("dropPriority"),
                           isExpanded: true,
                           value: this.prioridadeSelected,
                           items: this.prioridades.map((dropDownValue) {
@@ -227,6 +232,7 @@ class _NoteAddPageState extends State<TarefaAddPage> implements IPageNewNote {
                           ),
                         ),
                         Checkbox(
+                            key: Key("checkDone"),
                             value: this._checkDone,
                             onChanged: (newValue) {
                               setState(() {
