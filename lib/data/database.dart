@@ -1,23 +1,24 @@
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
+import 'package:lista_de_tarefa/data/IDataBase.dart';
 import 'package:lista_de_tarefa/model/note.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
-class DBProvider {
+class DBProvider implements IDBProvider{
   static DBProvider _dbProvider;
   static Database _database;
 
   DBProvider._(); // construtor privado
 
-  static DBProvider getDBProvider() {
+  static IDBProvider getDBProvider() {
     if (_dbProvider == null) {
       return DBProvider._();
     }
     return _dbProvider;
   }
-
+  
   Future<Database> getDataBase() async {
     debugPrint("get dataBase");
     if (_database != null) {
@@ -53,19 +54,22 @@ class DBProvider {
       },
     );
   }
-
+  
+  @override
   Future<int> insertNote(Note nota) async {
     Database database = await this.getDataBase();
     int row = await database.insert("note", nota.toMap());
     return row;
   }
-
+  
+  @override
   Future<int> updateNote(Note nota) async {
     Database dataBase = await this.getDataBase();
     return await dataBase
         .update("note", nota.toMap(), where: "id=?", whereArgs: [nota.getId()]);
   }
 
+  @override
   Future<List<Note>> fetchAll() async {
     Database database = await this.getDataBase();
     var dados = await database.query("note", orderBy: 'done');
@@ -75,6 +79,7 @@ class DBProvider {
     return notes;
   }
 
+  @override
   Future<List<Note>> findByTitle(String title) async {
     Database db = await this.getDataBase();
     var result = await db.query("note", where: "title LIKE ?",whereArgs: ['%$title%']);
@@ -82,7 +87,8 @@ class DBProvider {
         (result.isNotEmpty) ? result.map((c) => Note.fromMap(c)).toList() : [];
     return notes;
   }
-
+   
+  @override
   Future<List<Note>> findByTitleAndDone(String title, bool done) async {
     Database db = await this.getDataBase();
     var result = await db.query("note", where: "title LIKE ? and done = ?",whereArgs: ['%$title%', done?1:0]);
@@ -91,14 +97,24 @@ class DBProvider {
     return notes;
   }
 
+  @override
   Future<int> delete(int id) async {
     Database db = await this.getDataBase();
     return await db.delete("note", where: "id = ?", whereArgs: [id]);
   }
 
+  @override
   Future<int> markNote(int id, bool done) async {
     Database db = await this.getDataBase();
     return await db
         .rawUpdate("UPDATE note set done=? WHERE id=?", [((done) ? 1 : 0), id]);
+  }
+
+  @override
+  Future<Note> getById(int id) async {
+    Database db = await this.getDataBase();
+    List<Map<dynamic, dynamic>> result = await db.query("note", where: "id = ?",whereArgs: [id]);
+    Note note =(result.isNotEmpty) ? Note.fromMap(result[0]): null;
+    return note;
   }
 }
