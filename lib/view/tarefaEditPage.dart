@@ -144,6 +144,7 @@ class _NoteEditPageState extends State<TarefaEditPage> implements INoteEdit {
                 Container(
                   padding: EdgeInsets.fromLTRB(15, 30, 15, 5),
                   child: TextFormField(
+                    key: Key("txtTitle"),
                     validator: (value) {
                       if (value.isEmpty) {
                         return "Preencha o campo titulo";
@@ -158,6 +159,7 @@ class _NoteEditPageState extends State<TarefaEditPage> implements INoteEdit {
                 Container(
                   padding: EdgeInsets.fromLTRB(15, 10, 15, 5),
                   child: TextFormField(
+                    key: Key("txtDescription"),
                     maxLines: 10,
                     controller: this._txtDescription,
                     decoration: InputDecoration(
@@ -177,6 +179,7 @@ class _NoteEditPageState extends State<TarefaEditPage> implements INoteEdit {
                       child: Container(
                           padding: EdgeInsets.fromLTRB(15, 10, 15, 5),
                           child: TextFormField(
+                            key: Key("txtDateStart"),
                             controller: this._txtDataStart,
                             decoration: InputDecoration(
                                 hintText: "00/00/0000",
@@ -213,6 +216,7 @@ class _NoteEditPageState extends State<TarefaEditPage> implements INoteEdit {
                       child: Container(
                           padding: EdgeInsets.fromLTRB(15, 10, 15, 5),
                           child: TextFormField(
+                            key: Key("txtDateEnd"),
                             controller: this._txtDateEnd,
                             decoration: InputDecoration(
                                 hintText: "00/00/0000",
@@ -259,6 +263,7 @@ class _NoteEditPageState extends State<TarefaEditPage> implements INoteEdit {
                 Container(
                   padding: EdgeInsets.fromLTRB(15, 10, 15, 10),
                   child: DropdownButton(
+                      key:Key("dropPriority"),
                       isExpanded: true,
                       value: this.prioridadeSelected,
                       items: this.prioridades.map((dropDownValue) {
@@ -279,6 +284,7 @@ class _NoteEditPageState extends State<TarefaEditPage> implements INoteEdit {
                       ),
                     ),
                     Checkbox(
+                        key: Key("checkDone"),
                         value: this._checkDone,
                         onChanged: (newValue) {
                           setState(() {
