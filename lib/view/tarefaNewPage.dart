@@ -67,6 +67,7 @@ class _NoteAddPageState extends State<TarefaAddPage> implements IPageNewNote {
             title: Text("Nova tarefa"),
             actions: <Widget>[
               IconButton(
+                  key: Key("buttonCheck"),
                   icon: Icon(Icons.check, color: Colors.white),
                   tooltip: "Salvar",
                   onPressed: () {
@@ -77,6 +78,7 @@ class _NoteAddPageState extends State<TarefaAddPage> implements IPageNewNote {
             ],
             leading: Builder(builder: (BuildContext context) {
               return IconButton(
+                key: Key("backPage"),
                 icon: Icon(Icons.arrow_back, color: Colors.white),
                 onPressed: () {
                   this.backPage();

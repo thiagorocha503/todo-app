@@ -19,6 +19,7 @@ class _TarefaListPageState extends State<TarefaListPage> implements IPageList {
   Map lastNoteRemoved;
   BuildContext scaffoldContext;
   IPresenterNoteList presenter;
+  static Key floatingActionButtonKey = Key("floatingActionButtonKey");
 
   int _filterSelected = FILTER_NOT_DONE;
 
@@ -62,6 +63,7 @@ class _TarefaListPageState extends State<TarefaListPage> implements IPageList {
         title: Text("Tarefas"),
         actions: <Widget>[
           IconButton(
+            key: Key("buttonSearch"),
             icon: Icon(Icons.search, color: Colors.white),
             tooltip: "Pesquisar",
             onPressed: () {
@@ -103,6 +105,7 @@ class _TarefaListPageState extends State<TarefaListPage> implements IPageList {
         );
       }),
       floatingActionButton: FloatingActionButton(
+        key: floatingActionButtonKey,
         onPressed: this.onClickFloatingButton,
         child: Icon(Icons.add),
         tooltip: "Adicionar tarefa",
