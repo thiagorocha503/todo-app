@@ -69,6 +69,7 @@ class _TarefaListPageState extends State<TarefaListPage> implements IPageList {
             },
           ),
           PopupMenuButton(
+              offset:Offset(1.0, 4),
               tooltip: "Filtrar",
               icon: Icon(Icons.filter_list),
               onSelected: (newValue) {
@@ -77,7 +78,7 @@ class _TarefaListPageState extends State<TarefaListPage> implements IPageList {
                   this.onRefresh();
                 });
               },
-              initialValue: this._filterSelected,
+              //initialValue: this._filterSelected,
               itemBuilder: (BuildContext context) {
                 return [
                   PopupMenuItem(
@@ -152,10 +153,11 @@ class _TarefaListPageState extends State<TarefaListPage> implements IPageList {
       return Colors.grey[300];
     }
     // caso atrasado
-    DateTime dateEnd = DateConversion.dateFormtToDateTime(this.notes[index]["dateEnd"]);
+    DateTime dateEnd =
+        DateConversion.dateFormtToDateTime(this.notes[index]["dateEnd"]);
     DateTime now = DateTime.now();
     DateTime today = DateTime(now.year, now.month, now.day);
-    if (dateEnd.compareTo(today)<0){
+    if (dateEnd.compareTo(today) < 0) {
       return Colors.red[200];
     }
     return Colors.white;
