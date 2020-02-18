@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:lista_de_tarefa/data/database.dart';
 import 'package:lista_de_tarefa/model/note.dart';
 import 'package:lista_de_tarefa/presenter/presenter.dart';
-import 'package:lista_de_tarefa/util/DateConversion.dart';
+import 'package:lista_de_tarefa/util/dateConversion.dart';
 import 'package:lista_de_tarefa/view/view.dart';
 
 class NoteEditPresenter implements IEditPresenter{
