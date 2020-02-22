@@ -80,4 +80,9 @@ class TarefaListPresent implements IPresenterNoteList {
       }
     });
   }
+
+  @override
+  void about() {
+    this.view.showAboutPage();
+  }
 }

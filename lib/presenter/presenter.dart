@@ -7,6 +7,8 @@ class IPresenterNoteList{
   void setView(IPageList view) {}
   void addNote(Map note){}
   void refresh(int filter){}
+  void about() {}
+  
 }
 
 
@@ -22,4 +24,11 @@ class IEditPresenter{
   void delete(int id){return null;}
   void setView(INoteEdit view){}
    Future<List> getNoteById(int id){return null;}
+}
+
+class IAboutPresenter{
+  void setView(IAboutPage view){}
+  void share(){}
+  void shop(){}
+  void sendFeedBack(){}
 }

@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:lista_de_tarefa/presenter/aboutPage.dart';
 import 'package:lista_de_tarefa/presenter/presenter.dart';
 import 'package:lista_de_tarefa/presenter/tarefaListPresenter.dart';
 import 'package:lista_de_tarefa/util/dateConversion.dart';
@@ -26,6 +27,8 @@ class _TarefaListPageState extends State<TarefaListPage> implements IPageList {
   static const int FILTER_NOT_DONE = 1;
   static const int FILTER_DONE = 2;
   static const int FILTER_ALL = 3;
+
+  static const int MORE_OPTION = 0;
 
   void initList() async {
     notes = new List<Map>();
@@ -71,7 +74,7 @@ class _TarefaListPageState extends State<TarefaListPage> implements IPageList {
             },
           ),
           PopupMenuButton(
-              offset:Offset(1.0, 4),
+              offset: Offset(1.0, 4),
               tooltip: "Filtrar",
               icon: Icon(Icons.filter_list),
               onSelected: (newValue) {
@@ -95,7 +98,29 @@ class _TarefaListPageState extends State<TarefaListPage> implements IPageList {
                       value: FILTER_ALL,
                       child: Text(this.getFilterAsString(FILTER_ALL)))
                 ];
-              }),
+              }
+          ),
+          PopupMenuButton(
+            offset: Offset(1.0, 4),
+            tooltip: "Mais",
+            icon: Icon(
+              Icons.more_vert,
+              color: Colors.white,
+            ),
+            onSelected: (value) {
+              if (value == MORE_OPTION) {
+                this.onAbout();
+              }
+            },
+            itemBuilder: (BuildContext context) {
+              return [
+                PopupMenuItem(
+                  value: MORE_OPTION,
+                  child: Text("Sobre")
+                )
+              ];
+            },
+          )
         ],
       ),
       body: Builder(builder: (context) {
@@ -122,7 +147,7 @@ class _TarefaListPageState extends State<TarefaListPage> implements IPageList {
       case FILTER_ALL:
         return "Todos";
       default:
-        return "filtro invalid";
+        return "filtro ínvalido";
     }
   }
 
@@ -266,4 +291,18 @@ class _TarefaListPageState extends State<TarefaListPage> implements IPageList {
       }
     });
   }
+
+   @override
+  void onAbout() {
+    this.presenter.about();
+  }
+
+  @override
+  void showAboutPage() {
+    MaterialPageRoute route = MaterialPageRoute(builder: (context){
+      return AboutPage();
+    });
+    Navigator.push(context, route);
+  }
+  
 }

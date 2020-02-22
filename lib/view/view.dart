@@ -8,6 +8,8 @@ class IPageList{
   void onClickIconButtonSearch(){}
   void onRefresh(){}
   void updateList(List<Map> notes){}
+  void onAbout(){}
+  void showAboutPage(){}
   
 }
 
@@ -26,4 +28,16 @@ class INoteEdit{
   void onClickDelete(){}
   void backPage() {}
   void setField(){}
+}
+
+class IAboutPage{
+  
+  void onFeedBack(){}
+  void onShare(){}
+  void onShop(){}
+
+  void openShop(){}
+  void sendEmail(String mail){}
+  void shareApp(String text){}
+
 }
