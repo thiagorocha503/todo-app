@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_masked_text/flutter_masked_text.dart';
 import 'package:lista_de_tarefa/presenter/presenter.dart';
 import 'package:lista_de_tarefa/presenter/tarefaEditPresenter.dart';
 import 'package:lista_de_tarefa/util/dateConversion.dart';
@@ -17,8 +18,8 @@ class _NoteEditPageState extends State<TarefaEditPage> implements INoteEdit {
   bool _checkDone = false;
   TextEditingController _txtTitle = new TextEditingController();
   TextEditingController _txtDescription = new TextEditingController();
-  TextEditingController _txtDataStart = new TextEditingController();
-  TextEditingController _txtDateEnd = new TextEditingController();
+  MaskedTextController _txtDataStart = new MaskedTextController(mask: "00/00/0000");
+  MaskedTextController _txtDateEnd = new MaskedTextController(mask: "00/00/0000");
   DateTime dateStartSelected = new DateTime.now();
   DateTime dateEndSelected = new DateTime.now();
   final _formKey = GlobalKey<FormState>();
@@ -122,7 +123,8 @@ class _NoteEditPageState extends State<TarefaEditPage> implements INoteEdit {
               tooltip: "Remover",
               onPressed: () {
                 this.onClickDelete();
-              }),
+              }
+          ),
         ],
         leading: Builder(builder: (BuildContext context) {
           return IconButton(
@@ -138,166 +140,174 @@ class _NoteEditPageState extends State<TarefaEditPage> implements INoteEdit {
         return Form(
           key: _formKey,
           child: SingleChildScrollView(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Container(
-                  padding: EdgeInsets.fromLTRB(15, 30, 15, 5),
-                  child: TextFormField(
-                    key: Key("txtTitle"),
-                    validator: (value) {
-                      if (value.isEmpty) {
-                        return "Preencha o campo titulo";
-                      }
-                      return null;
-                    },
-                    controller: this._txtTitle,
-                    decoration: InputDecoration(
-                        labelText: "Título", border: OutlineInputBorder()),
-                  ),
-                ),
-                Container(
-                  padding: EdgeInsets.fromLTRB(15, 10, 15, 5),
-                  child: TextFormField(
-                    key: Key("txtDescription"),
-                    maxLines: 10,
-                    controller: this._txtDescription,
-                    decoration: InputDecoration(
-                        labelText: "Descrição", border: OutlineInputBorder()),
-                    validator: (value) {
-                      if (value.isEmpty) {
-                        return "Preencha o campo descrição";
-                      }
-                      return null;
-                    },
-                  ),
-                ),
-                Row(
-                  children: <Widget>[
-                    Expanded(
-                      flex: 8,
-                      child: Container(
-                          padding: EdgeInsets.fromLTRB(15, 10, 15, 5),
-                          child: TextFormField(
-                            key: Key("txtDateStart"),
-                            controller: this._txtDataStart,
-                            decoration: InputDecoration(
-                                hintText: "00/00/0000",
-                                labelText: "Data de ínicio",
-                                border: OutlineInputBorder()),
-                            validator: (value) {
-                              if (value.isEmpty) {
-                                return "Preencha o campo data de ínicio";
-                              }
-                              if (!Validation.isDateValida(value)) {
-                                return "Data inválida";
-                              }
-                              return null;
-                            },
-                          )),
+            child: Padding(
+              padding: EdgeInsets.only(left: 5, right: 5),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Container(
+                    padding: EdgeInsets.fromLTRB(15, 30, 15, 5),
+                    child: TextFormField(
+                      key: Key("txtTitle"),
+                      validator: (value) {
+                        if (value.isEmpty) {
+                          return "Preencha o campo titulo";
+                        }
+                        return null;
+                      },
+                      controller: this._txtTitle,
+                      decoration: InputDecoration(
+                          labelText: "Título", border: OutlineInputBorder()),
                     ),
-                    Expanded(
-                        flex: 1,
-                        child: IconButton(
-                          icon: Icon(Icons.calendar_today,
-                              color: Theme.of(context).primaryColor),
-                          onPressed: () {
-                            setState(() {
-                              this._selectDateStart(context);
-                            });
-                          },
-                        )),
-                  ],
-                ),
-                Row(
-                  children: <Widget>[
-                    Expanded(
-                      flex: 8,
-                      child: Container(
-                          padding: EdgeInsets.fromLTRB(15, 10, 15, 5),
-                          child: TextFormField(
-                            key: Key("txtDateEnd"),
-                            controller: this._txtDateEnd,
-                            decoration: InputDecoration(
-                                hintText: "00/00/0000",
-                                labelText: "Data de término",
-                                border: OutlineInputBorder()),
-                            validator: (value) {
-                              if (value.isEmpty) {
-                                return "Preencha o campo data de término";
-                              }
-                              if (!Validation.isDateValida(value)) {
-                                return "Data inválida";
-                              }
-                              if (Validation.isDateValida(
-                                  this._txtDataStart.text)) {
-                                DateTime dateStart =
-                                    DateConversion.dateFormtToDateTime(
-                                        this._txtDataStart.text);
-                                DateTime dateEnd =
-                                    DateConversion.dateFormtToDateTime(
-                                        this._txtDateEnd.text);
-                                if (dateEnd.compareTo(dateStart) < 0) {
-                                  return "Data anterior a data de ínicio";
+                  ),
+                  Container(
+                    padding: EdgeInsets.fromLTRB(15, 10, 15, 5),
+                    child: TextFormField(
+                      key: Key("txtDescription"),
+                      maxLines: 10,
+                      controller: this._txtDescription,
+                      decoration: InputDecoration(
+                          labelText: "Descrição", border: OutlineInputBorder()),
+                      validator: (value) {
+                        if (value.isEmpty) {
+                          return "Preencha o campo descrição";
+                        }
+                        return null;
+                      },
+                    ),
+                  ),
+                  Row(
+                    children: <Widget>[
+                      Expanded(
+                        flex: 8,
+                        child: Container(
+                            padding: EdgeInsets.fromLTRB(15, 10, 15, 5),
+                            child: TextFormField(
+                              key: Key("txtDateStart"),
+                              controller: this._txtDataStart,
+                               keyboardType: TextInputType.number,
+                              decoration: InputDecoration(
+                                  hintText: "00/00/0000",
+                                  labelText: "Data de ínicio",
+                                  border: OutlineInputBorder()),
+                              validator: (value) {
+                                if (value.isEmpty) {
+                                  return "Preencha o campo data de ínicio";
                                 }
-                              }
-                              return null;
+                                if (!Validation.isDateValida(value)) {
+                                  return "Data inválida";
+                                }
+                                return null;
+                              },
+                            )
+                        ),
+                      ),
+                      Expanded(
+                          flex: 2,
+                          child: IconButton(
+                            
+                            icon: Icon(Icons.calendar_today,
+                                color: Theme.of(context).primaryColor),
+                            onPressed: () {
+                              setState(() {
+                                this._selectDateStart(context);
+                              });
                             },
                           )),
-                    ),
-                    Expanded(
-                        flex: 1,
-                        child: IconButton(
-                          icon: Icon(
-                            Icons.calendar_today,
-                            color: Theme.of(context).primaryColor,
-                          ),
-                          onPressed: () {
-                            setState(() {
-                              this._selectDateEnd(context);
-                            });
-                          },
-                        )),
-                  ],
-                ),
-                Container(
-                  padding: EdgeInsets.fromLTRB(15, 10, 15, 10),
-                  child: DropdownButton(
-                      key:Key("dropPriority"),
-                      isExpanded: true,
-                      value: this.prioridadeSelected,
-                      items: this.prioridades.map((dropDownValue) {
-                        return DropdownMenuItem<String>(
-                            value: dropDownValue, child: Text(dropDownValue));
-                      }).toList(),
-                      onChanged: (newValue) {
-                        this.onDropDownItemSelected(newValue);
-                      }),
-                ),
-                Row(
-                  children: <Widget>[
-                    Container(
-                      padding: EdgeInsets.fromLTRB(15, 10, 15, 5),
-                      child: Text(
-                        "Concluido",
-                        style: TextStyle(color: Colors.grey),
+                    ],
+                  ),
+                  Row(
+                    children: <Widget>[
+                      Expanded(
+                        flex: 8,
+                        child: Container(
+                            padding: EdgeInsets.fromLTRB(15, 10, 15, 5),
+                            child: TextFormField(
+                              key: Key("txtDateEnd"),
+                              controller: this._txtDateEnd,
+                               keyboardType: TextInputType.number,
+                              decoration: InputDecoration(
+                                  hintText: "00/00/0000",
+                                  labelText: "Data de término",
+                                  border: OutlineInputBorder()),
+                              validator: (value) {
+                                if (value.isEmpty) {
+                                  return "Preencha o campo data de término";
+                                }
+                                if (!Validation.isDateValida(value)) {
+                                  return "Data inválida";
+                                }
+                                if (Validation.isDateValida(this._txtDataStart.text)) {
+                                  DateTime dateStart = DateConversion.dateFormtToDateTime(this._txtDataStart.text);
+                                  DateTime dateEnd =DateConversion.dateFormtToDateTime(this._txtDateEnd.text);
+                                  if (dateEnd.compareTo(dateStart) < 0) {
+                                    return "Data anterior a data de ínicio";
+                                  }
+                                }
+                                return null;
+                              },
+                            )
+                        ),
                       ),
-                    ),
-                    Checkbox(
-                        key: Key("checkDone"),
-                        value: this._checkDone,
+                      Expanded(
+                          flex: 2,
+                          child: IconButton(
+                            icon: Icon(
+                              Icons.calendar_today,
+                              color: Theme.of(context).primaryColor,
+                            ),
+                            onPressed: () {
+                              setState(() {
+                                this._selectDateEnd(context);
+                              });
+                            },
+                          )
+                      ),
+                    ],
+                  ),
+                  Container(
+                    padding: EdgeInsets.fromLTRB(15, 10, 15, 10),
+                    child: DropdownButton(
+                        key: Key("dropPriority"),
+                        isExpanded: true,
+                        value: this.prioridadeSelected,
+                        items: this.prioridades.map((dropDownValue) {
+                          return DropdownMenuItem<String>(
+                              value: dropDownValue, child: Text(dropDownValue)
+                          );
+                        }).toList(),
                         onChanged: (newValue) {
-                          setState(() {
-                            this._checkDone = newValue;
-                          });
-                        }),
-                  ],
-                ),
-              ],
+                          this.onDropDownItemSelected(newValue);
+                        }
+                    ),
+                  ),
+                  Row(
+                    children: <Widget>[
+                      Container(
+                        padding: EdgeInsets.fromLTRB(15, 10, 15, 5),
+                        child: Text(
+                          "Concluido",
+                          style: TextStyle(color: Colors.grey),
+                        ),
+                      ),
+                      Checkbox(
+                          key: Key("checkDone"),
+                          value: this._checkDone,
+                          onChanged: (newValue) {
+                            setState(() {
+                              this._checkDone = newValue;
+                            });
+                          }
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
         );
-      })),
+      })
+      ),
     );
   }
 
