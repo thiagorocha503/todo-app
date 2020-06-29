@@ -315,6 +315,8 @@ class _NoteAddPageState extends State<TarefaAddPage> implements IPageNewNote {
       this._txtDateEnd.text = "";
       this._checkDone = false;
     });
+    dateStartSelected = new DateTime.now();
+    dateEndSelected = new DateTime.now();
   }
 
   int getPrioridadeAsInt(String prioridade) {

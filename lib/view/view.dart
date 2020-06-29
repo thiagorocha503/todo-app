@@ -22,9 +22,8 @@ class IPageNewNote{
 
 class INoteEdit{
   void onDropDownItemSelected(String newValue) {}
-   void showSnackBarMessage(String message) {}
-   void cleanField() {}
-   void onClickUpdate(){}
+  void showSnackBarMessage(String message) {}
+  void onClickUpdate(){}
   void onClickDelete(){}
   void backPage() {}
   void setField(){}

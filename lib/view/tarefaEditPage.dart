@@ -356,17 +356,6 @@ class _NoteEditPageState extends State<TarefaEditPage> implements INoteEdit {
     Scaffold.of(this.scaffoldContext).showSnackBar(snackbar);
   }
 
-  @override
-  void cleanField() {
-    setState(() {
-      this._txtTitle.text = "";
-      this._txtDescription.text = "";
-      this._txtDataStart.text = "";
-      this._txtDateEnd.text = "";
-      this._checkDone = false;
-    });
-  }
-
   String getPrioridadeAsString(int prioridade) {
     if (prioridade == 1) {
       return "Alta";

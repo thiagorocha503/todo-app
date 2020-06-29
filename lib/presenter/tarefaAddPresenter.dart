@@ -22,11 +22,14 @@ class TarefaAddPresenter implements IPresenterTarefaAdd {
     db.insertNote(nota).then((onValue) {
       debugPrint(">>> $onValue");
       if (onValue > 0) {
-        this.view.showSnackBarMessage("sucesso");
+        this.view.showSnackBarMessage("Tarefa salva com sucesso");
+        this.view.cleanField();
       } else {
         this.view.showSnackBarMessage("Erro");
       }
     });
+
+    
   }
 
   @override

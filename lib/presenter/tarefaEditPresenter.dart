@@ -23,7 +23,7 @@ class NoteEditPresenter implements IEditPresenter{
     int res = await db.updateNote(note);
     debugPrint("update -> $res");
     if(res>0){
-      this.view.showSnackBarMessage("atualizado com sucesso!");
+      this.view.showSnackBarMessage("Tarefa atualizada com sucesso!");
     } else {
       this.view.showSnackBarMessage("erro!");
     }
