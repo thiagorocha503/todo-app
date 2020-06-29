@@ -151,7 +151,7 @@ class _NoteEditPageState extends State<TarefaEditPage> implements INoteEdit {
                       key: Key("txtTitle"),
                       validator: (value) {
                         if (value.isEmpty) {
-                          return "Preencha o campo titulo";
+                          return "Preencha o campo título";
                         }
                         return null;
                       },
@@ -213,7 +213,8 @@ class _NoteEditPageState extends State<TarefaEditPage> implements INoteEdit {
                                 this._selectDateStart(context);
                               });
                             },
-                          )),
+                          )
+                      ),
                     ],
                   ),
                   Row(
@@ -284,13 +285,8 @@ class _NoteEditPageState extends State<TarefaEditPage> implements INoteEdit {
                   Row(
                     children: <Widget>[
                       Container(
-                        padding: EdgeInsets.fromLTRB(15, 10, 15, 5),
-                        child: Text(
-                          "Concluido",
-                          style: TextStyle(color: Colors.grey),
-                        ),
-                      ),
-                      Checkbox(
+                        padding: EdgeInsets.only(left:5),
+                        child:  Checkbox(
                           key: Key("checkDone"),
                           value: this._checkDone,
                           onChanged: (newValue) {
@@ -298,7 +294,15 @@ class _NoteEditPageState extends State<TarefaEditPage> implements INoteEdit {
                               this._checkDone = newValue;
                             });
                           }
+                        ),
                       ),
+                      Container(
+                        padding: EdgeInsets.fromLTRB(5, 10, 15, 5),
+                        child: Text(
+                          "Concluído",
+                          style: TextStyle(color: Colors.grey),
+                        ),
+                      ), 
                     ],
                   ),
                 ],

@@ -97,7 +97,7 @@ class _NoteAddPageState extends State<TarefaAddPage> implements IPageNewNote {
                       key: Key("txtTitle"),
                       validator: (value) {
                         if (value.isEmpty) {
-                          return "Preencha o campo titulo";
+                          return "Preencha o campo título";
                         }
                         return null;
                       },
@@ -211,7 +211,8 @@ class _NoteAddPageState extends State<TarefaAddPage> implements IPageNewNote {
                                 this._selectDateEnd(context);
                               });
                             },
-                          )),
+                          )
+                      ),
                     ],
                   ),
                   Container(
@@ -231,20 +232,24 @@ class _NoteAddPageState extends State<TarefaAddPage> implements IPageNewNote {
                   Row(
                     children: <Widget>[
                       Container(
-                        padding: EdgeInsets.fromLTRB(15, 10, 15, 5),
-                        child: Text(
-                          "Concluido",
-                          style: TextStyle(color: Colors.grey),
-                        ),
-                      ),
-                      Checkbox(
+                        padding: EdgeInsets.only(left:5),
+                        child:  Checkbox(
                           key: Key("checkDone"),
                           value: this._checkDone,
                           onChanged: (newValue) {
                             setState(() {
                               this._checkDone = newValue;
                             });
-                          }),
+                          }
+                        ),
+                      ),
+                      Container(
+                        padding: EdgeInsets.fromLTRB(5, 10, 15, 5),
+                        child: Text(
+                          "Concluído",
+                          style: TextStyle(color: Colors.grey),
+                        ),
+                      ), 
                     ],
                   ),
                 ],
