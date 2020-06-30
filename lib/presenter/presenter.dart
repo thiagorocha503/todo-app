@@ -1,4 +1,4 @@
-import 'package:lista_de_tarefa/view/view.dart';
+import 'package:lista_de_tarefas/view/view.dart';
 
 class IPresenterNoteList{
   Future<int> markNote(int id, bool value) async {return null;}

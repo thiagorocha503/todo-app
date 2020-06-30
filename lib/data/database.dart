@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
-import 'package:lista_de_tarefa/data/IDataBase.dart';
-import 'package:lista_de_tarefa/model/note.dart';
+import 'package:lista_de_tarefas/data/IDataBase.dart';
+import 'package:lista_de_tarefas/model/note.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';

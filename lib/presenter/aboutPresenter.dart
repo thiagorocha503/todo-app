@@ -1,6 +1,6 @@
-import 'package:lista_de_tarefa/presenter/presenter.dart';
-import 'package:lista_de_tarefa/view/view.dart';
-import 'package:lista_de_tarefa/constants.dart' as constants;
+import 'package:lista_de_tarefas/presenter/presenter.dart';
+import 'package:lista_de_tarefas/view/view.dart';
+import 'package:lista_de_tarefas/constants.dart' as constants;
 
 class AboutPresenter implements IAboutPresenter{
   

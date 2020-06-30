@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_masked_text/flutter_masked_text.dart';
-import 'package:lista_de_tarefa/presenter/presenter.dart';
-import 'package:lista_de_tarefa/presenter/tarefaAddPresenter.dart';
-import 'package:lista_de_tarefa/util/dateConversion.dart';
-import 'package:lista_de_tarefa/util/validation.dart';
-import 'package:lista_de_tarefa/view/view.dart';
+import 'package:lista_de_tarefas/presenter/presenter.dart';
+import 'package:lista_de_tarefas/presenter/tarefaAddPresenter.dart';
+import 'package:lista_de_tarefas/util/dateConversion.dart';
+import 'package:lista_de_tarefas/util/validation.dart';
+import 'package:lista_de_tarefas/view/view.dart';
+
 
 class TarefaAddPage extends StatefulWidget {
   @override

@@ -1,7 +1,7 @@
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:lista_de_tarefa/model/note.dart';
-import 'package:lista_de_tarefa/model/noteException.dart';
+import 'package:lista_de_tarefas/model/note.dart';
+import 'package:lista_de_tarefas/model/noteException.dart';
 import 'package:matcher/matcher.dart';
 
 void main() {

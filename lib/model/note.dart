@@ -1,6 +1,8 @@
 import 'dart:convert';
 
-import 'package:lista_de_tarefa/model/noteException.dart';
+import 'package:lista_de_tarefas/model/noteException.dart';
+
+
 
 Note noteFromJson(String str) => Note.fromMap(json.decode(str));
 

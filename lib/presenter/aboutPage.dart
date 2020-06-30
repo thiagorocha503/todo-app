@@ -1,11 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:lista_de_tarefa/presenter/aboutPresenter.dart';
-import 'package:lista_de_tarefa/presenter/presenter.dart';
-import 'package:lista_de_tarefa/view/view.dart';
+import 'package:lista_de_tarefas/presenter/aboutPresenter.dart';
+import 'package:lista_de_tarefas/presenter/presenter.dart';
+import 'package:lista_de_tarefas/view/view.dart';
 import 'package:share/share.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:lista_de_tarefa/constants.dart' as constants;
+import 'package:lista_de_tarefas/constants.dart' as constants;
 
 class AboutPage extends StatefulWidget {
   @override
@@ -18,7 +18,7 @@ class _AboutPageState extends State<AboutPage> implements IAboutPage {
   @override
   void initState() {
     super.initState();
-    this.presenter = AboutPresenter();
+    this.presenter = new AboutPresenter();
     this.presenter.setView(this);
   }
 

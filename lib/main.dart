@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:lista_de_tarefa/view/tarefaListPage.dart';
+import 'package:lista_de_tarefas/view/tarefaListPage.dart';
 
 void main() {
   runApp(MaterialApp(

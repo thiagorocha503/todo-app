@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lista_de_tarefa/presenter/tarefaSearchPresenter.dart';
+import 'package:lista_de_tarefas/presenter/tarefaSearchPresenter.dart';
 
 class TarefaSearchPage extends SearchDelegate<Map> {
   List<Map> notes = new List<Map>();

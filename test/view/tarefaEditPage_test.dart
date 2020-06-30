@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:lista_de_tarefa/view/tarefaEditPage.dart';
+import 'package:lista_de_tarefas/view/tarefaEditPage.dart';
 
 MediaQuery getApp() {
   Map todo = {

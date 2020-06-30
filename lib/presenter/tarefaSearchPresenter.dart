@@ -1,6 +1,6 @@
 
-import 'package:lista_de_tarefa/data/database.dart';
-import 'package:lista_de_tarefa/model/note.dart';
+import 'package:lista_de_tarefas/data/database.dart';
+import 'package:lista_de_tarefas/model/note.dart';
 
 class ISearchPresenter{
 

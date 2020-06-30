@@ -1,14 +1,14 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:lista_de_tarefa/presenter/aboutPage.dart';
-import 'package:lista_de_tarefa/presenter/presenter.dart';
-import 'package:lista_de_tarefa/presenter/tarefaListPresenter.dart';
-import 'package:lista_de_tarefa/util/dateConversion.dart';
-import 'package:lista_de_tarefa/view/tarefaEditPage.dart';
-import 'package:lista_de_tarefa/view/tarefaNewPage.dart';
-import 'package:lista_de_tarefa/view/tarefaSearchPage.dart';
-import 'package:lista_de_tarefa/view/view.dart';
+import 'package:lista_de_tarefas/presenter/aboutPage.dart';
+import 'package:lista_de_tarefas/presenter/presenter.dart';
+import 'package:lista_de_tarefas/presenter/tarefaListPresenter.dart';
+import 'package:lista_de_tarefas/util/dateConversion.dart';
+import 'package:lista_de_tarefas/view/tarefaEditPage.dart';
+import 'package:lista_de_tarefas/view/tarefaNewPage.dart';
+import 'package:lista_de_tarefas/view/tarefaSearchPage.dart';
+import 'package:lista_de_tarefas/view/view.dart';
 
 class TarefaListPage extends StatefulWidget {
   @override

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:lista_de_tarefa/view/tarefaNewPage.dart';
+import 'package:lista_de_tarefas/view/tarefaNewPage.dart';
 
 MediaQuery getApp(){
   return new MediaQuery(

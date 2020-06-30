@@ -1,8 +1,9 @@
 
 
-import 'package:lista_de_tarefa/data/IDataBase.dart';
-import 'package:lista_de_tarefa/data/database.dart';
-import 'package:lista_de_tarefa/model/note.dart';
+
+import 'package:lista_de_tarefas/data/IDataBase.dart';
+import 'package:lista_de_tarefas/data/database.dart';
+import 'package:lista_de_tarefas/model/note.dart';
 import 'package:sqflite/sqlite_api.dart';
 
 class DBProviderMockImpl implements IDBProvider{

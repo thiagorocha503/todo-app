@@ -1,5 +1,5 @@
-import 'package:lista_de_tarefa/data/mock/dataBaseMock.dart';
-import 'package:lista_de_tarefa/model/note.dart';
+import 'package:lista_de_tarefas/data/mock/dataBaseMock.dart';
+import 'package:lista_de_tarefas/model/note.dart';
 import 'package:test/test.dart';
 
 void main() {

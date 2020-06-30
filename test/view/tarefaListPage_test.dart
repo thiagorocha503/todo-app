@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:lista_de_tarefa/view/tarefaListPage.dart';
-import 'package:lista_de_tarefa/view/tarefaNewPage.dart';
+import 'package:lista_de_tarefas/view/tarefaListPage.dart';
+import 'package:lista_de_tarefas/view/tarefaNewPage.dart';
 import 'package:mockito/mockito.dart';
 
 class MockNavigatorObserver extends Mock implements NavigatorObserver {}
