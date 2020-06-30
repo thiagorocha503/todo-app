@@ -7,7 +7,7 @@
          FlutterApplication and put your custom class here. -->
     <application
         android:name="io.flutter.app.FlutterApplication"
-        android:label="lista_de_tarefas"
+        android:label="Lista de tarefas"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
