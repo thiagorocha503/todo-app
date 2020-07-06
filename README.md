@@ -1,6 +1,11 @@
-[![Codemagic build status](https://api.codemagic.io/apps/5e303a834b601e001758e703/5e303a834b601e001758e702/status_badge.svg)](https://codemagic.io/apps/5e303a834b601e001758e703/5e303a834b601e001758e702/latest_build) ![build](https://github.com/thiagorocha503/lista-de-tarefa-app/workflows/Flutter%20CI/badge.svg?event=push&pull_request) [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 # Lista de tarefa
+[![Codemagic build status](https://api.codemagic.io/apps/5e303a834b601e001758e703/5e303a834b601e001758e702/status_badge.svg)](https://codemagic.io/apps/5e303a834b601e001758e703/5e303a834b601e001758e702/latest_build) ![build](https://github.com/thiagorocha503/lista-de-tarefa-app/workflows/Flutter%20CI/badge.svg?event=push&pull_request) [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+
+<img src="https://i.ibb.co/vcX9C5n/ic-launcher.png" alt="ic-launcher" border="0">
+
 > Simples aplicativo lista de tarefa criado com o framework flutter.
+
+## Screenshoots
 
 <center>
   <img src="https://thiagorocha503.github.io/images/todo_screen.png" width="300">
@@ -47,6 +52,12 @@ cd lista-de-tarefa-app
 ```sh
 flutter run test test
 ```
+## Download
+
+<a src="https://play.google.com/store/apps/details?id=io.github.thiagorocha503.lista_de_tarefas">
+  <img src="https://i.ibb.co/51Q4zYb/google-play-badge.png" alt="google-play-badge" border="0" height="50">
+</a>
+
 ## Author
 * **Thiago Rocha Ferreira** - [Thiagorocha503](https://github.com/thiagorocha503)
 
