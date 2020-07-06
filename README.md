@@ -1,7 +1,7 @@
 # Lista de tarefa
 [![Codemagic build status](https://api.codemagic.io/apps/5e303a834b601e001758e703/5e303a834b601e001758e702/status_badge.svg)](https://codemagic.io/apps/5e303a834b601e001758e703/5e303a834b601e001758e702/latest_build) ![build](https://github.com/thiagorocha503/lista-de-tarefa-app/workflows/Flutter%20CI/badge.svg?event=push&pull_request) [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
-<img src="https://i.ibb.co/vcX9C5n/ic-launcher.png" alt="ic-launcher" border="0">
+<img src="https://i.ibb.co/LhFG4SH/ic-launcher.png" alt="ic-launcher" border="0">
 
 > Simples aplicativo lista de tarefa criado com o framework flutter.
 
