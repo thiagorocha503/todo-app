@@ -32,9 +32,9 @@ class TarefaListPresent implements IPresenterNoteList {
         "title": note.title,
         "description": note.description,
         "dateStart":
-            "${note.dateStart.day.toString().padLeft(2, '0')}/${note.dateStart.month.toString().padLeft(2, '0')}/${note.dateStart.year.toString().padLeft(4, '0')}",
+            "${note.dateStart.year.toString().padLeft(4, '0')}-${note.dateStart.month.toString().padLeft(2, '0')}-${note.dateStart.day.toString().padLeft(2, '0')}",
         "dateEnd":
-            "${note.dateEnd.day.toString().padLeft(2, '0')}/${note.dateEnd.month.toString().padLeft(2, '0')}/${note.dateEnd.year.toString().padLeft(4, '0')}",
+            "${note.dateEnd.year.toString().padLeft(4, '0')}-${note.dateEnd.month.toString().padLeft(2, '0')}-${note.dateEnd.day.toString().padLeft(2, '0')}",
         "priority": note.priority,
         "done": note.done
       };
@@ -61,7 +61,7 @@ class TarefaListPresent implements IPresenterNoteList {
   }
 
   @override
-  Future<void> addNote(Map<dynamic, dynamic> dados) async{
+  Future<void> addNote(Map<dynamic, dynamic> dados) async {
     DBProvider db = DBProvider.getDBProvider();
     print(dados);
     Note nota = new Note();

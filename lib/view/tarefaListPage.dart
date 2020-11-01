@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:lista_de_tarefas/presenter/aboutPage.dart';
 import 'package:lista_de_tarefas/presenter/presenter.dart';
 import 'package:lista_de_tarefas/presenter/tarefaListPresenter.dart';
-import 'package:lista_de_tarefas/util/dateConversion.dart';
 import 'package:lista_de_tarefas/view/tarefaEditPage.dart';
 import 'package:lista_de_tarefas/view/tarefaNewPage.dart';
 import 'package:lista_de_tarefas/view/tarefaSearchPage.dart';
@@ -98,8 +97,7 @@ class _TarefaListPageState extends State<TarefaListPage> implements IPageList {
                       value: FILTER_ALL,
                       child: Text(this.getFilterAsString(FILTER_ALL)))
                 ];
-              }
-          ),
+              }),
           PopupMenuButton(
             offset: Offset(1.0, 4),
             tooltip: "Mais",
@@ -113,12 +111,7 @@ class _TarefaListPageState extends State<TarefaListPage> implements IPageList {
               }
             },
             itemBuilder: (BuildContext context) {
-              return [
-                PopupMenuItem(
-                  value: MORE_OPTION,
-                  child: Text("Sobre")
-                )
-              ];
+              return [PopupMenuItem(value: MORE_OPTION, child: Text("Sobre"))];
             },
           )
         ],
@@ -181,8 +174,7 @@ class _TarefaListPageState extends State<TarefaListPage> implements IPageList {
       return Colors.grey[300];
     }
     // caso atrasado
-    DateTime dateEnd =
-        DateConversion.dateFormtToDateTime(this.notes[index]["dateEnd"]);
+    DateTime dateEnd = DateTime.parse(this.notes[index]["dateEnd"]);
     DateTime now = DateTime.now();
     DateTime today = DateTime(now.year, now.month, now.day);
     if (dateEnd.compareTo(today) < 0) {
@@ -292,17 +284,16 @@ class _TarefaListPageState extends State<TarefaListPage> implements IPageList {
     });
   }
 
-   @override
+  @override
   void onAbout() {
     this.presenter.about();
   }
 
   @override
   void showAboutPage() {
-    MaterialPageRoute route = MaterialPageRoute(builder: (context){
+    MaterialPageRoute route = MaterialPageRoute(builder: (context) {
       return AboutPage();
     });
     Navigator.push(context, route);
   }
-  
 }

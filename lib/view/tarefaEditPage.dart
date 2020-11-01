@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_masked_text/flutter_masked_text.dart';
 import 'package:lista_de_tarefas/presenter/presenter.dart';
 import 'package:lista_de_tarefas/presenter/tarefaEditPresenter.dart';
-import 'package:lista_de_tarefas/util/dateConversion.dart';
-import 'package:lista_de_tarefas/util/validation.dart';
 import 'package:lista_de_tarefas/view/view.dart';
-
 
 class TarefaEditPage extends StatefulWidget {
   final Map note;
@@ -19,8 +15,8 @@ class _NoteEditPageState extends State<TarefaEditPage> implements INoteEdit {
   bool _checkDone = false;
   TextEditingController _txtTitle = new TextEditingController();
   TextEditingController _txtDescription = new TextEditingController();
-  MaskedTextController _txtDataStart = new MaskedTextController(mask: "00/00/0000");
-  MaskedTextController _txtDateEnd = new MaskedTextController(mask: "00/00/0000");
+  TextEditingController _txtDataStart = new TextEditingController();
+  TextEditingController _txtDateEnd = new TextEditingController();
   DateTime dateStartSelected = new DateTime.now();
   DateTime dateEndSelected = new DateTime.now();
   final _formKey = GlobalKey<FormState>();
@@ -29,69 +25,22 @@ class _NoteEditPageState extends State<TarefaEditPage> implements INoteEdit {
   String prioridadeSelected = "Normal";
   IEditPresenter presenter;
 
-  @override
-  void onClickUpdate() {
-    Map note = {
-      "id": widget.note["id"],
-      "title": this._txtTitle.text,
-      "description": this._txtDescription.text,
-      "dateStart": this._txtDataStart.text,
-      "dateEnd": this._txtDateEnd.text,
-      "priority": this.getPrioridadeAsInt(this.prioridadeSelected),
-      "done": this._checkDone
-    };
-    debugPrint(note.toString());
-    this.presenter.updateNote(note);
-  }
+  bool _isSelectedDateEnd = false;
 
-  void _showDialogDelete() {
-    showDialog(
-        context: context,
-        //barrierDismissible: false,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: Text(
-              "Remoção",
-            ),
-            content: Text(
-              "Confirmar exclusão?",
-            ),
-            actions: <Widget>[
-              OutlineButton(
-                  child: Text(
-                    "Cancelar",
-                    style: TextStyle(fontSize: 15),
-                  ),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  }),
-              RaisedButton(
-                  color: Theme.of(context).primaryColor,
-                  child: Text(
-                    "Excluir",
-                    style: TextStyle(fontSize: 15),
-                  ),
-                  onPressed: () {
-                    this.presenter.delete(widget.note["id"]);
-                    Navigator.of(context).pop();
-                  })
-            ],
-          );
-        });
-  }
-
-  @override
-  void onClickDelete() {
-    this._showDialogDelete();
-  }
+  bool _isSelectedDateStart = false;
 
   @override
   void setField() {
     debugPrint(widget.note.toString());
+    this.dateStartSelected = DateTime.parse(widget.note["dateStart"]);
+    this.dateEndSelected = DateTime.parse(widget.note["dateEnd"]);
+
     this._txtTitle.text = widget.note["title"];
     this._txtDescription.text = widget.note["description"];
-    this._txtDataStart.text = widget.note["dateStart"];
-    this._txtDateEnd.text = widget.note["dateEnd"];
+    this._txtDataStart.text =
+        "${this.dateStartSelected.day.toString().padLeft(2, "0")}/${this.dateStartSelected.month.toString().padLeft(2, '0')}/${this.dateStartSelected.year.toString().padLeft(4, '4')}";
+    this._txtDateEnd.text =
+        "${this.dateEndSelected.day.toString().padLeft(2, "0")}/${this.dateEndSelected.month.toString().padLeft(2, '0')}/${this.dateEndSelected.year.toString().padLeft(4, '4')}";
     this._checkDone = widget.note["done"];
     this.prioridadeSelected =
         this.getPrioridadeAsString(widget.note["priority"]);
@@ -102,6 +51,7 @@ class _NoteEditPageState extends State<TarefaEditPage> implements INoteEdit {
     super.initState();
     this.presenter = new NoteEditPresenter();
     this.presenter.setView(this);
+    debugPrint("${widget.note}");
     this.setField();
   }
 
@@ -112,19 +62,20 @@ class _NoteEditPageState extends State<TarefaEditPage> implements INoteEdit {
         title: Text("Editar tarefa"),
         actions: <Widget>[
           IconButton(
-              icon: Icon(Icons.save, color: Colors.white),
-              tooltip: "Salvar",
-              onPressed: () {
-                if (_formKey.currentState.validate()) {
-                  this.onClickUpdate();
-                }
-              }),
-          IconButton(
-              icon: Icon(Icons.delete),
-              tooltip: "Remover",
-              onPressed: () {
-                this.onClickDelete();
+            icon: Icon(Icons.save, color: Colors.white),
+            tooltip: "Salvar",
+            onPressed: () {
+              if (_formKey.currentState.validate()) {
+                this.onClickUpdate();
               }
+            },
+          ),
+          IconButton(
+            icon: Icon(Icons.delete),
+            tooltip: "Remover",
+            onPressed: () {
+              this.onClickDelete();
+            },
           ),
         ],
         leading: Builder(builder: (BuildContext context) {
@@ -136,184 +87,227 @@ class _NoteEditPageState extends State<TarefaEditPage> implements INoteEdit {
           );
         }),
       ),
-      body: SafeArea(child: Builder(builder: (context) {
-        this.scaffoldContext = context;
-        return Form(
-          key: _formKey,
-          child: SingleChildScrollView(
-            child: Padding(
-              padding: EdgeInsets.only(left: 5, right: 5),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Container(
-                    padding: EdgeInsets.fromLTRB(15, 30, 15, 5),
-                    child: TextFormField(
-                      key: Key("txtTitle"),
-                      validator: (value) {
-                        if (value.isEmpty) {
-                          return "Preencha o campo título";
-                        }
-                        return null;
-                      },
-                      controller: this._txtTitle,
-                      decoration: InputDecoration(
-                          labelText: "Título", border: OutlineInputBorder()),
-                    ),
-                  ),
-                  Container(
-                    padding: EdgeInsets.fromLTRB(15, 10, 15, 5),
-                    child: TextFormField(
-                      key: Key("txtDescription"),
-                      maxLines: 10,
-                      controller: this._txtDescription,
-                      decoration: InputDecoration(
-                          labelText: "Descrição", border: OutlineInputBorder()),
-                      validator: (value) {
-                        if (value.isEmpty) {
-                          return "Preencha o campo descrição";
-                        }
-                        return null;
-                      },
-                    ),
-                  ),
-                  Row(
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Builder(
+            builder: (context) {
+              this.scaffoldContext = context;
+              return Form(
+                key: _formKey,
+                child: Padding(
+                  padding: EdgeInsets.only(left: 5, right: 5),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
-                      Expanded(
-                        flex: 8,
-                        child: Container(
-                            padding: EdgeInsets.fromLTRB(15, 10, 15, 5),
-                            child: TextFormField(
-                              key: Key("txtDateStart"),
-                              controller: this._txtDataStart,
-                               keyboardType: TextInputType.number,
-                              decoration: InputDecoration(
-                                  hintText: "00/00/0000",
-                                  labelText: "Data de ínicio",
-                                  border: OutlineInputBorder()),
-                              validator: (value) {
-                                if (value.isEmpty) {
-                                  return "Preencha o campo data de ínicio";
-                                }
-                                if (!Validation.isDateValida(value)) {
-                                  return "Data inválida";
-                                }
-                                return null;
-                              },
-                            )
+                      Container(
+                        padding: EdgeInsets.fromLTRB(15, 30, 15, 5),
+                        child: TextFormField(
+                          key: Key("txtTitle"),
+                          validator: (value) {
+                            if (value.isEmpty) {
+                              return "Preencha o campo título";
+                            }
+                            return null;
+                          },
+                          controller: this._txtTitle,
+                          decoration: InputDecoration(
+                            labelText: "Título",
+                            border: OutlineInputBorder(),
+                          ),
                         ),
                       ),
-                      Expanded(
-                          flex: 2,
-                          child: IconButton(
-                            
-                            icon: Icon(Icons.calendar_today,
-                                color: Theme.of(context).primaryColor),
-                            onPressed: () {
-                              setState(() {
-                                this._selectDateStart(context);
-                              });
-                            },
-                          )
-                      ),
-                    ],
-                  ),
-                  Row(
-                    children: <Widget>[
-                      Expanded(
-                        flex: 8,
-                        child: Container(
-                            padding: EdgeInsets.fromLTRB(15, 10, 15, 5),
-                            child: TextFormField(
-                              key: Key("txtDateEnd"),
-                              controller: this._txtDateEnd,
-                               keyboardType: TextInputType.number,
-                              decoration: InputDecoration(
-                                  hintText: "00/00/0000",
-                                  labelText: "Data de término",
-                                  border: OutlineInputBorder()),
-                              validator: (value) {
-                                if (value.isEmpty) {
-                                  return "Preencha o campo data de término";
-                                }
-                                if (!Validation.isDateValida(value)) {
-                                  return "Data inválida";
-                                }
-                                if (Validation.isDateValida(this._txtDataStart.text)) {
-                                  DateTime dateStart = DateConversion.dateFormtToDateTime(this._txtDataStart.text);
-                                  DateTime dateEnd =DateConversion.dateFormtToDateTime(this._txtDateEnd.text);
-                                  if (dateEnd.compareTo(dateStart) < 0) {
-                                    return "Data anterior a data de ínicio";
-                                  }
-                                }
-                                return null;
-                              },
-                            )
+                      Container(
+                        padding: EdgeInsets.fromLTRB(15, 10, 15, 5),
+                        child: TextFormField(
+                          key: Key("txtDescription"),
+                          maxLines: 10,
+                          controller: this._txtDescription,
+                          decoration: InputDecoration(
+                            helperText: "Opcional",
+                            labelText: "Descrição",
+                            border: OutlineInputBorder(),
+                            alignLabelWithHint: true,
+                          ),
                         ),
                       ),
-                      Expanded(
-                          flex: 2,
-                          child: IconButton(
-                            icon: Icon(
-                              Icons.calendar_today,
-                              color: Theme.of(context).primaryColor,
+                      Container(
+                        padding: EdgeInsets.fromLTRB(15, 10, 15, 5),
+                        child: TextFormField(
+                          controller: this._txtDataStart,
+                          keyboardType: TextInputType.number,
+                          readOnly: true,
+                          onTap: () {
+                            debugPrint("Tap date picker");
+                            this._selectDateStart(context);
+                          },
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(),
+                            labelText: "Data de ínicio",
+                            suffixIcon: IconButton(
+                              onPressed: () {},
+                              icon: Icon(
+                                Icons.calendar_today,
+                              ),
                             ),
-                            onPressed: () {
+                          ),
+                          validator: (value) {
+                            if (value.isEmpty) {
+                              return "Preencha este campo";
+                            }
+                            return null;
+                          },
+                        ),
+                      ),
+                      Container(
+                        padding: EdgeInsets.fromLTRB(15, 10, 15, 5),
+                        child: TextFormField(
+                          controller: this._txtDateEnd,
+                          keyboardType: TextInputType.number,
+                          readOnly: true,
+                          onTap: () {
+                            debugPrint("Tap date picker");
+                            this._selectDateEnd(context);
+                          },
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(),
+                            labelText: "Data de término",
+                            suffixIcon: IconButton(
+                              onPressed: () {},
+                              icon: Icon(
+                                Icons.calendar_today,
+                              ),
+                            ),
+                          ),
+                          validator: (value) {
+                            if (value.isEmpty) {
+                              return "Preencha este campo";
+                            }
+                            return null;
+                          },
+                        ),
+                      ),
+                      Container(
+                        padding: EdgeInsets.fromLTRB(15, 10, 15, 10),
+                        child: DropdownButtonFormField<String>(
+                          key: Key("dropPriority"),
+                          decoration: const InputDecoration(
+                            border: const OutlineInputBorder(),
+                          ),
+                          isExpanded: true,
+                          value: this.prioridadeSelected,
+                          items: this.prioridades.map((dropDownValue) {
+                            return DropdownMenuItem<String>(
+                              value: dropDownValue,
+                              child: Text(dropDownValue),
+                            );
+                          }).toList(),
+                          onChanged: (newValue) {
+                            this.onDropDownItemSelected(newValue);
+                          },
+                        ),
+                      ),
+                      Row(
+                        children: <Widget>[
+                          Container(
+                            padding: EdgeInsets.only(left: 5),
+                            child: Checkbox(
+                              key: Key("checkDone"),
+                              value: this._checkDone,
+                              onChanged: (value) {
+                                setState(() {
+                                  this._checkDone = value;
+                                });
+                              },
+                            ),
+                          ),
+                          GestureDetector(
+                            onTap: () {
                               setState(() {
-                                this._selectDateEnd(context);
+                                if (this._checkDone) {
+                                  this._checkDone = false;
+                                } else {
+                                  this._checkDone = true;
+                                }
                               });
                             },
-                          )
+                            child: Container(
+                              padding: EdgeInsets.fromLTRB(5, 10, 15, 5),
+                              child: Text(
+                                "Concluído",
+                                style: TextStyle(
+                                  color: Colors.grey,
+                                  fontSize: 16,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   ),
-                  Container(
-                    padding: EdgeInsets.fromLTRB(15, 10, 15, 10),
-                    child: DropdownButton(
-                        key: Key("dropPriority"),
-                        isExpanded: true,
-                        value: this.prioridadeSelected,
-                        items: this.prioridades.map((dropDownValue) {
-                          return DropdownMenuItem<String>(
-                              value: dropDownValue, child: Text(dropDownValue)
-                          );
-                        }).toList(),
-                        onChanged: (newValue) {
-                          this.onDropDownItemSelected(newValue);
-                        }
-                    ),
-                  ),
-                  Row(
-                    children: <Widget>[
-                      Container(
-                        padding: EdgeInsets.only(left:5),
-                        child:  Checkbox(
-                          key: Key("checkDone"),
-                          value: this._checkDone,
-                          onChanged: (newValue) {
-                            setState(() {
-                              this._checkDone = newValue;
-                            });
-                          }
-                        ),
-                      ),
-                      Container(
-                        padding: EdgeInsets.fromLTRB(5, 10, 15, 5),
-                        child: Text(
-                          "Concluído",
-                          style: TextStyle(color: Colors.grey),
-                        ),
-                      ), 
-                    ],
-                  ),
-                ],
-              ),
-            ),
+                ),
+              );
+            },
           ),
-        );
-      })
+        ),
       ),
     );
+  }
+
+  @override
+  void onClickUpdate() {
+    Map note = {
+      "id": widget.note["id"],
+      "title": this._txtTitle.text,
+      "description": this._txtDescription.text,
+      "dateStart": this.dateStartSelected,
+      "dateEnd": this.dateEndSelected,
+      "priority": this.getPrioridadeAsInt(this.prioridadeSelected),
+      "done": this._checkDone
+    };
+    debugPrint(note.toString());
+    this.presenter.updateNote(note);
+  }
+
+  void _showDialogDelete() {
+    showDialog(
+      context: context,
+      //barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(
+            "Remoção",
+          ),
+          content: Text(
+            "Excluir tarefa?",
+          ),
+          actions: <Widget>[
+            FlatButton(
+              child: Text(
+                "Cancelar".toUpperCase(),
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            FlatButton(
+              child: Text(
+                "Excluir".toUpperCase(),
+              ),
+              onPressed: () {
+                this.presenter.delete(widget.note["id"]);
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  @override
+  void onClickDelete() {
+    this._showDialogDelete();
   }
 
   @override
@@ -324,31 +318,43 @@ class _NoteEditPageState extends State<TarefaEditPage> implements INoteEdit {
   }
 
   Future<void> _selectDateStart(BuildContext context) async {
+    final start = DateTime.parse(widget.note["dateStart"]);
     final DateTime picked = await showDatePicker(
       context: context,
-      initialDate: dateStartSelected,
-      firstDate: DateTime(2015, 8),
-      lastDate: DateTime(2101),
+      initialDate: this.dateStartSelected,
+      firstDate: DateTime(start.year, start.month, start.day),
+      lastDate: start.add(new Duration(days: 360 * 2)),
     );
-    if (picked != null && picked != dateStartSelected)
+    if (picked != null && picked != dateStartSelected) {
+      if (!this._isSelectedDateStart) {
+        this._isSelectedDateStart = true;
+      }
       setState(() {
         this.dateStartSelected = picked;
-        this._txtDataStart.text = DateConversion.dateTimeToDateFormt(picked);
+        this._txtDataStart.text =
+            "${picked.day.toString().padLeft(2, '0')}/${picked.month.toString().padLeft(2, '0')}/${picked.year.toString().padLeft(4, '0')}";
       });
+    }
   }
 
   Future<void> _selectDateEnd(BuildContext context) async {
+    final today = DateTime.now();
     final DateTime picked = await showDatePicker(
       context: context,
-      initialDate: dateEndSelected,
-      firstDate: DateTime(2015, 8),
-      lastDate: DateTime(2101),
+      initialDate: this.dateEndSelected,
+      firstDate: DateTime(today.year, today.month, today.day),
+      lastDate: DateTime.now().add(new Duration(days: 360 * 2)),
     );
-    if (picked != null && picked != dateEndSelected)
+    if (picked != null && picked != dateEndSelected) {
+      if (!this._isSelectedDateEnd) {
+        this._isSelectedDateEnd = true;
+      }
       setState(() {
         this.dateEndSelected = picked;
-        this._txtDateEnd.text = DateConversion.dateTimeToDateFormt(picked);
+        this._txtDateEnd.text =
+            "${picked.day.toString().padLeft(2, '0')}/${picked.month.toString().padLeft(2, '0')}/${picked.year.toString().padLeft(4, '0')}";
       });
+    }
   }
 
   @override
@@ -358,25 +364,27 @@ class _NoteEditPageState extends State<TarefaEditPage> implements INoteEdit {
   }
 
   String getPrioridadeAsString(int prioridade) {
-    if (prioridade == 1) {
+    if (prioridade == 0) {
       return "Alta";
-    } else if (prioridade == 2) {
+    } else if (prioridade == 1) {
       return "Normal";
-    } else {
+    } else if (prioridade == 2) {
       return "Baixa";
+    } else {
+      return "";
     }
   }
 
   int getPrioridadeAsInt(String prioridade) {
     switch (prioridade) {
       case "Alta":
-        return 1;
-      case "Normal":
-        return 2;
-      case "Baixa":
-        return 3;
-      default:
         return 0;
+      case "Normal":
+        return 1;
+      case "Baixa":
+        return 2;
+      default:
+        return -1;
     }
   }
 
