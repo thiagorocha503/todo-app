@@ -2,8 +2,6 @@ import 'dart:convert';
 
 import 'package:lista_de_tarefas/model/noteException.dart';
 
-
-
 Note noteFromJson(String str) => Note.fromMap(json.decode(str));
 
 String noteToJson(Note data) => json.encode(data.toMap());
@@ -26,7 +24,7 @@ class Note {
     this.priority,
     this.done,
   });
-   
+
   static const PRIORITY_HIGH = 0;
   static const PRIORITY_NORMAL = 1;
   static const PRIORITY_LOW = 2;
@@ -98,7 +96,8 @@ class Note {
   void setDateEnd(DateTime date) {
     if (this.dateStart != null) {
       if (date.compareTo(this.dateStart) < 0) {
-        throw new NoteDateIntervaloException("Data de término menor que de ínicio");
+        throw new NoteDateIntervaloException(
+            "Data de término menor que de ínicio");
       }
     }
     this.dateEnd = date;
@@ -109,7 +108,7 @@ class Note {
   }
 
   void setPriority(int priority) {
-    if (priority < PRIORITY_HIGH || priority > PRIORITY_LOW) {
+    if (priority < 0 || priority > 2) {
       throw new NotePriorityException(priority);
     }
     this.priority = priority;

@@ -3,7 +3,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:lista_de_tarefas/data/database.dart';
 import 'package:lista_de_tarefas/model/note.dart';
 import 'package:lista_de_tarefas/presenter/presenter.dart';
-import 'package:lista_de_tarefas/util/dateConversion.dart';
 import 'package:lista_de_tarefas/view/view.dart';
 
 class TarefaAddPresenter implements IPresenterTarefaAdd {
@@ -14,8 +13,8 @@ class TarefaAddPresenter implements IPresenterTarefaAdd {
     Note nota = new Note();
     nota.setTitle(dados["title"]);
     nota.setDescription(dados["description"]);
-    nota.setDateStart(DateConversion.dateFormtToDateTime(dados["dateStart"]));
-    nota.setDateEnd(DateConversion.dateFormtToDateTime(dados["dateEnd"]));
+    nota.setDateStart(dados["dateStart"]);
+    nota.setDateEnd(dados["dateEnd"]);
     nota.setPriority(dados["priority"]);
     nota.setDone(dados["done"]);
     DBProvider db = DBProvider.getDBProvider();
@@ -28,8 +27,6 @@ class TarefaAddPresenter implements IPresenterTarefaAdd {
         this.view.showSnackBarMessage("Erro");
       }
     });
-
-    
   }
 
   @override
