@@ -60,24 +60,27 @@ class _NoteAddPageState extends State<TarefaAddPage> implements IPageNewNote {
         title: Text("Nova tarefa"),
         actions: <Widget>[
           IconButton(
-              key: Key("buttonCheck"),
-              icon: Icon(Icons.check, color: Colors.white),
-              tooltip: "Salvar",
-              onPressed: () {
-                if (_formKey.currentState.validate()) {
-                  this.onCadastro();
-                }
-              })
-        ],
-        leading: Builder(builder: (BuildContext context) {
-          return IconButton(
-            key: Key("backPage"),
-            icon: Icon(Icons.arrow_back, color: Colors.white),
+            key: Key("buttonCheck"),
+            icon: Icon(Icons.check, color: Colors.white),
+            tooltip: "Salvar",
             onPressed: () {
-              this.backPage();
+              if (_formKey.currentState.validate()) {
+                this.onCadastro();
+              }
             },
-          );
-        }),
+          ),
+        ],
+        leading: Builder(
+          builder: (BuildContext context) {
+            return IconButton(
+              key: Key("backPage"),
+              icon: Icon(Icons.arrow_back, color: Colors.white),
+              onPressed: () {
+                this.backPage();
+              },
+            );
+          },
+        ),
       ),
       body: SafeArea(
         child: Builder(

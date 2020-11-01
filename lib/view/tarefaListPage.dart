@@ -73,31 +73,39 @@ class _TarefaListPageState extends State<TarefaListPage> implements IPageList {
             },
           ),
           PopupMenuButton(
-              offset: Offset(1.0, 4),
-              tooltip: "Filtrar",
-              icon: Icon(Icons.filter_list),
-              onSelected: (newValue) {
-                setState(() {
-                  this._filterSelected = newValue;
-                  this.onRefresh();
-                });
-              },
-              //initialValue: this._filterSelected,
-              itemBuilder: (BuildContext context) {
-                return [
-                  PopupMenuItem(
-                    value: FILTER_NOT_DONE,
-                    child: Text(this.getFilterAsString(FILTER_NOT_DONE)),
+            offset: Offset(1.0, 4),
+            tooltip: "Filtrar",
+            icon: Icon(Icons.filter_list),
+            onSelected: (newValue) {
+              setState(() {
+                this._filterSelected = newValue;
+                this.onRefresh();
+              });
+            },
+            //initialValue: this._filterSelected,
+            itemBuilder: (BuildContext context) {
+              return [
+                PopupMenuItem(
+                  value: FILTER_NOT_DONE,
+                  child: Text(
+                    this.getFilterAsString(FILTER_NOT_DONE),
                   ),
-                  PopupMenuItem(
-                    value: FILTER_DONE,
-                    child: Text(this.getFilterAsString(FILTER_DONE)),
+                ),
+                PopupMenuItem(
+                  value: FILTER_DONE,
+                  child: Text(
+                    this.getFilterAsString(FILTER_DONE),
                   ),
-                  PopupMenuItem(
-                      value: FILTER_ALL,
-                      child: Text(this.getFilterAsString(FILTER_ALL)))
-                ];
-              }),
+                ),
+                PopupMenuItem(
+                  value: FILTER_ALL,
+                  child: Text(
+                    this.getFilterAsString(FILTER_ALL),
+                  ),
+                )
+              ];
+            },
+          ),
           PopupMenuButton(
             offset: Offset(1.0, 4),
             tooltip: "Mais",
@@ -111,17 +119,28 @@ class _TarefaListPageState extends State<TarefaListPage> implements IPageList {
               }
             },
             itemBuilder: (BuildContext context) {
-              return [PopupMenuItem(value: MORE_OPTION, child: Text("Sobre"))];
+              return [
+                PopupMenuItem(
+                  value: MORE_OPTION,
+                  child: Text("Sobre"),
+                ),
+              ];
             },
           )
         ],
       ),
-      body: Builder(builder: (context) {
-        this.scaffoldContext = context;
-        return Column(
-          children: <Widget>[Expanded(child: this.buildList())],
-        );
-      }),
+      body: Builder(
+        builder: (context) {
+          this.scaffoldContext = context;
+          return Column(
+            children: <Widget>[
+              Expanded(
+                child: this.buildList(),
+              ),
+            ],
+          );
+        },
+      ),
       floatingActionButton: FloatingActionButton(
         key: floatingActionButtonKey,
         onPressed: this.onClickFloatingButton,
@@ -172,7 +191,9 @@ class _TarefaListPageState extends State<TarefaListPage> implements IPageList {
       return Text(
         this.notes[index]['title'],
         style: TextStyle(
-            color: Colors.grey, decoration: TextDecoration.lineThrough),
+          color: Colors.grey,
+          decoration: TextDecoration.lineThrough,
+        ),
       );
     } else {
       return Text("${this.notes[index]['title']}");
@@ -181,29 +202,33 @@ class _TarefaListPageState extends State<TarefaListPage> implements IPageList {
 
   Widget builderItemList(int index) {
     return Card(
-        color: this.getItemListColor(index),
-        child: ListTile(
-          onTap: () {
-            this.onTapListItem(index);
+      color: this.getItemListColor(index),
+      child: ListTile(
+        onTap: () {
+          this.onTapListItem(index);
+        },
+        leading: Checkbox(
+          value: this.notes[index]["done"],
+          onChanged: (value) {
+            setState(() {
+              this.notes[index]["done"] = value;
+              this.onChangedCheckButton(value, index);
+            });
           },
-          leading: Checkbox(
-              value: this.notes[index]["done"],
-              onChanged: (value) {
-                setState(() {
-                  this.notes[index]["done"] = value;
-                  this.onChangedCheckButton(value, index);
-                });
-              }),
-          trailing: IconButton(
-            icon: Icon(Icons.delete),
-            color: Theme.of(context).primaryColor,
-            onPressed: () {
-              this.onClickDelete(index);
-            },
-          ),
-          title: this.getItemListTitle(index),
-          subtitle: Text(this.notes[index]["description"].toString()),
-        ));
+        ),
+        trailing: IconButton(
+          icon: Icon(Icons.delete),
+          color: Theme.of(context).primaryColor,
+          onPressed: () {
+            this.onClickDelete(index);
+          },
+        ),
+        title: this.getItemListTitle(index),
+        subtitle: Text(
+          this.notes[index]["description"].toString(),
+        ),
+      ),
+    );
   }
 
   void onTapListItem(int index) {
@@ -239,7 +264,7 @@ class _TarefaListPageState extends State<TarefaListPage> implements IPageList {
   @override
   void onChangedCheckButton(bool value, int index) {
     this.presenter.markNote(this.notes[index]["id"], value);
-    //this.onRefresh();
+    this.onRefresh();
   }
 
   @override
