@@ -10,6 +10,25 @@ class TarefaSearchPage extends SearchDelegate<Map> {
   }
 
   @override
+  ThemeData appBarTheme(BuildContext context) {
+    assert(context != null);
+    final ThemeData theme = Theme.of(context).copyWith(
+      textTheme: TextTheme(
+        headline6: TextStyle(
+          color: Colors.white,
+          fontSize: 18.0,
+        ),
+      ),
+    );
+    assert(theme != null);
+    return theme;
+  }
+
+  @override
+  TextStyle get searchFieldStyle =>
+      TextStyle(color: Colors.white, fontSize: 18.0);
+
+  @override
   List<Widget> buildActions(BuildContext context) {
     return [
       IconButton(
@@ -34,7 +53,7 @@ class TarefaSearchPage extends SearchDelegate<Map> {
   Widget builListItem(int index, BuildContext context) {
     return Card(
       child: ListTile(
-        onTap: (){
+        onTap: () {
           close(context, this.notes[index]);
         },
         leading: Checkbox(
