@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:lista_de_tarefas/presenter/aboutPage.dart';
 import 'package:lista_de_tarefas/presenter/presenter.dart';
@@ -16,7 +15,6 @@ class TarefaListPage extends StatefulWidget {
 
 class _TarefaListPageState extends State<TarefaListPage> implements IPageList {
   List<Map> notes;
-  Map lastNoteRemoved;
   BuildContext scaffoldContext;
   IPresenterNoteList presenter;
   static Key floatingActionButtonKey = Key("floatingActionButtonKey");
@@ -43,9 +41,11 @@ class _TarefaListPageState extends State<TarefaListPage> implements IPageList {
     showSearch(context: context, delegate: TarefaSearchPage()).then((onValue) {
       if (onValue != null) {
         Route route = new MaterialPageRoute(
-            builder: (context) => TarefaEditPage(note: onValue));
-        Navigator.push(this.scaffoldContext, route);
-        this.onRefresh();
+          builder: (context) => TarefaEditPage(note: onValue),
+        );
+        Navigator.push(this.scaffoldContext, route).whenComplete(() {
+          this.onRefresh();
+        });
       }
     });
   }
@@ -152,22 +152,6 @@ class _TarefaListPageState extends State<TarefaListPage> implements IPageList {
     Scaffold.of(this.scaffoldContext).showSnackBar(snackBarInfo);
   }
 
-  @override
-  void showSnackBarUndo(String title) {
-    final SnackBar undoRemove = new SnackBar(
-        content: Text("Tarefa $title removido"),
-        duration: Duration(seconds: 3),
-        action: SnackBarAction(
-            label: "desfazer",
-            onPressed: () {
-              setState(() {
-                this.presenter.addNote(this.lastNoteRemoved);
-                this.onRefresh();
-              });
-            }));
-    Scaffold.of(this.scaffoldContext).showSnackBar(undoRemove);
-  }
-
   Color getItemListColor(int index) {
     // caso concluído
     if (this.notes[index]["done"]) {
@@ -224,24 +208,21 @@ class _TarefaListPageState extends State<TarefaListPage> implements IPageList {
 
   void onTapListItem(int index) {
     Route rota = new MaterialPageRoute(
-      builder: (context) => TarefaEditPage(note: this.notes[index]),
+      builder: (context) => TarefaEditPage(
+        note: this.notes[index],
+      ),
     );
-    Navigator.push(context, rota).then((onValue) {
-      setState(() {
-        this.onRefresh();
-      });
+    Navigator.push(context, rota).whenComplete(() {
+      this.onRefresh();
     });
   }
 
   Widget buildList() {
-    return RefreshIndicator(
-      onRefresh: onRefresh,
-      child: ListView.builder(
-        itemCount: this.notes.length,
-        itemBuilder: (context, index) {
-          return builderItemList(index);
-        },
-      ),
+    return ListView.builder(
+      itemCount: this.notes.length,
+      itemBuilder: (context, index) {
+        return builderItemList(index);
+      },
     );
   }
 
@@ -252,11 +233,7 @@ class _TarefaListPageState extends State<TarefaListPage> implements IPageList {
 
   @override
   void onClickDelete(int index) async {
-    String title = this.notes[index]["title"];
-    this.lastNoteRemoved = this.notes[index];
     this.presenter.deleteNote(this.notes[index]["id"]);
-    this.onRefresh();
-    this.showSnackBarUndo(title);
   }
 
   @override
@@ -270,8 +247,9 @@ class _TarefaListPageState extends State<TarefaListPage> implements IPageList {
     Route rota = new MaterialPageRoute(
       builder: (context) => TarefaAddPage(),
     );
-    Navigator.push(context, rota);
-    this.onRefresh();
+    Navigator.push(context, rota).whenComplete(() {
+      this.onRefresh();
+    });
   }
 
   @override

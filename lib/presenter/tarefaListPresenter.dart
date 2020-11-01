@@ -1,17 +1,21 @@
-import 'package:flutter/cupertino.dart';
 import 'package:lista_de_tarefas/data/database.dart';
 import 'package:lista_de_tarefas/model/note.dart';
 import 'package:lista_de_tarefas/presenter/presenter.dart';
-import 'package:lista_de_tarefas/util/dateConversion.dart';
 import 'package:lista_de_tarefas/view/view.dart';
 
 class TarefaListPresent implements IPresenterNoteList {
   IPageList view;
 
   @override
-  Future<int> deleteNote(int id) async {
+  void deleteNote(int id) async {
     DBProvider db = DBProvider.getDBProvider();
-    return await db.delete(id);
+    int result = await db.delete(id);
+    if (result > 0) {
+      this.view.showSnackBarInfo("Tarefa removida com sucesso");
+      this.view.onRefresh();
+    } else {
+      this.view.showSnackBarInfo("Erro ao remove tarefa");
+    }
   }
 
   @override
@@ -58,27 +62,6 @@ class TarefaListPresent implements IPresenterNoteList {
   void refresh(int filter) async {
     List notes = await this.fetchAll(filter);
     this.view.updateList(notes);
-  }
-
-  @override
-  Future<void> addNote(Map<dynamic, dynamic> dados) async {
-    DBProvider db = DBProvider.getDBProvider();
-    print(dados);
-    Note nota = new Note();
-    nota.setTitle(dados["title"]);
-    nota.setDescription(dados["description"]);
-    nota.setDateStart(DateConversion.dateFormtToDateTime(dados["dateStart"]));
-    nota.setDateEnd(DateConversion.dateFormtToDateTime(dados["dateEnd"]));
-    nota.setPriority(dados["priority"]);
-    nota.setDone(dados["done"]);
-    db.insertNote(nota).then((onValue) {
-      debugPrint(">>> $onValue");
-      if (onValue > 0) {
-        this.view.showSnackBarInfo("Remoção desfeita");
-      } else {
-        this.view.showSnackBarInfo("Erro ao desfazer remoção");
-      }
-    });
   }
 
   @override
