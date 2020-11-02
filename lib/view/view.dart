@@ -10,14 +10,14 @@ class IPageList {
   void showAboutPage() {}
 }
 
-class IPageNewNote {
+class IPageNewTodo {
   void onDropDownItemSelected(String newValue) {}
   void showSnackBarMessage(String message) {}
   void cleanField() {}
   void onCadastro() {}
 }
 
-class INoteEdit {
+class ITodoEdit {
   void onDropDownItemSelected(String newValue) {}
   void showSnackBarMessage(String message) {}
   void onClickUpdate() {}

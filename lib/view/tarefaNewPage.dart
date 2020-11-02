@@ -8,7 +8,7 @@ class TarefaAddPage extends StatefulWidget {
   _NoteAddPageState createState() => _NoteAddPageState();
 }
 
-class _NoteAddPageState extends State<TarefaAddPage> implements IPageNewNote {
+class _NoteAddPageState extends State<TarefaAddPage> implements IPageNewTodo {
   bool _checkDone = false;
   TextEditingController _txtTitle = new TextEditingController();
   TextEditingController _txtDescription = new TextEditingController();
@@ -22,11 +22,11 @@ class _NoteAddPageState extends State<TarefaAddPage> implements IPageNewNote {
   BuildContext scaffoldContext;
   List prioridades = ["Normal", "Baixa", "Alta"];
   String prioridadeSelected = "Normal";
-  IPresenterTarefaAdd presenter;
+  ITodoAddPresenter presenter;
 
   @override
   void onCadastro() {
-    Map note = {
+    Map todo = {
       "title": this._txtTitle.text,
       "description": this._txtDescription.text,
       "dateStart": this.dateStartSelected,
@@ -34,8 +34,8 @@ class _NoteAddPageState extends State<TarefaAddPage> implements IPageNewNote {
       "priority": this.getPrioridadeAsInt(this.prioridadeSelected),
       "done": this._checkDone
     };
-    debugPrint(note.toString());
-    this.presenter.noteInsert(note);
+    debugPrint(todo.toString());
+    this.presenter.todoInsert(todo);
   }
 
   @override

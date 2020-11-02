@@ -61,7 +61,7 @@ class TarefaSearchPage extends SearchDelegate<Map> {
             context,
             MaterialPageRoute(
               builder: (context) {
-                return new TarefaEditPage(note: this.todos[index]);
+                return new TarefaEditPage(todo: this.todos[index]);
               },
             ),
           );

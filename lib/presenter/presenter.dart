@@ -1,11 +1,11 @@
 import 'package:lista_de_tarefas/view/view.dart';
 
-class IPresenterNoteList {
-  Future<int> markNote(int id, bool value) async {
+class ITodoListPresenter {
+  Future<int> markTodo(int id, bool value) async {
     return null;
   }
 
-  void deleteNote(int id) async {}
+  void deleteTodo(int id) async {}
   Future<List<Map>> fetchAll(int filter) async {
     return new List<Map>();
   }
@@ -15,22 +15,22 @@ class IPresenterNoteList {
   void about() {}
 }
 
-class IPresenterTarefaAdd {
-  Future noteInsert(Map note) {
+class ITodoAddPresenter {
+  Future todoInsert(Map todo) {
     return null;
   }
 
-  void setView(IPageNewNote view) {}
+  void setView(IPageNewTodo view) {}
 }
 
-class IEditPresenter {
-  void updateNote(Map note) {}
+class ITodoEditPresenter {
+  void updateTodo(Map todo) {}
   void delete(int id) {
     return null;
   }
 
-  void setView(INoteEdit view) {}
-  Future<List> getNoteById(int id) {
+  void setView(ITodoEdit view) {}
+  Future<List> getTodoById(int id) {
     return null;
   }
 }

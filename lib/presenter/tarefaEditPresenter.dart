@@ -1,23 +1,23 @@
 import 'package:flutter/cupertino.dart';
 import 'package:lista_de_tarefas/data/database.dart';
-import 'package:lista_de_tarefas/model/note.dart';
+import 'package:lista_de_tarefas/model/todo.dart';
 import 'package:lista_de_tarefas/presenter/presenter.dart';
 import 'package:lista_de_tarefas/view/view.dart';
 
-class NoteEditPresenter implements IEditPresenter {
-  INoteEdit view;
+class NoteEditPresenter implements ITodoEditPresenter {
+  ITodoEdit view;
 
-  Future<void> updateNote(Map dados) async {
-    Note note = new Note();
-    note.setId(dados["id"]);
-    note.setTitle(dados["title"]);
-    note.setDescription(dados["description"]);
-    note.setDateStart(dados["dateStart"]);
-    note.setDateEnd(dados["dateEnd"]);
-    note.setPriority(dados["priority"]);
-    note.setDone(dados["done"]);
+  Future<void> updateTodo(Map dados) async {
+    Todo todo = new Todo();
+    todo.setId(dados["id"]);
+    todo.setTitle(dados["title"]);
+    todo.setDescription(dados["description"]);
+    todo.setDateStart(dados["dateStart"]);
+    todo.setDateEnd(dados["dateEnd"]);
+    todo.setPriority(dados["priority"]);
+    todo.setDone(dados["done"]);
     DBProvider db = DBProvider.getDBProvider();
-    int res = await db.updateNote(note);
+    int res = await db.updateTodo(todo);
     debugPrint("update -> $res");
     if (res > 0) {
       this.view.showSnackBarMessage("Tarefa atualizada com sucesso!");
@@ -26,7 +26,7 @@ class NoteEditPresenter implements IEditPresenter {
     }
   }
 
-  void setView(INoteEdit view) {
+  void setView(ITodoEdit view) {
     this.view = view;
   }
 
@@ -43,7 +43,7 @@ class NoteEditPresenter implements IEditPresenter {
   }
 
   @override
-  Future<List> getNoteById(int id) async {
+  Future<List> getTodoById(int id) async {
     return null;
   }
 }

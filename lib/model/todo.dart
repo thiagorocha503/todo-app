@@ -1,12 +1,12 @@
 import 'dart:convert';
 
-import 'package:lista_de_tarefas/model/noteException.dart';
+import 'package:lista_de_tarefas/model/todoException.dart';
 
-Note noteFromJson(String str) => Note.fromMap(json.decode(str));
+Todo todoFromJson(String str) => Todo.fromMap(json.decode(str));
 
-String noteToJson(Note data) => json.encode(data.toMap());
+String todoToJson(Todo data) => json.encode(data.toMap());
 
-class Note {
+class Todo {
   int id;
   String title;
   String description;
@@ -15,7 +15,7 @@ class Note {
   int priority;
   bool done;
 
-  Note({
+  Todo({
     this.id,
     this.title,
     this.description,
@@ -29,7 +29,7 @@ class Note {
   static const PRIORITY_NORMAL = 1;
   static const PRIORITY_LOW = 2;
 
-  factory Note.fromMap(Map<String, dynamic> json) => Note(
+  factory Todo.fromMap(Map<String, dynamic> json) => Todo(
         id: json["id"],
         title: json["title"],
         description: json["description"],
@@ -109,7 +109,7 @@ class Note {
 
   void setPriority(int priority) {
     if (priority < 0 || priority > 2) {
-      throw new NotePriorityException(priority);
+      throw new TodoPriorityException(priority);
     }
     this.priority = priority;
   }

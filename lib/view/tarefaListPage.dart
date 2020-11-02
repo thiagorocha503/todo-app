@@ -14,9 +14,9 @@ class TarefaListPage extends StatefulWidget {
 }
 
 class _TarefaListPageState extends State<TarefaListPage> implements IPageList {
-  List<Map> notes;
+  List<Map> _todos;
   BuildContext scaffoldContext;
-  IPresenterNoteList presenter;
+  ITodoListPresenter presenter;
   static Key floatingActionButtonKey = Key("floatingActionButtonKey");
 
   int _filterSelected = FILTER_NOT_DONE;
@@ -28,10 +28,10 @@ class _TarefaListPageState extends State<TarefaListPage> implements IPageList {
   List<String> suggestions;
 
   void initList() async {
-    notes = new List<Map>();
-    await this.presenter.fetchAll(this._filterSelected).then((onValue) {
+    this._todos = new List<Map>();
+    await this.presenter.fetchAll(this._filterSelected).then((value) {
       setState(() {
-        notes = onValue;
+        this._todos = value;
       });
     });
   }
@@ -77,9 +77,9 @@ class _TarefaListPageState extends State<TarefaListPage> implements IPageList {
             offset: Offset(1.0, 4),
             tooltip: "Filtrar",
             icon: Icon(Icons.filter_list),
-            onSelected: (newValue) {
+            onSelected: (value) {
               setState(() {
-                this._filterSelected = newValue;
+                this._filterSelected = value;
                 this.onRefresh();
               });
             },
@@ -174,11 +174,11 @@ class _TarefaListPageState extends State<TarefaListPage> implements IPageList {
 
   Color getItemListColor(int index) {
     // caso concluído
-    if (this.notes[index]["done"]) {
+    if (this._todos[index]["done"]) {
       return Colors.grey[300];
     }
     // caso atrasado
-    DateTime dateEnd = DateTime.parse(this.notes[index]["dateEnd"]);
+    DateTime dateEnd = DateTime.parse(this._todos[index]["dateEnd"]);
     DateTime now = DateTime.now();
     DateTime today = DateTime(now.year, now.month, now.day);
     if (dateEnd.compareTo(today) < 0) {
@@ -188,16 +188,16 @@ class _TarefaListPageState extends State<TarefaListPage> implements IPageList {
   }
 
   Widget getItemListTitle(int index) {
-    if (this.notes[index]['done']) {
+    if (this._todos[index]['done']) {
       return Text(
-        this.notes[index]['title'],
+        this._todos[index]['title'],
         style: TextStyle(
           color: Colors.grey,
           decoration: TextDecoration.lineThrough,
         ),
       );
     } else {
-      return Text("${this.notes[index]['title']}");
+      return Text("${this._todos[index]['title']}");
     }
   }
 
@@ -209,10 +209,10 @@ class _TarefaListPageState extends State<TarefaListPage> implements IPageList {
           this.onTapListItem(index);
         },
         leading: Checkbox(
-          value: this.notes[index]["done"],
+          value: this._todos[index]["done"],
           onChanged: (value) {
             setState(() {
-              this.notes[index]["done"] = value;
+              this._todos[index]["done"] = value;
               this.onChangedCheckButton(value, index);
             });
           },
@@ -227,7 +227,7 @@ class _TarefaListPageState extends State<TarefaListPage> implements IPageList {
         ),
         title: this.getItemListTitle(index),
         subtitle: Text(
-          this.notes[index]["description"].toString(),
+          this._todos[index]["description"].toString(),
         ),
       ),
     );
@@ -236,7 +236,7 @@ class _TarefaListPageState extends State<TarefaListPage> implements IPageList {
   void onTapListItem(int index) {
     Route rota = new MaterialPageRoute(
       builder: (context) => TarefaEditPage(
-        note: this.notes[index],
+        todo: this._todos[index],
       ),
     );
     Navigator.push(context, rota).whenComplete(() {
@@ -245,7 +245,7 @@ class _TarefaListPageState extends State<TarefaListPage> implements IPageList {
   }
 
   Widget buildList() {
-    if (this.notes.length == 0) {
+    if (this._todos.length == 0) {
       return Center(
         child: Text(
           "Nenhuma tarefa",
@@ -258,7 +258,7 @@ class _TarefaListPageState extends State<TarefaListPage> implements IPageList {
       );
     }
     return ListView.builder(
-      itemCount: this.notes.length,
+      itemCount: this._todos.length,
       itemBuilder: (context, index) {
         return builderItemList(index);
       },
@@ -272,12 +272,12 @@ class _TarefaListPageState extends State<TarefaListPage> implements IPageList {
 
   @override
   void onClickDelete(int index) async {
-    this.presenter.deleteNote(this.notes[index]["id"]);
+    this.presenter.deleteTodo(this._todos[index]["id"]);
   }
 
   @override
   void onChangedCheckButton(bool value, int index) {
-    this.presenter.markNote(this.notes[index]["id"], value);
+    this.presenter.markTodo(this._todos[index]["id"], value);
     this.onRefresh();
   }
 
@@ -294,7 +294,7 @@ class _TarefaListPageState extends State<TarefaListPage> implements IPageList {
   @override
   void updateList(List<Map> newNote) {
     setState(() {
-      this.notes = newNote;
+      this._todos = newNote;
     });
   }
 

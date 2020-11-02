@@ -4,14 +4,14 @@ import 'package:lista_de_tarefas/presenter/tarefaEditPresenter.dart';
 import 'package:lista_de_tarefas/view/view.dart';
 
 class TarefaEditPage extends StatefulWidget {
-  final Map note;
+  final Map todo;
 
-  TarefaEditPage({Key key, @required this.note}) : super(key: key);
+  TarefaEditPage({Key key, @required this.todo}) : super(key: key);
   @override
   _NoteEditPageState createState() => _NoteEditPageState();
 }
 
-class _NoteEditPageState extends State<TarefaEditPage> implements INoteEdit {
+class _NoteEditPageState extends State<TarefaEditPage> implements ITodoEdit {
   bool _checkDone = false;
   TextEditingController _txtTitle = new TextEditingController();
   TextEditingController _txtDescription = new TextEditingController();
@@ -23,7 +23,7 @@ class _NoteEditPageState extends State<TarefaEditPage> implements INoteEdit {
   BuildContext scaffoldContext;
   List prioridades = ["Normal", "Baixa", "Alta"];
   String prioridadeSelected = "Normal";
-  IEditPresenter presenter;
+  ITodoEditPresenter presenter;
 
   bool _isSelectedDateEnd = false;
 
@@ -31,19 +31,19 @@ class _NoteEditPageState extends State<TarefaEditPage> implements INoteEdit {
 
   @override
   void setField() {
-    debugPrint(widget.note.toString());
-    this.dateStartSelected = DateTime.parse(widget.note["dateStart"]);
-    this.dateEndSelected = DateTime.parse(widget.note["dateEnd"]);
+    debugPrint(widget.todo.toString());
+    this.dateStartSelected = DateTime.parse(widget.todo["dateStart"]);
+    this.dateEndSelected = DateTime.parse(widget.todo["dateEnd"]);
 
-    this._txtTitle.text = widget.note["title"];
-    this._txtDescription.text = widget.note["description"];
+    this._txtTitle.text = widget.todo["title"];
+    this._txtDescription.text = widget.todo["description"];
     this._txtDataStart.text =
         "${this.dateStartSelected.day.toString().padLeft(2, "0")}/${this.dateStartSelected.month.toString().padLeft(2, '0')}/${this.dateStartSelected.year.toString().padLeft(4, '4')}";
     this._txtDateEnd.text =
         "${this.dateEndSelected.day.toString().padLeft(2, "0")}/${this.dateEndSelected.month.toString().padLeft(2, '0')}/${this.dateEndSelected.year.toString().padLeft(4, '4')}";
-    this._checkDone = widget.note["done"];
+    this._checkDone = widget.todo["done"];
     this.prioridadeSelected =
-        this.getPrioridadeAsString(widget.note["priority"]);
+        this.getPrioridadeAsString(widget.todo["priority"]);
   }
 
   @override
@@ -51,7 +51,7 @@ class _NoteEditPageState extends State<TarefaEditPage> implements INoteEdit {
     super.initState();
     this.presenter = new NoteEditPresenter();
     this.presenter.setView(this);
-    debugPrint("${widget.note}");
+    debugPrint("${widget.todo}");
     this.setField();
   }
 
@@ -256,8 +256,8 @@ class _NoteEditPageState extends State<TarefaEditPage> implements INoteEdit {
 
   @override
   void onClickUpdate() {
-    Map note = {
-      "id": widget.note["id"],
+    Map todo = {
+      "id": widget.todo["id"],
       "title": this._txtTitle.text,
       "description": this._txtDescription.text,
       "dateStart": this.dateStartSelected,
@@ -265,8 +265,8 @@ class _NoteEditPageState extends State<TarefaEditPage> implements INoteEdit {
       "priority": this.getPrioridadeAsInt(this.prioridadeSelected),
       "done": this._checkDone
     };
-    debugPrint(note.toString());
-    this.presenter.updateNote(note);
+    debugPrint(todo.toString());
+    this.presenter.updateTodo(todo);
   }
 
   void _showDialogDelete() {
@@ -295,7 +295,7 @@ class _NoteEditPageState extends State<TarefaEditPage> implements INoteEdit {
                 "Excluir".toUpperCase(),
               ),
               onPressed: () {
-                this.presenter.delete(widget.note["id"]);
+                this.presenter.delete(widget.todo["id"]);
                 Navigator.of(context).pop();
               },
             ),
@@ -311,14 +311,14 @@ class _NoteEditPageState extends State<TarefaEditPage> implements INoteEdit {
   }
 
   @override
-  void onDropDownItemSelected(String newValue) {
+  void onDropDownItemSelected(String value) {
     setState(() {
-      this.prioridadeSelected = newValue;
+      this.prioridadeSelected = value;
     });
   }
 
   Future<void> _selectDateStart(BuildContext context) async {
-    final start = DateTime.parse(widget.note["dateStart"]);
+    final start = DateTime.parse(widget.todo["dateStart"]);
     final DateTime picked = await showDatePicker(
       context: context,
       initialDate: this.dateStartSelected,

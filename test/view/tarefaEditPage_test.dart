@@ -15,7 +15,7 @@ MediaQuery getApp() {
   };
   return new MediaQuery(
       data: new MediaQueryData(),
-      child: new MaterialApp(home: TarefaEditPage(note: todo)));
+      child: new MaterialApp(home: TarefaEditPage(todo: todo)));
 }
 
 void main() {

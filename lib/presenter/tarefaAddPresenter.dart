@@ -1,24 +1,24 @@
 //import 'package:flutter/cupertino.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:lista_de_tarefas/data/database.dart';
-import 'package:lista_de_tarefas/model/note.dart';
+import 'package:lista_de_tarefas/model/todo.dart';
 import 'package:lista_de_tarefas/presenter/presenter.dart';
 import 'package:lista_de_tarefas/view/view.dart';
 
-class TarefaAddPresenter implements IPresenterTarefaAdd {
-  IPageNewNote view;
+class TarefaAddPresenter implements ITodoAddPresenter {
+  IPageNewTodo view;
 
   @override
-  Future noteInsert(Map dados) async {
-    Note nota = new Note();
-    nota.setTitle(dados["title"]);
-    nota.setDescription(dados["description"]);
-    nota.setDateStart(dados["dateStart"]);
-    nota.setDateEnd(dados["dateEnd"]);
-    nota.setPriority(dados["priority"]);
-    nota.setDone(dados["done"]);
+  Future todoInsert(Map dados) async {
+    Todo todo = new Todo();
+    todo.setTitle(dados["title"]);
+    todo.setDescription(dados["description"]);
+    todo.setDateStart(dados["dateStart"]);
+    todo.setDateEnd(dados["dateEnd"]);
+    todo.setPriority(dados["priority"]);
+    todo.setDone(dados["done"]);
     DBProvider db = DBProvider.getDBProvider();
-    db.insertNote(nota).then((onValue) {
+    db.insertTodo(todo).then((onValue) {
       debugPrint(">>> $onValue");
       if (onValue > 0) {
         this.view.showSnackBarMessage("Tarefa salva com sucesso");
@@ -30,7 +30,7 @@ class TarefaAddPresenter implements IPresenterTarefaAdd {
   }
 
   @override
-  void setView(IPageNewNote view) {
+  void setView(IPageNewTodo view) {
     this.view = view;
   }
 }

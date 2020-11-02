@@ -1,10 +1,10 @@
 import 'package:lista_de_tarefas/data/mock/dataBaseMock.dart';
-import 'package:lista_de_tarefas/model/note.dart';
+import 'package:lista_de_tarefas/model/todo.dart';
 import 'package:test/test.dart';
 
 void main() {
   DateTime now = DateTime.now();
-  Note nota1 = new Note();
+  Todo nota1 = new Todo();
   nota1.setTitle("title 1");
   nota1.setDescription("Text text");
   nota1.setDateStart(now);
@@ -12,7 +12,7 @@ void main() {
   nota1.setPriority(0);
   nota1.setDone(false);
 
-  Note nota2 = new Note();
+  Todo nota2 = new Todo();
   nota2.setTitle("title 2");
   nota2.setDescription("Text text");
   nota2.setDateStart(now);
@@ -22,10 +22,10 @@ void main() {
 
   test("Test Insert e fetchall", () async {
     DBProviderMockImpl dataBase = DBProviderMockImpl.getDBProvider();
-    expect(1, await dataBase.insertNote(nota1));
-    expect(2, await dataBase.insertNote(nota2));
+    expect(1, await dataBase.insertTodo(nota1));
+    expect(2, await dataBase.insertTodo(nota2));
 
-    List<Note> result = await dataBase.fetchAll();
+    List<Todo> result = await dataBase.fetchAll();
     expect(result[0].getId(), nota1.getId());
     expect(result[1].getId(), nota2.getId());
 
@@ -33,11 +33,10 @@ void main() {
     expect(result[1].getTitle(), nota2.getTitle());
   });
 
-
   test("Test getById", () async {
     DBProviderMockImpl dataBase = DBProviderMockImpl.getDBProvider();
-    dataBase.insertNote(nota1);
-    Note result = await dataBase.getById(1);
+    dataBase.insertTodo(nota1);
+    Todo result = await dataBase.getById(1);
     // verifica valores
     expect(nota1.getId(), result.getId());
     expect(nota1.getTitle(), result.getTitle());
@@ -51,14 +50,14 @@ void main() {
   test("Test remoção", () async {
     DBProviderMockImpl dataBase = DBProviderMockImpl.getDBProvider();
     DateTime now = DateTime.now();
-    Note nota = new Note();
+    Todo nota = new Todo();
     nota.setTitle("title 1");
     nota.setDescription("Text text");
     nota.setDateStart(now);
     nota.setDateEnd(DateTime(now.year, now.month, now.day + 5));
     nota.setPriority(0);
     nota.setDone(false);
-    expect(1, await dataBase.insertNote(nota));
+    expect(1, await dataBase.insertTodo(nota));
     expect(1, await dataBase.delete(1));
     expect([], dataBase.getTodo());
   });
@@ -66,9 +65,9 @@ void main() {
   test("Test update", () async {
     DBProviderMockImpl dataBase = DBProviderMockImpl.getDBProvider();
     // adiciona tarefa
-    expect(1, await dataBase.insertNote(nota1));
+    expect(1, await dataBase.insertTodo(nota1));
     // objeto com as atualizações
-    Note todoNew = new Note();
+    Todo todoNew = new Todo();
     todoNew.setId(1);
     todoNew.setTitle("title 2");
     todoNew.setDescription("Text text");
@@ -77,11 +76,10 @@ void main() {
     todoNew.setPriority(1);
     todoNew.setDone(true);
     // atualiza valores
-    expect(1, await dataBase.updateNote(todoNew));
-   
+    expect(1, await dataBase.updateTodo(todoNew));
 
     //verifica valores
-    Note result = await dataBase.getById(1);
+    Todo result = await dataBase.getById(1);
     expect(todoNew.getId(), result.getId());
     expect(todoNew.getTitle(), result.getTitle());
     expect(todoNew.getDescription(), result.getDescription());

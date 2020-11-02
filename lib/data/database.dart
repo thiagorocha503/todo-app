@@ -1,12 +1,12 @@
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:lista_de_tarefas/data/IDataBase.dart';
-import 'package:lista_de_tarefas/model/note.dart';
+import 'package:lista_de_tarefas/model/todo.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
-class DBProvider implements IDBProvider{
+class DBProvider implements IDBProvider {
   static DBProvider _dbProvider;
   static Database _database;
 
@@ -18,7 +18,7 @@ class DBProvider implements IDBProvider{
     }
     return _dbProvider;
   }
-  
+
   Future<Database> getDataBase() async {
     debugPrint("get dataBase");
     if (_database != null) {
@@ -54,47 +54,50 @@ class DBProvider implements IDBProvider{
       },
     );
   }
-  
+
   @override
-  Future<int> insertNote(Note nota) async {
+  Future<int> insertTodo(Todo nota) async {
     Database database = await this.getDataBase();
     int row = await database.insert("note", nota.toMap());
     return row;
   }
-  
+
   @override
-  Future<int> updateNote(Note nota) async {
+  Future<int> updateTodo(Todo nota) async {
     Database dataBase = await this.getDataBase();
     return await dataBase
         .update("note", nota.toMap(), where: "id=?", whereArgs: [nota.getId()]);
   }
 
   @override
-  Future<List<Note>> fetchAll() async {
+  Future<List<Todo>> fetchAll() async {
     Database database = await this.getDataBase();
     var dados = await database.query("note", orderBy: 'done');
-    List<Note> notes = dados.isNotEmpty
-        ? dados.map((value) => Note.fromMap(value)).toList()
+    List<Todo> todos = dados.isNotEmpty
+        ? dados.map((value) => Todo.fromMap(value)).toList()
         : [];
-    return notes;
+    return todos;
   }
 
   @override
-  Future<List<Note>> findByTitle(String title) async {
+  Future<List<Todo>> findByTitle(String title) async {
     Database db = await this.getDataBase();
-    var result = await db.query("note", where: "title LIKE ?",whereArgs: ['%$title%']);
-    List<Note> notes =
-        (result.isNotEmpty) ? result.map((c) => Note.fromMap(c)).toList() : [];
-    return notes;
+    var result =
+        await db.query("note", where: "title LIKE ?", whereArgs: ['%$title%']);
+    List<Todo> todos =
+        (result.isNotEmpty) ? result.map((c) => Todo.fromMap(c)).toList() : [];
+    return todos;
   }
-   
+
   @override
-  Future<List<Note>> findByTitleAndDone(String title, bool done) async {
+  Future<List<Todo>> findByTitleAndDone(String title, bool done) async {
     Database db = await this.getDataBase();
-    var result = await db.query("note", where: "title LIKE ? and done = ?",whereArgs: ['%$title%', done?1:0]);
-    List<Note> notes =
-        (result.isNotEmpty) ? result.map((c) => Note.fromMap(c)).toList() : [];
-    return notes;
+    var result = await db.query("note",
+        where: "title LIKE ? and done = ?",
+        whereArgs: ['%$title%', done ? 1 : 0]);
+    List<Todo> todos =
+        (result.isNotEmpty) ? result.map((c) => Todo.fromMap(c)).toList() : [];
+    return todos;
   }
 
   @override
@@ -104,17 +107,18 @@ class DBProvider implements IDBProvider{
   }
 
   @override
-  Future<int> markNote(int id, bool done) async {
+  Future<int> markTodo(int id, bool done) async {
     Database db = await this.getDataBase();
     return await db
         .rawUpdate("UPDATE note set done=? WHERE id=?", [((done) ? 1 : 0), id]);
   }
 
   @override
-  Future<Note> getById(int id) async {
+  Future<Todo> getById(int id) async {
     Database db = await this.getDataBase();
-    List<Map<dynamic, dynamic>> result = await db.query("note", where: "id = ?",whereArgs: [id]);
-    Note note =(result.isNotEmpty) ? Note.fromMap(result[0]): null;
-    return note;
+    List<Map<dynamic, dynamic>> result =
+        await db.query("note", where: "id = ?", whereArgs: [id]);
+    Todo todo = (result.isNotEmpty) ? Todo.fromMap(result[0]) : null;
+    return todo;
   }
 }
