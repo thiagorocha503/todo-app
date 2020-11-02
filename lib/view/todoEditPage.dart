@@ -3,15 +3,15 @@ import 'package:lista_de_tarefas/presenter/presenter.dart';
 import 'package:lista_de_tarefas/presenter/tarefaEditPresenter.dart';
 import 'package:lista_de_tarefas/view/view.dart';
 
-class TarefaEditPage extends StatefulWidget {
+class TodoEditPage extends StatefulWidget {
   final Map todo;
 
-  TarefaEditPage({Key key, @required this.todo}) : super(key: key);
+  TodoEditPage({Key key, @required this.todo}) : super(key: key);
   @override
   _NoteEditPageState createState() => _NoteEditPageState();
 }
 
-class _NoteEditPageState extends State<TarefaEditPage> implements ITodoEdit {
+class _NoteEditPageState extends State<TodoEditPage> implements ITodoEdit {
   bool _checkDone = false;
   TextEditingController _txtTitle = new TextEditingController();
   TextEditingController _txtDescription = new TextEditingController();

@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:lista_de_tarefas/presenter/tarefaSearchPresenter.dart';
-import 'package:lista_de_tarefas/view/tarefaEditPage.dart';
+import 'package:lista_de_tarefas/view/todoEditPage.dart';
 
-class TarefaSearchPage extends SearchDelegate<Map> {
+class TodoSearchPage extends SearchDelegate<Map> {
   List<Map> todos = new List<Map>();
   ISearchPresenter presenter;
   List<String> suggestions;
 
-  TarefaSearchPage(List<String> suggestions) {
+  TodoSearchPage(List<String> suggestions) {
     this.presenter = new SearchPresenter();
     this.suggestions = suggestions == null ? [] : suggestions;
   }
@@ -61,7 +61,7 @@ class TarefaSearchPage extends SearchDelegate<Map> {
             context,
             MaterialPageRoute(
               builder: (context) {
-                return new TarefaEditPage(todo: this.todos[index]);
+                return new TodoEditPage(todo: this.todos[index]);
               },
             ),
           );

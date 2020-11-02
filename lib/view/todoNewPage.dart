@@ -3,12 +3,12 @@ import 'package:lista_de_tarefas/presenter/presenter.dart';
 import 'package:lista_de_tarefas/presenter/tarefaAddPresenter.dart';
 import 'package:lista_de_tarefas/view/view.dart';
 
-class TarefaAddPage extends StatefulWidget {
+class TodoNewPage extends StatefulWidget {
   @override
   _NoteAddPageState createState() => _NoteAddPageState();
 }
 
-class _NoteAddPageState extends State<TarefaAddPage> implements IPageNewTodo {
+class _NoteAddPageState extends State<TodoNewPage> implements IPageNewTodo {
   bool _checkDone = false;
   TextEditingController _txtTitle = new TextEditingController();
   TextEditingController _txtDescription = new TextEditingController();

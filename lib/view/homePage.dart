@@ -3,17 +3,17 @@ import 'package:flutter/material.dart';
 import 'package:lista_de_tarefas/view/aboutPage.dart';
 import 'package:lista_de_tarefas/presenter/presenter.dart';
 import 'package:lista_de_tarefas/presenter/tarefaListPresenter.dart';
-import 'package:lista_de_tarefas/view/tarefaEditPage.dart';
-import 'package:lista_de_tarefas/view/tarefaNewPage.dart';
-import 'package:lista_de_tarefas/view/tarefaSearchPage.dart';
+import 'package:lista_de_tarefas/view/todoEditPage.dart';
+import 'package:lista_de_tarefas/view/todoNewPage.dart';
+import 'package:lista_de_tarefas/view/todoSearchPage.dart';
 import 'package:lista_de_tarefas/view/view.dart';
 
-class TarefaListPage extends StatefulWidget {
+class HomePage extends StatefulWidget {
   @override
-  _TarefaListPageState createState() => _TarefaListPageState();
+  _HomePageState createState() => _HomePageState();
 }
 
-class _TarefaListPageState extends State<TarefaListPage> implements IPageList {
+class _HomePageState extends State<HomePage> implements IPageList {
   List<Map> _todos;
   BuildContext scaffoldContext;
   ITodoListPresenter presenter;
@@ -40,7 +40,7 @@ class _TarefaListPageState extends State<TarefaListPage> implements IPageList {
   void onClickIconButtonSearch() {
     showSearch(
       context: context,
-      delegate: TarefaSearchPage(this.suggestions),
+      delegate: TodoSearchPage(this.suggestions),
     ).then((value) {
       if (value["suggestions"] is List<String>) {
         this.suggestions = value["suggestions"];
@@ -235,7 +235,7 @@ class _TarefaListPageState extends State<TarefaListPage> implements IPageList {
 
   void onTapListItem(int index) {
     Route rota = new MaterialPageRoute(
-      builder: (context) => TarefaEditPage(
+      builder: (context) => TodoEditPage(
         todo: this._todos[index],
       ),
     );
@@ -284,7 +284,7 @@ class _TarefaListPageState extends State<TarefaListPage> implements IPageList {
   @override
   void onClickFloatingButton() async {
     Route rota = new MaterialPageRoute(
-      builder: (context) => TarefaAddPage(),
+      builder: (context) => TodoNewPage(),
     );
     Navigator.push(context, rota).whenComplete(() {
       this.onRefresh();

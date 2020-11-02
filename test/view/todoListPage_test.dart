@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:lista_de_tarefas/view/tarefaListPage.dart';
-import 'package:lista_de_tarefas/view/tarefaNewPage.dart';
+import 'package:lista_de_tarefas/view/homePage.dart';
+import 'package:lista_de_tarefas/view/todoNewPage.dart';
 import 'package:mockito/mockito.dart';
 
 class MockNavigatorObserver extends Mock implements NavigatorObserver {}
@@ -12,7 +12,7 @@ void main() {
     var app = MediaQuery(
         data: new MediaQueryData(),
         child: new MaterialApp(
-          home: TarefaListPage(),
+          home: HomePage(),
           navigatorObservers: [mockObserver],
         ));
     await tester.pumpWidget(app);
@@ -26,6 +26,6 @@ void main() {
     verify(mockObserver.didPush(any, any));
 
     // Verifica a existencia de TarefaAddPage na árvore de widget
-    expect(find.byType(TarefaAddPage), findsOneWidget);
+    expect(find.byType(TodoNewPage), findsOneWidget);
   });
 }
