@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:lista_de_tarefas/presenter/aboutPage.dart';
+import 'package:lista_de_tarefas/view/aboutPage.dart';
 import 'package:lista_de_tarefas/presenter/presenter.dart';
 import 'package:lista_de_tarefas/presenter/tarefaListPresenter.dart';
 import 'package:lista_de_tarefas/view/tarefaEditPage.dart';
