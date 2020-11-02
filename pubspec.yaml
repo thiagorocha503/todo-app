@@ -30,7 +30,7 @@ dependencies:
   flutter_masked_text: ^0.8.0
   sqflite: ^1.2.0
   path_provider:  ^1.5.1
-  url_launcher: ^5.4.1
+  url_launcher: ^5.7.8
   share: ^0.6.3+5
 
 
