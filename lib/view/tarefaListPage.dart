@@ -20,12 +20,12 @@ class _TarefaListPageState extends State<TarefaListPage> implements IPageList {
   static Key floatingActionButtonKey = Key("floatingActionButtonKey");
 
   int _filterSelected = FILTER_NOT_DONE;
-
   static const int FILTER_NOT_DONE = 1;
   static const int FILTER_DONE = 2;
   static const int FILTER_ALL = 3;
 
   static const int MORE_OPTION = 0;
+  List<String> suggestions;
 
   void initList() async {
     notes = new List<Map>();
@@ -38,15 +38,15 @@ class _TarefaListPageState extends State<TarefaListPage> implements IPageList {
 
   @override
   void onClickIconButtonSearch() {
-    showSearch(context: context, delegate: TarefaSearchPage()).then((onValue) {
-      if (onValue != null) {
-        Route route = new MaterialPageRoute(
-          builder: (context) => TarefaEditPage(note: onValue),
-        );
-        Navigator.push(this.scaffoldContext, route).whenComplete(() {
-          this.onRefresh();
-        });
+    showSearch(
+      context: context,
+      delegate: TarefaSearchPage(this.suggestions),
+    ).then((value) {
+      if (value["suggestions"] is List<String>) {
+        this.suggestions = value["suggestions"];
       }
+    }).whenComplete(() {
+      this.onRefresh();
     });
   }
 
@@ -55,6 +55,7 @@ class _TarefaListPageState extends State<TarefaListPage> implements IPageList {
     super.initState();
     this.presenter = new TarefaListPresent();
     this.presenter.setView(this);
+    this.suggestions = [];
     this.initList();
   }
 
@@ -217,6 +218,7 @@ class _TarefaListPageState extends State<TarefaListPage> implements IPageList {
           },
         ),
         trailing: IconButton(
+          tooltip: "Remover",
           icon: Icon(Icons.delete),
           color: Theme.of(context).primaryColor,
           onPressed: () {
@@ -243,6 +245,18 @@ class _TarefaListPageState extends State<TarefaListPage> implements IPageList {
   }
 
   Widget buildList() {
+    if (this.notes.length == 0) {
+      return Center(
+        child: Text(
+          "Nenhuma tarefa",
+          style: TextStyle(
+            color: Colors.grey,
+            fontSize: 20,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+      );
+    }
     return ListView.builder(
       itemCount: this.notes.length,
       itemBuilder: (context, index) {
@@ -281,9 +295,6 @@ class _TarefaListPageState extends State<TarefaListPage> implements IPageList {
   void updateList(List<Map> newNote) {
     setState(() {
       this.notes = newNote;
-      if (notes.length == 0) {
-        this.showSnackBarInfo("Nehuma tarefa");
-      }
     });
   }
 

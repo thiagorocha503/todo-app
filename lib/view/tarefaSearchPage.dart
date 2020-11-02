@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:lista_de_tarefas/presenter/tarefaSearchPresenter.dart';
+import 'package:lista_de_tarefas/view/tarefaEditPage.dart';
 
 class TarefaSearchPage extends SearchDelegate<Map> {
-  List<Map> notes = new List<Map>();
+  List<Map> todos = new List<Map>();
   ISearchPresenter presenter;
+  List<String> suggestions;
 
-  TarefaSearchPage() {
+  TarefaSearchPage(List<String> suggestions) {
     this.presenter = new SearchPresenter();
+    this.suggestions = suggestions == null ? [] : suggestions;
   }
 
   @override
@@ -45,7 +48,7 @@ class TarefaSearchPage extends SearchDelegate<Map> {
     return IconButton(
       icon: Icon(Icons.arrow_back),
       onPressed: () {
-        close(context, null);
+        close(context, {"suggestions": this.suggestions});
       },
     );
   }
@@ -54,23 +57,30 @@ class TarefaSearchPage extends SearchDelegate<Map> {
     return Card(
       child: ListTile(
         onTap: () {
-          close(context, this.notes[index]);
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) {
+                return new TarefaEditPage(note: this.todos[index]);
+              },
+            ),
+          );
         },
         leading: Checkbox(
-          value: this.notes[index]["done"],
+          value: this.todos[index]["done"],
           onChanged: (value) {
             close(context, null);
           },
         ),
-        title: Text(this.notes[index]["title"]),
-        subtitle: Text(this.notes[index]["description"]),
+        title: Text(this.todos[index]["title"]),
+        subtitle: Text(this.todos[index]["description"]),
       ),
     );
   }
 
   Widget buildList() {
     return ListView.builder(
-      itemCount: notes.length,
+      itemCount: todos.length,
       itemBuilder: (context, index) {
         return this.builListItem(index, context);
       },
@@ -79,24 +89,35 @@ class TarefaSearchPage extends SearchDelegate<Map> {
 
   @override
   Widget buildResults(BuildContext context) {
+    if (this.query != "" && !this.suggestions.contains(this.query)) {
+      this.suggestions.add(this.query);
+    }
+    if (this.todos.length == 0) {
+      return Center(
+        child: Text(
+          "Nenhum resultado",
+          style: TextStyle(
+            color: Colors.grey,
+            fontSize: 20,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+      );
+    }
     return new FutureBuilder<List<Map>>(
       future: this.presenter.findByTitle(query),
       builder: (context, snapshot) {
-        switch (snapshot.connectionState) {
-          case ConnectionState.none:
-          case ConnectionState.waiting:
-            return Center(
-              child: CircularProgressIndicator(),
-            );
-          default:
-            {
-              if (snapshot.hasError) {
-                return new Text('Error: ${snapshot.error}');
-              } else {
-                this.notes = snapshot.data;
-                return buildList();
-              }
-            }
+        if (snapshot.hasError) {
+          return Center(
+            child: Text('Error: ${snapshot.error}'),
+          );
+        } else if (snapshot.hasData) {
+          this.todos = snapshot.data;
+          return buildList();
+        } else {
+          return Center(
+            child: CircularProgressIndicator(),
+          );
         }
       },
     );
@@ -104,24 +125,33 @@ class TarefaSearchPage extends SearchDelegate<Map> {
 
   @override
   Widget buildSuggestions(BuildContext context) {
+    if (this.query == "") {
+      return ListView.builder(
+        itemCount: this.suggestions.length,
+        itemBuilder: (context, index) {
+          return ListTile(
+            onTap: () {
+              this.query = this.suggestions[index];
+            },
+            title: Text(this.suggestions[index]),
+          );
+        },
+      );
+    }
     return new FutureBuilder<List<Map>>(
       future: this.presenter.findByTitle(query),
       builder: (context, snapshot) {
-        switch (snapshot.connectionState) {
-          case ConnectionState.none:
-          case ConnectionState.waiting:
-            return Center(
-              child: CircularProgressIndicator(),
-            );
-          default:
-            {
-              if (snapshot.hasError) {
-                return new Text('Error: ${snapshot.error}');
-              } else {
-                this.notes = snapshot.data;
-                return buildList();
-              }
-            }
+        if (snapshot.hasError) {
+          return Center(
+            child: Text('Error: ${snapshot.error}'),
+          );
+        } else if (snapshot.hasData) {
+          this.todos = snapshot.data;
+          return buildList();
+        } else {
+          return Center(
+            child: CircularProgressIndicator(),
+          );
         }
       },
     );
