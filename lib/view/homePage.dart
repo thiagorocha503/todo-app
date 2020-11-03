@@ -13,7 +13,7 @@ class HomePage extends StatefulWidget {
   _HomePageState createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> implements IPageList {
+class _HomePageState extends State<HomePage> implements IHomePage {
   List<Map> _todos;
   BuildContext scaffoldContext;
   ITodoListPresenter presenter;
@@ -114,11 +114,6 @@ class _HomePageState extends State<HomePage> implements IPageList {
               Icons.more_vert,
               color: Colors.white,
             ),
-            onSelected: (value) {
-              if (value == MORE_OPTION) {
-                this.onAbout();
-              }
-            },
             itemBuilder: (BuildContext context) {
               return [
                 PopupMenuItem(
@@ -126,6 +121,11 @@ class _HomePageState extends State<HomePage> implements IPageList {
                   child: Text("Sobre"),
                 ),
               ];
+            },
+            onSelected: (value) {
+              if (value == MORE_OPTION) {
+                this.showAboutPage();
+              }
             },
           )
         ],
@@ -302,11 +302,6 @@ class _HomePageState extends State<HomePage> implements IPageList {
     setState(() {
       this._todos = newNote;
     });
-  }
-
-  @override
-  void onAbout() {
-    this.presenter.about();
   }
 
   @override

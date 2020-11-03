@@ -4,7 +4,7 @@ import 'package:lista_de_tarefas/presenter/presenter.dart';
 import 'package:lista_de_tarefas/view/view.dart';
 
 class TarefaListPresent implements ITodoListPresenter {
-  IPageList view;
+  IHomePage view;
 
   @override
   void deleteTodo(int id) async {
@@ -57,7 +57,7 @@ class TarefaListPresent implements ITodoListPresenter {
   }
 
   @override
-  void setView(IPageList view) {
+  void setView(IHomePage view) {
     this.view = view;
   }
 

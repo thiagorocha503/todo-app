@@ -10,7 +10,7 @@ class ITodoListPresenter {
     return new List<Map>();
   }
 
-  void setView(IPageList view) {}
+  void setView(IHomePage view) {}
   void refresh(int filter) {}
   void about() {}
 }
@@ -33,11 +33,4 @@ class ITodoEditPresenter {
   Future<List> getTodoById(int id) {
     return null;
   }
-}
-
-class IAboutPresenter {
-  void setView(IAboutPage view) {}
-  void share() {}
-  void shop() {}
-  void sendFeedBack() {}
 }

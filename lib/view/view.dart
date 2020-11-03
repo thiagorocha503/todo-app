@@ -1,4 +1,4 @@
-class IPageList {
+class IHomePage {
   void onClickFloatingButton() {}
   void onClickDelete(int index) {}
   void showSnackBarInfo(String title) {}
@@ -6,7 +6,6 @@ class IPageList {
   void onClickIconButtonSearch() {}
   void onRefresh() {}
   void updateList(List<Map> notes) {}
-  void onAbout() {}
   void showAboutPage() {}
 }
 
@@ -27,11 +26,7 @@ class ITodoEdit {
 }
 
 class IAboutPage {
-  void onFeedBack() {}
+  void onContact() {}
   void onShare() {}
-  void onShop() {}
-
-  void openShop() {}
-  void sendEmail(String mail) {}
-  void shareApp(String text) {}
+  void onStore() {}
 }

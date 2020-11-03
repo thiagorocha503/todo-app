@@ -1,11 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:lista_de_tarefas/presenter/aboutPresenter.dart';
-import 'package:lista_de_tarefas/presenter/presenter.dart';
-import 'package:lista_de_tarefas/view/view.dart';
 import 'package:share/share.dart';
+import 'package:launch_review/launch_review.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:lista_de_tarefas/constants.dart' as constants;
+import 'package:lista_de_tarefas/view/view.dart';
 
 class AboutPage extends StatefulWidget {
   @override
@@ -13,13 +12,9 @@ class AboutPage extends StatefulWidget {
 }
 
 class _AboutPageState extends State<AboutPage> implements IAboutPage {
-  IAboutPresenter presenter;
-
   @override
   void initState() {
     super.initState();
-    this.presenter = new AboutPresenter();
-    this.presenter.setView(this);
   }
 
   @override
@@ -29,68 +24,55 @@ class _AboutPageState extends State<AboutPage> implements IAboutPage {
         title: Text("Sobre"),
       ),
       body: SafeArea(
-          child: Column(
-        children: <Widget>[
-          Expanded(
-            child: ListView(
-              children: <Widget>[
-                ListTile(
-                  leading: Icon(Icons.shop),
-                  title: Text("Avalie ou comente"),
-                  onTap: (){
-                    this.onShop();
-                  },
-                ),
-                ListTile(
-                  leading: Icon(Icons.share),
-                  title: Text("Compartilhe com seus amigos"),
-                  onTap:(){
-                    this.onShare();
-                  }
-                ),
-                ListTile(
-                  leading: Icon(Icons.feedback),
-                  title: Text("Feedback"),
-                  onTap: () {
-                    this.onFeedBack();
-                  },
-                ),
-                ListTile(
-                  leading: Icon(Icons.info),
-                  title: Text("Versão"),
-                  subtitle: Text("${constants.version}"),
-                ),
-              ],
+        child: Column(
+          children: <Widget>[
+            Expanded(
+              child: ListView(
+                children: <Widget>[
+                  ListTile(
+                    leading: Icon(Icons.shop),
+                    title: Text("Avalie na play store"),
+                    onTap: () {
+                      this.onStore();
+                    },
+                  ),
+                  ListTile(
+                    leading: Icon(Icons.share),
+                    title: Text("Compartilhe com seus amigos"),
+                    onTap: () {
+                      this.onShare();
+                    },
+                  ),
+                  ListTile(
+                    leading: Icon(Icons.feedback),
+                    title: Text("Contato"),
+                    onTap: () {
+                      this.onContact();
+                    },
+                  ),
+                  AboutListTile(
+                    icon: Icon(Icons.info),
+                    applicationName: "Lista de tarefas",
+                    applicationVersion: constants.APP_VERSION,
+                    child: Text("Sobre o Lista de tarefa"),
+                    applicationIcon: Image.asset(
+                      'asset/todo.png',
+                      height: 60,
+                    ),
+                    applicationLegalese: "Developed by Thiago R. Ferreira",
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
-      )),
+          ],
+        ),
+      ),
     );
   }
 
   @override
-  void onFeedBack() {
-    this.presenter.sendFeedBack();
-  }
-
-  @override
-  void onShare() {
-    this.presenter.share();
-  }
-
-  @override
-  void onShop() {
-    this.presenter.shop();
-  }
-
-  @override
-  void openShop() async {
-    
-  }
-
-  @override
-  void sendEmail(String email) async {
-    String url = 'mailto:$email';
+  void onContact() async {
+    String url = 'mailto:${constants.EMAIL_DEV}';
     if (await canLaunch(url)) {
       await launch(url);
     } else {
@@ -99,7 +81,12 @@ class _AboutPageState extends State<AboutPage> implements IAboutPage {
   }
 
   @override
-  void shareApp(String link) {
-    Share.share("$link");
+  void onShare() {
+    Share.share("${constants.ANDROID_APP_LINK}");
+  }
+
+  @override
+  void onStore() async {
+    LaunchReview.launch();
   }
 }
