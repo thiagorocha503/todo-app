@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:lista_de_tarefas/view/aboutPage.dart';
 import 'package:lista_de_tarefas/presenter/presenter.dart';
-import 'package:lista_de_tarefas/presenter/tarefaListPresenter.dart';
+import 'package:lista_de_tarefas/presenter/todoHomePresenter.dart';
 import 'package:lista_de_tarefas/view/todoEditPage.dart';
 import 'package:lista_de_tarefas/view/todoNewPage.dart';
 import 'package:lista_de_tarefas/view/todoSearchPage.dart';
@@ -178,10 +178,10 @@ class _HomePageState extends State<HomePage> implements IPageList {
       return Colors.grey[300];
     }
     // caso atrasado
-    DateTime dateEnd = DateTime.parse(this._todos[index]["dateEnd"]);
+    DateTime dueDate = DateTime.parse(this._todos[index]["due_date"]);
     DateTime now = DateTime.now();
     DateTime today = DateTime(now.year, now.month, now.day);
-    if (dateEnd.compareTo(today) < 0) {
+    if (dueDate.compareTo(today) < 0) {
       return Colors.red[200];
     }
     return Colors.white;
@@ -239,7 +239,13 @@ class _HomePageState extends State<HomePage> implements IPageList {
         todo: this._todos[index],
       ),
     );
-    Navigator.push(context, rota).whenComplete(() {
+    Navigator.push(context, rota).then((value) {
+      if (value["showSuccessDelete"] != null) {
+        if (value["showSuccessDelete"]) {
+          this.showSnackBarInfo("Tarefa removida");
+        }
+      }
+    }).whenComplete(() {
       this.onRefresh();
     });
   }

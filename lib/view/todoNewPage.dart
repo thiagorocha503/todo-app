@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:lista_de_tarefas/presenter/presenter.dart';
-import 'package:lista_de_tarefas/presenter/tarefaAddPresenter.dart';
+import 'package:lista_de_tarefas/presenter/todoAddPresenter.dart';
 import 'package:lista_de_tarefas/view/view.dart';
 
 class TodoNewPage extends StatefulWidget {
@@ -12,12 +13,9 @@ class _NoteAddPageState extends State<TodoNewPage> implements IPageNewTodo {
   bool _checkDone = false;
   TextEditingController _txtTitle = new TextEditingController();
   TextEditingController _txtDescription = new TextEditingController();
-  TextEditingController _txtDataStart = new TextEditingController();
-  TextEditingController _txtDateEnd = new TextEditingController();
-  DateTime dateStartSelected = new DateTime.now();
-  DateTime dateEndSelected = new DateTime.now();
-  bool _isSelectedDateStart = false;
-  bool _isSelectedDateEnd = false;
+  TextEditingController _txtDueDate = new TextEditingController();
+  DateTime dueDateSelected = new DateTime.now();
+  bool _isSelectedDueDate = false;
   final _formKey = GlobalKey<FormState>();
   BuildContext scaffoldContext;
   List prioridades = ["Normal", "Baixa", "Alta"];
@@ -26,16 +24,19 @@ class _NoteAddPageState extends State<TodoNewPage> implements IPageNewTodo {
 
   @override
   void onCadastro() {
-    Map todo = {
+    DateTime today = DateTime.now();
+    Map json = {
+      "id": 0,
       "title": this._txtTitle.text,
       "description": this._txtDescription.text,
-      "dateStart": this.dateStartSelected,
-      "dateEnd": this.dateEndSelected,
+      "created_date": today,
+      "due_date": this.dueDateSelected,
+      "complete_date": this._checkDone ? today : null,
       "priority": this.getPrioridadeAsInt(this.prioridadeSelected),
-      "done": this._checkDone
+      "done": this._checkDone,
     };
-    debugPrint(todo.toString());
-    this.presenter.todoInsert(todo);
+    debugPrint(json.toString());
+    this.presenter.todoInsert(json);
   }
 
   @override
@@ -128,46 +129,16 @@ class _NoteAddPageState extends State<TodoNewPage> implements IPageNewTodo {
                       Container(
                         padding: EdgeInsets.fromLTRB(15, 10, 15, 5),
                         child: TextFormField(
-                          controller: this._txtDataStart,
+                          controller: this._txtDueDate,
                           keyboardType: TextInputType.number,
                           readOnly: true,
                           onTap: () {
                             debugPrint("Tap date picker");
-                            this._selectDateStart(context);
+                            this._selectDueDate(context);
                           },
                           decoration: InputDecoration(
                             border: OutlineInputBorder(),
-                            labelText: "Data de ínicio",
-                            hintText: "00/00/0000",
-                            suffixIcon: IconButton(
-                              onPressed: () {},
-                              icon: Icon(
-                                Icons.calendar_today,
-                              ),
-                            ),
-                          ),
-                          validator: (value) {
-                            if (value.isEmpty) {
-                              return "Preencha este campo";
-                            }
-                            return null;
-                          },
-                        ),
-                      ),
-                      Container(
-                        padding: EdgeInsets.fromLTRB(15, 10, 15, 5),
-                        child: TextFormField(
-                          controller: this._txtDateEnd,
-                          keyboardType: TextInputType.number,
-                          readOnly: true,
-                          onTap: () {
-                            debugPrint("Tap date picker");
-                            this._selectDateEnd(context);
-                          },
-                          decoration: InputDecoration(
-                            border: OutlineInputBorder(),
-                            labelText: "Data de término",
-                            hintText: "00/00/0000",
+                            labelText: "Data para concluir",
                             suffixIcon: IconButton(
                               onPressed: () {},
                               icon: Icon(Icons.calendar_today),
@@ -175,7 +146,7 @@ class _NoteAddPageState extends State<TodoNewPage> implements IPageNewTodo {
                           ),
                           validator: (value) {
                             if (value.isEmpty) {
-                              return "Preencha este campo";
+                              return "Preencha o campo data para concluir";
                             }
                             return null;
                           },
@@ -260,42 +231,23 @@ class _NoteAddPageState extends State<TodoNewPage> implements IPageNewTodo {
     });
   }
 
-  Future<void> _selectDateStart(BuildContext context) async {
+  Future<void> _selectDueDate(BuildContext context) async {
     final today = new DateTime.now();
     final DateTime picked = await showDatePicker(
       context: context,
-      initialDate: dateStartSelected,
+      initialDate: this.dueDateSelected,
       firstDate: DateTime(today.year, today.month, today.day),
       lastDate: DateTime.now().add(new Duration(days: 360 * 2)),
     );
-    if (picked != null && picked != dateStartSelected) {
-      if (!this._isSelectedDateStart) {
-        this._isSelectedDateStart = true;
+    if (picked != null && picked != dueDateSelected) {
+      if (!this._isSelectedDueDate) {
+        this._isSelectedDueDate = true;
       }
       setState(() {
-        this.dateStartSelected = picked;
-        this._txtDataStart.text =
-            "${picked.day.toString().padLeft(2, '0')}/${picked.month.toString().padLeft(2, '0')}/${picked.year.toString().padLeft(4, '0')}";
-      });
-    }
-  }
-
-  Future<void> _selectDateEnd(BuildContext context) async {
-    final today = new DateTime.now();
-    final DateTime picked = await showDatePicker(
-      context: context,
-      initialDate: dateStartSelected,
-      firstDate: DateTime(today.year, today.month, today.day),
-      lastDate: DateTime.now().add(new Duration(days: 360 * 2)),
-    );
-    if (picked != null && picked != dateEndSelected) {
-      if (!this._isSelectedDateEnd) {
-        this._isSelectedDateEnd = true;
-      }
-      setState(() {
-        this.dateEndSelected = picked;
-        this._txtDateEnd.text =
-            "${picked.day.toString().padLeft(2, '0')}/${picked.month.toString().padLeft(2, '0')}/${picked.year.toString().padLeft(4, '0')}";
+        this.dueDateSelected = picked;
+        DateFormat formatter =
+            new DateFormat.yMEd(Localizations.localeOf(context).toString());
+        this._txtDueDate.text = formatter.format(picked);
       });
     }
   }
@@ -311,14 +263,11 @@ class _NoteAddPageState extends State<TodoNewPage> implements IPageNewTodo {
     setState(() {
       this._txtTitle.text = "";
       this._txtDescription.text = "";
-      this._txtDataStart.text = "";
-      this._txtDateEnd.text = "";
+      this._txtDueDate.text = "";
       this._checkDone = false;
-      dateStartSelected = new DateTime.now();
 
-      dateEndSelected = new DateTime.now();
-      this._isSelectedDateStart = false;
-      this._isSelectedDateEnd = false;
+      dueDateSelected = new DateTime.now();
+      this._isSelectedDueDate = false;
       this.prioridadeSelected = "Normal";
     });
   }
@@ -332,7 +281,7 @@ class _NoteAddPageState extends State<TodoNewPage> implements IPageNewTodo {
       case "Baixa":
         return 2;
       default:
-        return 0;
+        return -1;
     }
   }
 }

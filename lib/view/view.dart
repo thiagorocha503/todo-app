@@ -22,7 +22,7 @@ class ITodoEdit {
   void showSnackBarMessage(String message) {}
   void onClickUpdate() {}
   void onClickDelete() {}
-  void backPage() {}
+  void backPage({showSuccessDelete}) {}
   void setField() {}
 }
 

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:lista_de_tarefas/presenter/presenter.dart';
-import 'package:lista_de_tarefas/presenter/tarefaEditPresenter.dart';
+import 'package:lista_de_tarefas/presenter/todoEditPresenter.dart';
 import 'package:lista_de_tarefas/view/view.dart';
 
 class TodoEditPage extends StatefulWidget {
@@ -15,32 +16,22 @@ class _NoteEditPageState extends State<TodoEditPage> implements ITodoEdit {
   bool _checkDone = false;
   TextEditingController _txtTitle = new TextEditingController();
   TextEditingController _txtDescription = new TextEditingController();
-  TextEditingController _txtDataStart = new TextEditingController();
-  TextEditingController _txtDateEnd = new TextEditingController();
-  DateTime dateStartSelected = new DateTime.now();
-  DateTime dateEndSelected = new DateTime.now();
+  TextEditingController _txtDueDate = new TextEditingController();
+  DateTime dueDateSelected = new DateTime.now();
   final _formKey = GlobalKey<FormState>();
   BuildContext scaffoldContext;
   List prioridades = ["Normal", "Baixa", "Alta"];
   String prioridadeSelected = "Normal";
   ITodoEditPresenter presenter;
-
   bool _isSelectedDateEnd = false;
-
-  bool _isSelectedDateStart = false;
+  DateFormat formatter;
 
   @override
   void setField() {
     debugPrint(widget.todo.toString());
-    this.dateStartSelected = DateTime.parse(widget.todo["dateStart"]);
-    this.dateEndSelected = DateTime.parse(widget.todo["dateEnd"]);
-
+    this.dueDateSelected = DateTime.parse(widget.todo["due_date"]);
     this._txtTitle.text = widget.todo["title"];
     this._txtDescription.text = widget.todo["description"];
-    this._txtDataStart.text =
-        "${this.dateStartSelected.day.toString().padLeft(2, "0")}/${this.dateStartSelected.month.toString().padLeft(2, '0')}/${this.dateStartSelected.year.toString().padLeft(4, '4')}";
-    this._txtDateEnd.text =
-        "${this.dateEndSelected.day.toString().padLeft(2, "0")}/${this.dateEndSelected.month.toString().padLeft(2, '0')}/${this.dateEndSelected.year.toString().padLeft(4, '4')}";
     this._checkDone = widget.todo["done"];
     this.prioridadeSelected =
         this.getPrioridadeAsString(widget.todo["priority"]);
@@ -57,6 +48,11 @@ class _NoteEditPageState extends State<TodoEditPage> implements ITodoEdit {
 
   @override
   Widget build(BuildContext context) {
+    // set due date text field
+    this.formatter =
+        new DateFormat.yMEd(Localizations.localeOf(context).toString());
+    this._txtDueDate.text = formatter.format(this.dueDateSelected);
+
     return Scaffold(
       appBar: AppBar(
         title: Text("Editar tarefa"),
@@ -133,16 +129,16 @@ class _NoteEditPageState extends State<TodoEditPage> implements ITodoEdit {
                       Container(
                         padding: EdgeInsets.fromLTRB(15, 10, 15, 5),
                         child: TextFormField(
-                          controller: this._txtDataStart,
+                          controller: this._txtDueDate,
                           keyboardType: TextInputType.number,
                           readOnly: true,
                           onTap: () {
                             debugPrint("Tap date picker");
-                            this._selectDateStart(context);
+                            this._selectDueDate(context);
                           },
                           decoration: InputDecoration(
                             border: OutlineInputBorder(),
-                            labelText: "Data de ínicio",
+                            labelText: "Data para concluir",
                             suffixIcon: IconButton(
                               onPressed: () {},
                               icon: Icon(
@@ -152,35 +148,7 @@ class _NoteEditPageState extends State<TodoEditPage> implements ITodoEdit {
                           ),
                           validator: (value) {
                             if (value.isEmpty) {
-                              return "Preencha este campo";
-                            }
-                            return null;
-                          },
-                        ),
-                      ),
-                      Container(
-                        padding: EdgeInsets.fromLTRB(15, 10, 15, 5),
-                        child: TextFormField(
-                          controller: this._txtDateEnd,
-                          keyboardType: TextInputType.number,
-                          readOnly: true,
-                          onTap: () {
-                            debugPrint("Tap date picker");
-                            this._selectDateEnd(context);
-                          },
-                          decoration: InputDecoration(
-                            border: OutlineInputBorder(),
-                            labelText: "Data de término",
-                            suffixIcon: IconButton(
-                              onPressed: () {},
-                              icon: Icon(
-                                Icons.calendar_today,
-                              ),
-                            ),
-                          ),
-                          validator: (value) {
-                            if (value.isEmpty) {
-                              return "Preencha este campo";
+                              return "Preencha o campo data para concluir";
                             }
                             return null;
                           },
@@ -256,14 +224,23 @@ class _NoteEditPageState extends State<TodoEditPage> implements ITodoEdit {
 
   @override
   void onClickUpdate() {
+    DateTime complete = widget.todo["complete_date"] == null
+        ? null
+        : DateTime.parse(widget.todo["complete_date"]);
+    if (widget.todo["complete_date"] == null &&
+        this._checkDone &&
+        !widget.todo["done"]) {
+      complete = DateTime.now();
+    }
     Map todo = {
       "id": widget.todo["id"],
       "title": this._txtTitle.text,
       "description": this._txtDescription.text,
-      "dateStart": this.dateStartSelected,
-      "dateEnd": this.dateEndSelected,
+      "created_date": DateTime.parse(widget.todo["created_date"]),
+      "due_date": this.dueDateSelected,
+      "complete_date": complete,
       "priority": this.getPrioridadeAsInt(this.prioridadeSelected),
-      "done": this._checkDone
+      "done": this._checkDone,
     };
     debugPrint(todo.toString());
     this.presenter.updateTodo(todo);
@@ -317,42 +294,21 @@ class _NoteEditPageState extends State<TodoEditPage> implements ITodoEdit {
     });
   }
 
-  Future<void> _selectDateStart(BuildContext context) async {
-    final start = DateTime.parse(widget.todo["dateStart"]);
-    final DateTime picked = await showDatePicker(
-      context: context,
-      initialDate: this.dateStartSelected,
-      firstDate: DateTime(start.year, start.month, start.day),
-      lastDate: start.add(new Duration(days: 360 * 2)),
-    );
-    if (picked != null && picked != dateStartSelected) {
-      if (!this._isSelectedDateStart) {
-        this._isSelectedDateStart = true;
-      }
-      setState(() {
-        this.dateStartSelected = picked;
-        this._txtDataStart.text =
-            "${picked.day.toString().padLeft(2, '0')}/${picked.month.toString().padLeft(2, '0')}/${picked.year.toString().padLeft(4, '0')}";
-      });
-    }
-  }
-
-  Future<void> _selectDateEnd(BuildContext context) async {
+  Future<void> _selectDueDate(BuildContext context) async {
     final today = DateTime.now();
     final DateTime picked = await showDatePicker(
       context: context,
-      initialDate: this.dateEndSelected,
+      initialDate: this.dueDateSelected,
       firstDate: DateTime(today.year, today.month, today.day),
       lastDate: DateTime.now().add(new Duration(days: 360 * 2)),
     );
-    if (picked != null && picked != dateEndSelected) {
+    if (picked != null && picked != dueDateSelected) {
       if (!this._isSelectedDateEnd) {
         this._isSelectedDateEnd = true;
       }
       setState(() {
-        this.dateEndSelected = picked;
-        this._txtDateEnd.text =
-            "${picked.day.toString().padLeft(2, '0')}/${picked.month.toString().padLeft(2, '0')}/${picked.year.toString().padLeft(4, '0')}";
+        this.dueDateSelected = picked;
+        this._txtDueDate.text = this.formatter.format(picked);
       });
     }
   }
@@ -389,7 +345,7 @@ class _NoteEditPageState extends State<TodoEditPage> implements ITodoEdit {
   }
 
   @override
-  void backPage() {
-    Navigator.pop(context);
+  void backPage({showSuccessDelete: false}) {
+    Navigator.pop(context, {"showSuccessDelete": showSuccessDelete});
   }
 }

@@ -17,6 +17,7 @@ void main() {
       supportedLocales: [
         const Locale('en', 'US'),
         const Locale('pt', 'BR'),
+        const Locale('pt', 'PT'),
         const Locale('es'),
       ],
       debugShowCheckedModeBanner: false,

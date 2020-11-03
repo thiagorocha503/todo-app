@@ -13,15 +13,18 @@ class TarefaAddPresenter implements ITodoAddPresenter {
     Todo todo = new Todo();
     todo.setTitle(dados["title"]);
     todo.setDescription(dados["description"]);
-    todo.setDateStart(dados["dateStart"]);
-    todo.setDateEnd(dados["dateEnd"]);
+    todo.setDateCreated(dados["created_date"]);
+    todo.dueDate = dados["due_date"];
+    if (dados["done"] == true) {
+      todo.completeDate = dados["complete_date"];
+    }
     todo.setPriority(dados["priority"]);
     todo.setDone(dados["done"]);
     DBProvider db = DBProvider.getDBProvider();
     db.insertTodo(todo).then((onValue) {
       debugPrint(">>> $onValue");
       if (onValue > 0) {
-        this.view.showSnackBarMessage("Tarefa salva com sucesso");
+        this.view.showSnackBarMessage("Tarefa salva");
         this.view.cleanField();
       } else {
         this.view.showSnackBarMessage("Erro");

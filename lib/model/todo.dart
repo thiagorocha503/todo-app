@@ -1,55 +1,66 @@
 import 'dart:convert';
-
 import 'package:lista_de_tarefas/model/todoException.dart';
 
-Todo todoFromJson(String str) => Todo.fromMap(json.decode(str));
+Todo todoFromJson(String str) => Todo.fromJson(json.decode(str));
 
-String todoToJson(Todo data) => json.encode(data.toMap());
+String todoToJson(Todo data) => json.encode(data.toJson());
 
 class Todo {
-  int id;
-  String title;
-  String description;
-  DateTime dateStart;
-  DateTime dateEnd;
-  int priority;
-  bool done;
+  static const PRIORITY_HIGH = 0;
+  static const PRIORITY_NORMAL = 1;
+  static const PRIORITY_LOW = 2;
 
   Todo({
     this.id,
     this.title,
     this.description,
-    this.dateStart,
-    this.dateEnd,
-    this.priority,
-    this.done,
+    this.createdDate,
+    this.dueDate,
+    this.completeDate,
+    this.priority = Todo.PRIORITY_NORMAL,
+    this.done = false,
   });
 
-  static const PRIORITY_HIGH = 0;
-  static const PRIORITY_NORMAL = 1;
-  static const PRIORITY_LOW = 2;
+  int id;
+  String title;
+  String description;
+  DateTime createdDate;
+  DateTime dueDate;
+  DateTime completeDate;
+  int priority;
+  bool done;
 
-  factory Todo.fromMap(Map<String, dynamic> json) => Todo(
-        id: json["id"],
-        title: json["title"],
-        description: json["description"],
-        dateStart: DateTime.parse(json["date_start"]),
-        dateEnd: DateTime.parse(json["date_end"]),
-        priority: json["priority"],
-        done: (json["done"] == 1) ? true : false,
-      );
+  factory Todo.fromJson(Map<String, dynamic> json) {
+    return Todo(
+      id: json["id"],
+      title: json["title"],
+      description: json["description"],
+      createdDate: DateTime.parse(json["created_date"]),
+      dueDate: DateTime.parse(json["due_date"]),
+      completeDate: json["complete_date"] == null
+          ? null
+          : DateTime.parse(json["complete_date"]),
+      priority: json["priority"],
+      done: (json["done"] == 1 ? true : false),
+    );
+  }
 
-  Map<String, dynamic> toMap() => {
-        "id": id,
-        "title": title,
-        "description": description,
-        "date_start":
-            "${dateStart.year.toString().padLeft(4, '0')}-${dateStart.month.toString().padLeft(2, '0')}-${dateStart.day.toString().padLeft(2, '0')}",
-        "date_end":
-            "${dateEnd.year.toString().padLeft(4, '0')}-${dateEnd.month.toString().padLeft(2, '0')}-${dateEnd.day.toString().padLeft(2, '0')}",
-        "priority": priority,
-        "done": (done) ? 1 : 0,
-      };
+  Map<String, dynamic> toJson() {
+    return {
+      "id": id,
+      "title": title,
+      "description": description,
+      "created_date":
+          "${createdDate.year.toString().padLeft(4, '0')}-${createdDate.month.toString().padLeft(2, '0')}-${createdDate.day.toString().padLeft(2, '0')}",
+      "due_date":
+          "${dueDate.year.toString().padLeft(4, '0')}-${dueDate.month.toString().padLeft(2, '0')}-${dueDate.day.toString().padLeft(2, '0')}",
+      "complete_date": completeDate == null
+          ? null
+          : "${completeDate.year.toString().padLeft(4, '0')}-${completeDate.month.toString().padLeft(2, '0')}-${completeDate.day.toString().padLeft(2, '0')}",
+      "priority": priority,
+      "done": (done ? 1 : 0),
+    };
+  }
 
   void setId(int id) {
     this.id = id;
@@ -75,32 +86,12 @@ class Todo {
     this.description = description;
   }
 
-  DateTime getDateStart() {
-    return this.dateStart;
+  DateTime getDateCreated() {
+    return this.createdDate;
   }
 
-  void setDateStart(DateTime date) {
-    if (this.dateEnd != null) {
-      if (date.compareTo(this.dateEnd) > 0) {
-        throw new NoteDateIntervaloException(
-            "Data de inicio maior que de término");
-      }
-    }
-    this.dateStart = date;
-  }
-
-  DateTime getDateEnd() {
-    return this.dateEnd;
-  }
-
-  void setDateEnd(DateTime date) {
-    if (this.dateStart != null) {
-      if (date.compareTo(this.dateStart) < 0) {
-        throw new NoteDateIntervaloException(
-            "Data de término menor que de ínicio");
-      }
-    }
-    this.dateEnd = date;
+  void setDateCreated(DateTime date) {
+    this.createdDate = date;
   }
 
   int getPriority() {
@@ -127,9 +118,8 @@ class Todo {
     return "{id: ${this.id}," +
         "title: ${this.title}, " +
         "description: ${this.description}, " +
-        "dataStart: ${dateStart.year.toString().padLeft(4, '0')}-${dateStart.month.toString().padLeft(2, '0')}-${dateStart.day.toString().padLeft(2, '0')}, " +
-        "dataEnd: ${dateEnd.year.toString().padLeft(4, '0')}-${dateEnd.month.toString().padLeft(2, '0')}-${dateEnd.day.toString().padLeft(2, '0')}, " +
+        "due_date: ${this.dueDate.year.toString().padLeft(4, '0')}-${this.dueDate.month.toString().padLeft(2, '0')}-${this.dueDate.day.toString().padLeft(2, '0')}, " +
         "priority: ${this.priority}, " +
-        "done: ${this.done}}";
+        "done: ${this.done}";
   }
 }

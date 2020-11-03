@@ -5,16 +5,6 @@ class TodoPriorityException implements Exception {
 
   @override
   String toString() {
-    return "NotePriorityException: prioridade invalid <${this.priority}>";
-  }
-}
-
-class NoteDateIntervaloException implements Exception {
-  String message;
-
-  NoteDateIntervaloException(this.message);
-
-  String toString() {
-    return "NoteDateIntervaloException: ${this.message}";
+    return "NotePriorityException: invalid priority <${this.priority}>";
   }
 }

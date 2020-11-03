@@ -12,8 +12,9 @@ class NoteEditPresenter implements ITodoEditPresenter {
     todo.setId(dados["id"]);
     todo.setTitle(dados["title"]);
     todo.setDescription(dados["description"]);
-    todo.setDateStart(dados["dateStart"]);
-    todo.setDateEnd(dados["dateEnd"]);
+    todo.setDateCreated(dados["created_date"]);
+    todo.dueDate = dados["due_date"];
+    todo.completeDate = dados["complete_date"];
     todo.setPriority(dados["priority"]);
     todo.setDone(dados["done"]);
     DBProvider db = DBProvider.getDBProvider();
@@ -36,7 +37,7 @@ class NoteEditPresenter implements ITodoEditPresenter {
     int res = await db.delete(id);
     debugPrint("delete: -> $res");
     if (res > 0) {
-      this.view.backPage();
+      this.view.backPage(showSuccessDelete: true);
     } else {
       this.view.showSnackBarMessage("erro! $res");
     }

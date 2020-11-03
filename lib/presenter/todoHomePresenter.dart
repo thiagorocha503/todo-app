@@ -35,12 +35,15 @@ class TarefaListPresent implements ITodoListPresenter {
         "id": todo.id,
         "title": todo.title,
         "description": todo.description,
-        "dateStart":
-            "${todo.dateStart.year.toString().padLeft(4, '0')}-${todo.dateStart.month.toString().padLeft(2, '0')}-${todo.dateStart.day.toString().padLeft(2, '0')}",
-        "dateEnd":
-            "${todo.dateEnd.year.toString().padLeft(4, '0')}-${todo.dateEnd.month.toString().padLeft(2, '0')}-${todo.dateEnd.day.toString().padLeft(2, '0')}",
+        "created_date":
+            "${todo.createdDate.year.toString().padLeft(4, '0')}-${todo.createdDate.month.toString().padLeft(2, '0')}-${todo.createdDate.day.toString().padLeft(2, '0')}",
+        "due_date":
+            "${todo.dueDate.year.toString().padLeft(4, '0')}-${todo.dueDate.month.toString().padLeft(2, '0')}-${todo.dueDate.day.toString().padLeft(2, '0')}",
+        "complete_date": todo.completeDate == null
+            ? null
+            : "${todo.completeDate.year.toString().padLeft(4, '0')}-${todo.completeDate.month.toString().padLeft(2, '0')}-${todo.completeDate.day.toString().padLeft(2, '0')}",
         "priority": todo.priority,
-        "done": todo.done
+        "done": todo.done,
       };
       todos.add(todoMap);
     }
