@@ -2,11 +2,10 @@ class IHomePage {
   void onClickFloatingButton() {}
   void onClickDelete(int index) {}
   void showSnackBarInfo(String title) {}
-  void onChangedCheckButton(bool value, int index) {}
+  void onChangedCheckButton(int id, bool value) {}
   void onClickIconButtonSearch() {}
-  void onRefresh() {}
-  void updateList(List<Map> notes) {}
   void showAboutPage() {}
+  void onRefresh() {}
 }
 
 class IPageNewTodo {

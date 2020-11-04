@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:lista_de_tarefas/view/aboutPage.dart';
 import 'package:lista_de_tarefas/presenter/presenter.dart';
@@ -14,11 +13,9 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> implements IHomePage {
-  List<Map> _todos;
   BuildContext scaffoldContext;
-  ITodoListPresenter presenter;
+  IHomePresenter presenter;
   static Key floatingActionButtonKey = Key("floatingActionButtonKey");
-
   int _filterSelected = FILTER_NOT_DONE;
   static const int FILTER_NOT_DONE = 1;
   static const int FILTER_DONE = 2;
@@ -26,15 +23,6 @@ class _HomePageState extends State<HomePage> implements IHomePage {
 
   static const int MORE_OPTION = 0;
   List<String> suggestions;
-
-  void initList() async {
-    this._todos = new List<Map>();
-    await this.presenter.fetchAll(this._filterSelected).then((value) {
-      setState(() {
-        this._todos = value;
-      });
-    });
-  }
 
   @override
   void onClickIconButtonSearch() {
@@ -53,10 +41,9 @@ class _HomePageState extends State<HomePage> implements IHomePage {
   @override
   void initState() {
     super.initState();
-    this.presenter = new TarefaListPresent();
-    this.presenter.setView(this);
+    this.presenter = new HomePresent(this);
     this.suggestions = [];
-    this.initList();
+    this.presenter.fetchAll(this._filterSelected);
   }
 
   @override
@@ -83,7 +70,7 @@ class _HomePageState extends State<HomePage> implements IHomePage {
                 this.onRefresh();
               });
             },
-            //initialValue: this._filterSelected,
+            initialValue: this._filterSelected,
             itemBuilder: (BuildContext context) {
               return [
                 PopupMenuItem(
@@ -136,7 +123,22 @@ class _HomePageState extends State<HomePage> implements IHomePage {
           return Column(
             children: <Widget>[
               Expanded(
-                child: this.buildList(),
+                child: StreamBuilder<List<Map<dynamic, dynamic>>>(
+                  stream: this.presenter.stream,
+                  builder: (context, snapshot) {
+                    if (snapshot.hasError) {
+                      return Center(
+                        child: Text('Error: ${snapshot.error}'),
+                      );
+                    } else if (snapshot.hasData) {
+                      return buildList(snapshot.data);
+                    } else {
+                      return Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    }
+                  },
+                ),
               ),
             ],
           );
@@ -172,13 +174,13 @@ class _HomePageState extends State<HomePage> implements IHomePage {
     Scaffold.of(this.scaffoldContext).showSnackBar(snackBarInfo);
   }
 
-  Color getItemListColor(int index) {
-    // caso concluído
-    if (this._todos[index]["done"]) {
+  Color getItemListColor(Map todo) {
+    // case done
+    if (todo["done"]) {
       return Colors.grey[300];
     }
-    // caso atrasado
-    DateTime dueDate = DateTime.parse(this._todos[index]["due_date"]);
+    // late case
+    DateTime dueDate = DateTime.parse(todo["due_date"]);
     DateTime now = DateTime.now();
     DateTime today = DateTime(now.year, now.month, now.day);
     if (dueDate.compareTo(today) < 0) {
@@ -187,33 +189,33 @@ class _HomePageState extends State<HomePage> implements IHomePage {
     return Colors.white;
   }
 
-  Widget getItemListTitle(int index) {
-    if (this._todos[index]['done']) {
+  Widget getItemListTitle(Map todo) {
+    if (todo['done']) {
       return Text(
-        this._todos[index]['title'],
+        todo['title'],
         style: TextStyle(
           color: Colors.grey,
           decoration: TextDecoration.lineThrough,
         ),
       );
     } else {
-      return Text("${this._todos[index]['title']}");
+      return Text("${todo['title']}");
     }
   }
 
-  Widget builderItemList(int index) {
+  Widget builderItemList(Map todo) {
     return Card(
-      color: this.getItemListColor(index),
+      color: this.getItemListColor(todo),
       child: ListTile(
         onTap: () {
-          this.onTapListItem(index);
+          this.onTapListItem(todo);
         },
         leading: Checkbox(
-          value: this._todos[index]["done"],
+          value: todo["done"],
           onChanged: (value) {
             setState(() {
-              this._todos[index]["done"] = value;
-              this.onChangedCheckButton(value, index);
+              todo["done"] = value;
+              this.onChangedCheckButton(todo["id"], value);
             });
           },
         ),
@@ -222,21 +224,21 @@ class _HomePageState extends State<HomePage> implements IHomePage {
           icon: Icon(Icons.delete),
           color: Theme.of(context).primaryColor,
           onPressed: () {
-            this.onClickDelete(index);
+            this.onClickDelete(todo["id"]);
           },
         ),
-        title: this.getItemListTitle(index),
+        title: this.getItemListTitle(todo),
         subtitle: Text(
-          this._todos[index]["description"].toString(),
+          todo["description"].toString(),
         ),
       ),
     );
   }
 
-  void onTapListItem(int index) {
+  void onTapListItem(Map todo) {
     Route rota = new MaterialPageRoute(
       builder: (context) => TodoEditPage(
-        todo: this._todos[index],
+        todo: todo,
       ),
     );
     Navigator.push(context, rota).then((value) {
@@ -250,8 +252,8 @@ class _HomePageState extends State<HomePage> implements IHomePage {
     });
   }
 
-  Widget buildList() {
-    if (this._todos.length == 0) {
+  Widget buildList(List<Map> todos) {
+    if (todos.length == 0) {
       return Center(
         child: Text(
           "Nenhuma tarefa",
@@ -264,26 +266,21 @@ class _HomePageState extends State<HomePage> implements IHomePage {
       );
     }
     return ListView.builder(
-      itemCount: this._todos.length,
+      itemCount: todos.length,
       itemBuilder: (context, index) {
-        return builderItemList(index);
+        return builderItemList(todos[index]);
       },
     );
   }
 
   @override
-  Future<void> onRefresh() async {
-    this.presenter.refresh(this._filterSelected);
+  void onClickDelete(int id) async {
+    this.presenter.deleteTodo(id);
   }
 
   @override
-  void onClickDelete(int index) async {
-    this.presenter.deleteTodo(this._todos[index]["id"]);
-  }
-
-  @override
-  void onChangedCheckButton(bool value, int index) {
-    this.presenter.markTodo(this._todos[index]["id"], value);
+  void onChangedCheckButton(int id, bool value) {
+    this.presenter.markTodo(id, value);
     this.onRefresh();
   }
 
@@ -298,17 +295,21 @@ class _HomePageState extends State<HomePage> implements IHomePage {
   }
 
   @override
-  void updateList(List<Map> newNote) {
-    setState(() {
-      this._todos = newNote;
-    });
-  }
-
-  @override
   void showAboutPage() {
     MaterialPageRoute route = MaterialPageRoute(builder: (context) {
       return AboutPage();
     });
     Navigator.push(context, route);
+  }
+
+  @override
+  void onRefresh() {
+    this.presenter.fetchAll(this._filterSelected);
+  }
+
+  @override
+  void dispose() {
+    this.presenter.close();
+    super.dispose();
   }
 }

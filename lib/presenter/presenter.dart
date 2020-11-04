@@ -1,18 +1,16 @@
 import 'package:lista_de_tarefas/view/view.dart';
 
-class ITodoListPresenter {
+class IHomePresenter {
   Future<int> markTodo(int id, bool value) async {
     return null;
   }
 
   void deleteTodo(int id) async {}
-  Future<List<Map>> fetchAll(int filter) async {
-    return new List<Map>();
-  }
-
-  void setView(IHomePage view) {}
-  void refresh(int filter) {}
+  Future<void> fetchAll(int filter) async {}
   void about() {}
+  void close() {}
+
+  Stream<List<Map<dynamic, dynamic>>> get stream => null;
 }
 
 class ITodoAddPresenter {

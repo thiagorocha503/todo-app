@@ -42,7 +42,6 @@ class _NoteEditPageState extends State<TodoEditPage> implements ITodoEdit {
     super.initState();
     this.presenter = new NoteEditPresenter();
     this.presenter.setView(this);
-    debugPrint("${widget.todo}");
     this.setField();
   }
 
