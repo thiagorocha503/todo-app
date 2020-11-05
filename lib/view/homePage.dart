@@ -64,34 +64,26 @@ class _HomePageState extends State<HomePage> implements IHomePage {
             offset: Offset(1.0, 4),
             tooltip: "Filtrar",
             icon: Icon(Icons.filter_list),
+            initialValue: this._filterSelected,
+            itemBuilder: (BuildContext context) {
+              return <int>[
+                FILTER_NOT_DONE,
+                FILTER_DONE,
+                FILTER_ALL,
+              ].map((value) {
+                return PopupMenuItem(
+                  value: value,
+                  child: Text(
+                    this.getFilterAsString(value),
+                  ),
+                );
+              }).toList();
+            },
             onSelected: (value) {
               setState(() {
                 this._filterSelected = value;
                 this.onRefresh();
               });
-            },
-            initialValue: this._filterSelected,
-            itemBuilder: (BuildContext context) {
-              return [
-                PopupMenuItem(
-                  value: FILTER_NOT_DONE,
-                  child: Text(
-                    this.getFilterAsString(FILTER_NOT_DONE),
-                  ),
-                ),
-                PopupMenuItem(
-                  value: FILTER_DONE,
-                  child: Text(
-                    this.getFilterAsString(FILTER_DONE),
-                  ),
-                ),
-                PopupMenuItem(
-                  value: FILTER_ALL,
-                  child: Text(
-                    this.getFilterAsString(FILTER_ALL),
-                  ),
-                )
-              ];
             },
           ),
           PopupMenuButton(
