@@ -18,5 +18,5 @@ jobs:
       - run: flutter doctor
       - run: flutter pub get
       # Analyze our Dart code
-      #- run: flutter analyze
+      - run: flutter analyze
       - run: flutter test

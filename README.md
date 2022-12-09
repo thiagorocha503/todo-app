@@ -1,14 +1,14 @@
-# Lista de tarefa
-[![Codemagic build status](https://api.codemagic.io/apps/5e303a834b601e001758e703/5e303a834b601e001758e702/status_badge.svg)](https://codemagic.io/apps/5e303a834b601e001758e703/5e303a834b601e001758e702/latest_build) ![build](https://github.com/thiagorocha503/lista-de-tarefa-app/workflows/Flutter%20CI/badge.svg?event=push&pull_request) [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+# Todo
+[![Codemagic build status](https://api.codemagic.io/apps/5fb29cea6050966c26cb0529/5fb29cea6050966c26cb0528/status_badge.svg)](https://codemagic.io/apps/5fb29cea6050966c26cb0529/5fb29cea6050966c26cb0528/latest_build)[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
-<img src="https://i.ibb.co/LhFG4SH/ic-launcher.png" alt="ic-launcher" border="0">
+<img src="https://i.ibb.co/LhFG4SH/ic-launcher.png" alt="ic-launcher" style="border: 0">
 
-> Simples aplicativo lista de tarefa criado com o framework flutter.
+> To do list app built in flutter framework.
 
 ## Screenshoots
 
 <center>
-  <img src="https://thiagorocha503.github.io/images/todo_screen.png" width="300">
+  <img src="https://thiagorocha503.github.io/images/todo_screen.png" style="width:300px">
 </center>
 
 ## Getting Started
@@ -22,13 +22,13 @@ samples, guidance on mobile development, and a full API reference.
  * Dart (https://dart.dev/get-dart)
 
 ## Installation
-1. Clone the repo
+1. Clone the repository
 ```sh
-git clone  "https://github.com/thiagorocha503/lista-de-tarefa-app"
+git clone "https://github.com/thiagorocha503/todo-app"
 ```
 2. Change into project directory
 ```sh
-cd lista-de-tarefa-app
+cd todo-app
 ```
 3. Install dependencies
 ```sh
@@ -47,15 +47,15 @@ flutter build apk --split-per-abi
 
 ## Test
 ```sh
-cd lista-de-tarefa-app
+cd todo-app
 ```
 ```sh
-flutter run test test
+flutter test
 ```
 ## Download
 
 <a href="https://play.google.com/store/apps/details?id=io.github.thiagorocha503.lista_de_tarefas" alt="Get it on Google play">
-  <img src="https://i.ibb.co/51Q4zYb/google-play-badge.png" alt="google-play-badge" border="0" height="50">
+  <img src="https://i.ibb.co/51Q4zYb/google-play-badge.png" alt="google-play-badge" style="border:0; height:50px">
 </a>
 
 ## Author
@@ -73,6 +73,3 @@ flutter run test test
 ## License
 
 This project is licensed under the Apache License 2.0 License - see the [LICENSE.md](LICENSE.md) file for details
-
-
-
