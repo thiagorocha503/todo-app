@@ -1,5 +1,5 @@
 # Todo
-[![Codemagic build status](https://api.codemagic.io/apps/5fb29cea6050966c26cb0529/5fb29cea6050966c26cb0528/status_badge.svg)](https://codemagic.io/apps/5fb29cea6050966c26cb0529/5fb29cea6050966c26cb0528/latest_build)[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+[![Codemagic build status](https://api.codemagic.io/apps/5fb29cea6050966c26cb0529/5fb29cea6050966c26cb0528/status_badge.svg)](https://codemagic.io/apps/5fb29cea6050966c26cb0529/5fb29cea6050966c26cb0528/latest_build) ![build](https://github.com/thiagorocha503/todo-app/actions/workflows/flutter.yml/badge.svg?event=push&pull_request) [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
 <img src="https://i.ibb.co/LhFG4SH/ic-launcher.png" alt="ic-launcher" style="border: 0">
 
@@ -8,7 +8,7 @@
 ## Screenshoots
 
 <center>
-  <img src="https://thiagorocha503.github.io/images/todo_screen.png" style="width:300px">
+  <img src="https://github.com/thiagorocha503/thiagorocha503.github.io/blob/master/images/screenshot/screenshot_20221214-161845.jpg" style="width:300px">
 </center>
 
 ## Getting Started
