@@ -29,5 +29,7 @@
     "ok":"ok",
     "delete-alert-title":"eliminar tarea",
     "delete-alert-content":"¿Está seguro de que desea eliminar esta tarea de forma permanente?",
-    "delete":"eliminar tarea"
+    "delete":"eliminar tarea",
+    "enter-name":"Ingrese nombre",
+    "fill-out-name":"llena este campo"
 }

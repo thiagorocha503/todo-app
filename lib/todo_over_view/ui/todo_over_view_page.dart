@@ -6,8 +6,8 @@ import 'package:todo/todo_over_view/bloc/todo_over_view_bloc.dart';
 import 'package:todo/todo_over_view/bloc/todo_over_view_event.dart';
 import 'package:todo/todo_over_view/bloc/todo_over_view_state.dart';
 import 'package:todo/todo_over_view/model/todo.dart';
-import 'package:todo/settings/ui/setting_page.dart';
-import 'package:todo/todo_over_view/ui/widget/todo_add_alert_dialog.dart';
+import 'package:todo/todo_over_view/ui/widget/more_button.dart';
+import 'package:todo/todo_over_view/ui/widget/todo_add_button.dart';
 import 'package:todo/todo_over_view/ui/widget/todo_delete_alert_dialog.dart';
 import 'package:todo/todo_over_view/ui/widget/todo_list_tile.dart';
 import 'package:todo/todo_edit/ui/todo_edit_page.dart';
@@ -22,24 +22,12 @@ class TodoOverViewPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title:
-            Text(AppLocalizations.of(context).translate("todos").capitalize()),
-        actions: [
-          const TodoFilterButton(),
-          Padding(
-            padding: const EdgeInsets.only(right: 16.0),
-            child: IconButton(
-              icon: const Icon(Icons.more_horiz),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const SettingsPage(),
-                  ),
-                );
-              },
-            ),
-          )
+        title: Text(
+          AppLocalizations.of(context).translate("todos").capitalize(),
+        ),
+        actions: const [
+          TodoFilterButton(),
+          Padding(padding: EdgeInsets.only(right: 16.0), child: MoreButton())
         ],
       ),
       body: BlocConsumer<TodoOverViewBloc, TodoOverviewState>(
@@ -121,12 +109,7 @@ class TodoOverViewPage extends StatelessWidget {
           }
         },
       ),
-      floatingActionButton: FloatingActionButton(
-        child: const Icon(Icons.add),
-        onPressed: () {
-          showDialog(context: context, builder: (context) => const TodoAlert());
-        },
-      ),
+      floatingActionButton: const AddTodoButton(),
     );
   }
 }

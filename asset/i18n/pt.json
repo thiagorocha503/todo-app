@@ -29,5 +29,7 @@
     "ok":"ok",
     "delete-alert-title":"excluir tarefa",
     "delete-alert-content":"tem certeza de que deseja excluir esta tarefa?",
-    "delete":"remover tarefa"
+    "delete":"remover tarefa",
+    "enter-name":"Digite o name",
+    "fill-out-name":"preencha este campo"
 }

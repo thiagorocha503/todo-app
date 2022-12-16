@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:roundcheckbox/roundcheckbox.dart';
+import 'package:todo/app_localizations.dart';
 import 'package:todo/todo_over_view/model/todo.dart';
+import 'package:todo/util/string_extension.dart';
 
 class TodoOverviewListTile extends StatelessWidget {
   final Todo todo;
@@ -49,6 +51,8 @@ class TodoOverviewListTile extends StatelessWidget {
           ),
         ),
         trailing: IconButton(
+          tooltip:
+              AppLocalizations.of(context).translate("delete").capitalize(),
           icon: const Icon(
             Icons.delete,
             color: Colors.blue,

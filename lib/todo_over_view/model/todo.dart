@@ -47,7 +47,7 @@ class Todo extends Equatable {
   factory Todo.fromJson(Map<String, dynamic> json) {
     return Todo(
       id: json["id"],
-      name: json["title"],
+      name: json["title"].toString(),
       note: json["note"],
       createdDate: json["created_at"] == null
           ? null
