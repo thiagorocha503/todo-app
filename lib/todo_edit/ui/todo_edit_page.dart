@@ -70,7 +70,7 @@ class TodoEditPageView extends StatelessWidget {
             Expanded(
               child: Column(
                 children: const [
-                  TodoListTile(),
+                  TodoEditListTile(),
                   DueDateListTile(),
                   NoteListTile()
                 ],

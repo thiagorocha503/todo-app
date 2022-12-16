@@ -73,7 +73,7 @@ class TodoOverViewPage extends StatelessWidget {
               itemCount: todos.length,
               itemBuilder: (BuildContext context, int index) {
                 Todo todo = todos[index];
-                return TodoListTile(
+                return TodoOverviewListTile(
                   todo: todos[index],
                   onTap: () {
                     Navigator.push(
