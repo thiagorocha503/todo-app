@@ -24,8 +24,7 @@ class TodoOverviewListTile extends StatelessWidget {
         leading: RoundCheckBox(
           size: 26,
           border: Border.all(
-            color: _getTodoColorState(context, todo) ??
-                Theme.of(context).primaryColor,
+            color: _getTodoColorState(context, todo),
             width: 2,
           ),
           animationDuration: const Duration(milliseconds: 400),
@@ -66,7 +65,7 @@ class TodoOverviewListTile extends StatelessWidget {
     );
   }
 
-  Color? _getTodoColorState(BuildContext context, Todo todo) {
+  Color _getTodoColorState(BuildContext context, Todo todo) {
     DateTime now = DateTime.now();
     DateTime? completeDate = todo.completeDate;
     DateTime? dueDate = todo.dueDate;
@@ -74,10 +73,15 @@ class TodoOverviewListTile extends StatelessWidget {
       return Theme.of(context).primaryColor;
     }
     if (dueDate != null) {
-      if (dueDate.compareTo(now) > 0) {
+      if (now.day == dueDate.day &&
+          now.month == dueDate.month &&
+          now.year == dueDate.year) {
+        return Theme.of(context).primaryColor;
+      }
+      if (dueDate.compareTo(now) == -1) {
         return Colors.red;
       }
     }
-    return null; // default style
+    return Theme.of(context).primaryColor; // default style
   }
 }
