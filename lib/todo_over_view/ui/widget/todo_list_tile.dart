@@ -7,12 +7,13 @@ class TodoOverviewListTile extends StatelessWidget {
   final Function(bool value) onToggleCompleted;
   final Function onDelete;
   final Function onTap;
-  const TodoOverviewListTile(
-      {required this.todo,
-      super.key,
-      required this.onTap,
-      required this.onToggleCompleted,
-      required this.onDelete});
+  const TodoOverviewListTile({
+    required this.todo,
+    super.key,
+    required this.onTap,
+    required this.onToggleCompleted,
+    required this.onDelete,
+  });
 
   @override
   Widget build(BuildContext context) {

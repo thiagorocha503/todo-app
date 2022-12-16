@@ -8,6 +8,7 @@ import 'package:todo/todo_over_view/bloc/todo_over_view_state.dart';
 import 'package:todo/todo_over_view/model/todo.dart';
 import 'package:todo/settings/ui/setting_page.dart';
 import 'package:todo/todo_over_view/ui/widget/todo_add_alert_dialog.dart';
+import 'package:todo/todo_over_view/ui/widget/todo_delete_alert_dialog.dart';
 import 'package:todo/todo_over_view/ui/widget/todo_list_tile.dart';
 import 'package:todo/todo_edit/ui/todo_edit_page.dart';
 import 'package:todo/widget/error_dialog.dart';
@@ -95,9 +96,16 @@ class TodoOverViewPage extends StatelessWidget {
                         );
                   },
                   onDelete: () {
-                    context
-                        .read<TodoOverViewBloc>()
-                        .add(TodoOverViewDeleted(id: todo.id));
+                    showDialog(
+                      context: context,
+                      builder: (context) => TodoDeleteAlertDialog(
+                        onConfirm: () {
+                          context
+                              .read<TodoOverViewBloc>()
+                              .add(TodoOverViewDeleted(id: todo.id));
+                        },
+                      ),
+                    );
                   },
                 );
               },

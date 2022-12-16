@@ -26,5 +26,8 @@
     "active":"ativo",
     "filter":"filtro",
     "error":"erro",
-    "ok":"ok"
+    "ok":"ok",
+    "delete-alert-title":"excluir tarefa",
+    "delete-alert-content":"tem certeza de que deseja excluir esta tarefa?",
+    "delete":"remover tarefa"
 }

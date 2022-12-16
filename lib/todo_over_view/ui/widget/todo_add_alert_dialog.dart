@@ -8,7 +8,9 @@ import 'package:todo/todo_over_view/model/todo.dart';
 import 'package:todo/util/string_extension.dart';
 
 class TodoAlert extends StatefulWidget {
-  const TodoAlert({super.key});
+  const TodoAlert({
+    super.key,
+  });
 
   @override
   State<TodoAlert> createState() => _TodoAlertState();

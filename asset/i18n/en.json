@@ -26,5 +26,8 @@
     "active":"active",
     "filter":"filter",
     "error":"error",
-    "ok":"ok"
+    "ok":"ok",
+    "delete-alert-title": "delete task",
+    "delete-alert-content": "are you sure you want to delete this task?",
+    "delete":"delete task"
 }
