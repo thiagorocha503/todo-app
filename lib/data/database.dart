@@ -13,7 +13,7 @@ class DBProvider {
   static DBProvider? _db;
   DBProvider._();
 
-  final int version = 2;
+  final int version = 3;
 
   static DBProvider getTodoDB() {
     DBProvider? db = _db;
@@ -117,11 +117,24 @@ class DBProvider {
 
   void onUpgrade(Database db, int oldVersion, int newVersion) async {
     debugPrint("> onUpgrade");
-    if (oldVersion == 1 && newVersion == 2) {
-      debugPrint("> upgrade 02");
-      for (String sql in upgrade_002) {
-        await db.execute(sql);
-      }
+    if (oldVersion == 1) {
+      updateToV2(db);
+      updateToV3(db);
     }
+    if (oldVersion == 2) {
+      updateToV3(db);
+    }
+  }
+}
+
+void updateToV2(Database db) async {
+  for (String sql in upgrade_002) {
+    await db.execute(sql);
+  }
+}
+
+void updateToV3(Database db) async {
+  for (String sql in upgrade_003) {
+    await db.execute(sql);
   }
 }

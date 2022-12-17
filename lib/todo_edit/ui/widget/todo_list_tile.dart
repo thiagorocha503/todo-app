@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:roundcheckbox/roundcheckbox.dart';
 import 'package:todo/app_localizations.dart';
 import 'package:todo/todo_edit/bloc/todo_edit_bloc.dart';
 import 'package:todo/todo_edit/bloc/todo_edit_event.dart';
 import 'package:todo/todo_edit/bloc/todo_edit_state.dart';
+import 'package:todo/todo_over_view/model/todo.dart';
 import 'package:todo/util/string_extension.dart';
 
 class TodoEditListTile extends StatelessWidget {
@@ -32,9 +32,9 @@ class TodoCheckBox extends StatelessWidget {
       builder: (BuildContext context, TodoEditState state) {
         return RoundCheckBox(
           key: const Key("check"),
-          size: 32,
+          size: 36,
           border: Border.all(
-            color: Theme.of(context).primaryColor,
+            color: _getCheckboxBorder(context, state.todo),
             width: 2,
           ),
           isChecked: state.todo.completeDate == null ? false : true,
@@ -52,6 +52,14 @@ class TodoCheckBox extends StatelessWidget {
       },
     );
   }
+
+  Color _getCheckboxBorder(BuildContext context, Todo todo) {
+    if (todo.completeDate == null) {
+      return Colors.grey;
+    } else {
+      return Theme.of(context).primaryColor;
+    }
+  }
 }
 
 class TodoInput extends StatelessWidget {
@@ -64,40 +72,28 @@ class TodoInput extends StatelessWidget {
     return BlocBuilder<TodoEditBloc, TodoEditState>(
       builder: (context, state) {
         controller.text = state.todo.name.replaceAll("\n", " ");
-        return RawKeyboardListener(
-          focusNode: FocusNode(),
-          onKey: (event) {
-            if (event.isKeyPressed(LogicalKeyboardKey.enter)) {
-              if (controller.text.isNotEmpty) {
-                BlocProvider.of<TodoEditBloc>(context)
-                    .add(TodoEditTitleChanged(title: controller.text));
-              }
-            }
+        return TextField(
+          controller: controller,
+          onSubmitted: (value) {
+            BlocProvider.of<TodoEditBloc>(context)
+                .add(TodoEditTitleChanged(title: controller.text));
           },
-          child: TextField(
-            controller: controller,
-            onSubmitted: (value) {
-              BlocProvider.of<TodoEditBloc>(context)
-                  .add(TodoEditTitleChanged(title: controller.text));
-            },
-            textInputAction: TextInputAction.done,
-            style: TextStyle(
-              fontSize: 24,
-              fontWeight: FontWeight.bold,
-              fontStyle: state.todo.completeDate == null
-                  ? FontStyle.normal
-                  : FontStyle.italic,
-              decoration: state.todo.completeDate == null
-                  ? TextDecoration.none
-                  : TextDecoration.lineThrough,
-              color: state.todo.completeDate == null ? null : Colors.grey,
-            ),
-            decoration: InputDecoration(
-              hintText: AppLocalizations.of(context)
-                  .translate("add-todo")
-                  .capitalize(),
-              border: InputBorder.none,
-            ),
+          textInputAction: TextInputAction.done,
+          style: TextStyle(
+            fontWeight: FontWeight.w500,
+            fontSize: 24,
+            fontStyle: state.todo.completeDate == null
+                ? FontStyle.normal
+                : FontStyle.italic,
+            decoration: state.todo.completeDate == null
+                ? TextDecoration.none
+                : TextDecoration.lineThrough,
+            color: state.todo.completeDate == null ? null : Colors.grey,
+          ),
+          decoration: InputDecoration(
+            hintText:
+                AppLocalizations.of(context).translate("add-todo").capitalize(),
+            border: InputBorder.none,
           ),
         );
       },

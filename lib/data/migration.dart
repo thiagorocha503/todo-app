@@ -37,3 +37,18 @@ List<String> upgrade_002 = const [
   """,
   "DROP table note;"
 ];
+
+const List<String> upgrade_003 = [
+  """
+      CREATE TABLE subtask (
+          id       INTEGER PRIMARY KEY AUTOINCREMENT
+                           NOT NULL,
+          name     STRING  NOT NULL,
+          complete BOOLEAN CONSTRAINT not_null_complete NOT NULL
+                          CONSTRAINT default_constraint DEFAULT (0) 
+                          CONSTRAINT complete_check CHECK (complete = 0 OR complete = 1),
+          todo_id  INTEGER CONSTRAINT fk_constraint REFERENCES todo (id) ON DELETE CASCADE
+                          NOT NULL
+      );
+      """
+];

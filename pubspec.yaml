@@ -29,7 +29,6 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
-  bloc_test: ^9.1.0
   cupertino_icons: ^1.0.2
   equatable: ^2.0.5
   flutter:
@@ -49,12 +48,12 @@ dependencies:
   sqflite: ^2.2.2
   sqflite_common_ffi: ^2.2.0+1
   url_launcher: ^6.1.7
-
+  
 dev_dependencies:
   flutter_lints: ^2.0.0
   flutter_test:
     sdk: flutter
-  mockito: ^5.3.2
+  bloc_test: ^9.1.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

@@ -24,10 +24,10 @@ class TodoOverviewListTile extends StatelessWidget {
         leading: RoundCheckBox(
           size: 26,
           border: Border.all(
-            color: _getTodoColorState(context, todo),
+            color: _getCheckboxBorderColor(context, todo),
             width: 2,
           ),
-          animationDuration: const Duration(milliseconds: 400),
+          animationDuration: const Duration(milliseconds: 300),
           isChecked: todo.completeDate == null ? false : true,
           checkedColor: Theme.of(context).primaryColor,
           disabledColor: Colors.grey,
@@ -46,7 +46,7 @@ class TodoOverviewListTile extends StatelessWidget {
             decoration: todo.completeDate == null
                 ? TextDecoration.none
                 : TextDecoration.lineThrough,
-            color: _getTodoColorState(context, todo),
+            color: _getTextColor(context, todo),
           ),
         ),
         trailing: IconButton(
@@ -65,23 +65,43 @@ class TodoOverviewListTile extends StatelessWidget {
     );
   }
 
-  Color _getTodoColorState(BuildContext context, Todo todo) {
+  Color _getCheckboxBorderColor(BuildContext context, Todo todo) {
     DateTime now = DateTime.now();
     DateTime? completeDate = todo.completeDate;
     DateTime? dueDate = todo.dueDate;
     if (completeDate != null) {
-      return Theme.of(context).primaryColor;
+      return Colors.blue;
     }
     if (dueDate != null) {
       if (now.day == dueDate.day &&
           now.month == dueDate.month &&
           now.year == dueDate.year) {
-        return Theme.of(context).primaryColor;
+        return Colors.grey;
       }
       if (dueDate.compareTo(now) == -1) {
         return Colors.red;
       }
     }
-    return Theme.of(context).primaryColor; // default style
+    return Colors.grey; // default style
+  }
+
+  Color _getTextColor(BuildContext context, Todo todo) {
+    DateTime now = DateTime.now();
+    DateTime? completeDate = todo.completeDate;
+    DateTime? dueDate = todo.dueDate;
+    if (completeDate != null) {
+      return Colors.grey;
+    }
+    if (dueDate != null) {
+      if (now.day == dueDate.day &&
+          now.month == dueDate.month &&
+          now.year == dueDate.year) {
+        return Colors.black;
+      }
+      if (dueDate.compareTo(now) == -1) {
+        return Colors.red;
+      }
+    }
+    return Colors.black;
   }
 }

@@ -19,11 +19,15 @@ class DueDateListTile extends StatelessWidget {
           current.todo.dueDate != previous.todo.dueDate,
       builder: (context, state) {
         return ListTile(
-          leading: IconButton(
-            onPressed: () {
-              showDueDatePicker(context, BlocProvider.of(context), state.todo);
-            },
-            icon: buildCalendarIconButton(context, state.todo),
+          leading: Padding(
+            padding: const EdgeInsets.only(left: 0.0),
+            child: IconButton(
+              onPressed: () {
+                showDueDatePicker(
+                    context, BlocProvider.of(context), state.todo);
+              },
+              icon: buildCalendarIconButton(context, state.todo),
+            ),
           ),
           title: GestureDetector(
             onTap: () {

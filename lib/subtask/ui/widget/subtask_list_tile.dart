@@ -1,0 +1,95 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:roundcheckbox/roundcheckbox.dart';
+import 'package:todo/subtask/bloc/subtask_bloc.dart';
+import 'package:todo/subtask/bloc/subtask_event.dart';
+import 'package:todo/subtask/bloc/subtask_state.dart';
+import 'package:todo/subtask/model/subtask.dart';
+
+class SubtaskListTile extends StatelessWidget {
+  const SubtaskListTile({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    BlocProvider.of<SubtaskBloc>(context).previusData;
+    return BlocBuilder<SubtaskBloc, SubtaskState>(
+        buildWhen: (previous, current) =>
+            current is SubtasksLoadedState || current is SubtaskErrorState,
+        builder: (BuildContext context, SubtaskState state) {
+          return Column(
+            children: List.generate(state.subtasks.length, (int index) {
+              Subtask subtask = state.subtasks[index];
+              TextEditingController controller =
+                  TextEditingController(text: subtask.name);
+              return ListTile(
+                leading: Padding(
+                  padding: const EdgeInsets.only(left: 8.0),
+                  child: RoundCheckBox(
+                    isChecked: subtask.complete,
+                    size: 26,
+                    border: Border.all(
+                      color: _getCheckboxBorderColor(context, subtask),
+                      width: 2,
+                    ),
+                    checkedColor: Theme.of(context).primaryColor,
+                    onTap: (bool? value) {
+                      if (value == null) {
+                        return;
+                      }
+                      context.read<SubtaskBloc>().add(
+                            UpdateSubtaskEvent(
+                              subtask: subtask.copyWith(
+                                complete: value,
+                              ),
+                            ),
+                          );
+                    },
+                  ),
+                ),
+                title: TextField(
+                  controller: controller,
+                  style: TextStyle(
+                    color: subtask.complete ? Colors.grey : Colors.black,
+                    fontStyle:
+                        subtask.complete ? FontStyle.italic : FontStyle.normal,
+                    decoration:
+                        subtask.complete ? TextDecoration.lineThrough : null,
+                  ),
+                  onSubmitted: (String? value) {
+                    if (value == null) {
+                      return;
+                    }
+                    if (value.isEmpty) {
+                      return;
+                    }
+                    context.read<SubtaskBloc>().add(
+                          UpdateSubtaskEvent(
+                            subtask: subtask.copyWith(
+                              name: controller.text,
+                            ),
+                          ),
+                        );
+                  },
+                ),
+                trailing: IconButton(
+                  onPressed: () {
+                    context
+                        .read<SubtaskBloc>()
+                        .add(DeleteSubtaskEvent(id: state.subtasks[index].id));
+                  },
+                  icon: const Icon(Icons.clear),
+                ),
+              );
+            }),
+          );
+        });
+  }
+
+  Color _getCheckboxBorderColor(BuildContext context, Subtask subtask) {
+    if (subtask.complete) {
+      return Theme.of(context).primaryColor;
+    } else {
+      return Colors.grey;
+    }
+  }
+}

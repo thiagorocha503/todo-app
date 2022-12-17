@@ -1,14 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todo/app_localizations.dart';
+import 'package:todo/subtask/bloc/subtask_bloc.dart';
+import 'package:todo/subtask/bloc/subtask_event.dart';
+import 'package:todo/subtask/repository/subtask_repository.dart';
+import 'package:todo/subtask/ui/widget/subtask_list_tile.dart';
+import 'package:todo/subtask/ui/widget/subtask_input.dart';
 import 'package:todo/todo_edit/bloc/todo_edit_bloc.dart';
 import 'package:todo/todo_edit/bloc/todo_edit_state.dart';
+import 'package:todo/todo_edit/ui/widget/todo_footer.dart';
 import 'package:todo/todo_over_view/model/todo.dart';
 import 'package:todo/todo_over_view/repository/todo_repository.dart';
 import 'package:todo/todo_edit/ui/widget/due_date_list_tile.dart';
 import 'package:todo/todo_edit/ui/widget/note_list_tile.dart';
 import 'package:todo/widget/error_dialog.dart';
-import 'package:todo/todo_edit/ui/widget/todo_footer.dart';
 import 'package:todo/todo_edit/ui/widget/todo_list_tile.dart';
 import 'package:todo/util/string_extension.dart';
 
@@ -18,13 +23,27 @@ class TodoEditPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<TodoEditBloc>(
-      lazy: false,
-      create: (context) => TodoEditBloc(
-        todo,
-        TodoRepository(),
-        BlocProvider.of(context),
-      ),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<SubtaskBloc>(
+          lazy: false,
+          create: (context) {
+            return SubtaskBloc(
+              repository: SubtaskRepository(),
+              todoId: todo.id,
+            )..add(FetchSubtasksEvent());
+          },
+        ),
+        BlocProvider(create: (context) => SubtaskInputBloc()),
+        BlocProvider<TodoEditBloc>(
+          lazy: false,
+          create: (context) => TodoEditBloc(
+            todo,
+            TodoRepository(),
+            BlocProvider.of(context),
+          ),
+        ),
+      ],
       child: TodoEditPageView(todo: todo),
     );
   }
@@ -68,12 +87,16 @@ class TodoEditPageView extends StatelessWidget {
         body: Column(
           children: [
             Expanded(
-              child: Column(
-                children: const [
-                  TodoEditListTile(),
-                  DueDateListTile(),
-                  NoteListTile()
-                ],
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    const TodoEditListTile(),
+                    const SubtaskListTile(),
+                    SubtaskInput(todoId: todo.id),
+                    const DueDateListTile(),
+                    const NoteListTile(),
+                  ],
+                ),
               ),
             ),
             const Footer()
