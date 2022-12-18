@@ -5,7 +5,7 @@ import 'package:flutter/services.dart';
 
 class AppLocalizations {
   // ignore: constant_identifier_names
-  static const String PATH = "asset/i18n";
+  static const String PATH = "assets/l10n";
   final Locale locale;
 
   AppLocalizations(this.locale);

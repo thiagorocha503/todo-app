@@ -51,7 +51,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   AboutListTile(
                     icon: const Icon(Icons.info),
                     applicationIcon: Image.asset(
-                      "asset/img/todo.png",
+                      "assets/img/todo.png",
                       height: 80,
                     ),
                     applicationName: constants.APP_NAME.capitalize(),
