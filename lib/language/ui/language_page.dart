@@ -1,17 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:todo/app_localizations.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:todo/locale/cubit/locale_cubit.dart';
+import 'package:todo/language/cubit/language_cubit.dart';
+import 'package:todo/language/model/language.dart';
 import 'package:todo/util/string_extension.dart';
 
+class LanguageItem {
+  final String name;
+  final Language code;
+  LanguageItem({required this.name, required this.code});
+}
+
 class LanguagePage extends StatelessWidget {
-  final List<Map<dynamic, dynamic>> language = const [
-    {"name": "english", "code": "en"},
-    {"name": "português", "code": "pt"},
-    {"name": "espanõl", "code": "es"},
+  final List<LanguageItem> language = [
+    LanguageItem(name: "english", code: Language.en),
+    LanguageItem(name: "português", code: Language.pt),
+    LanguageItem(name: "español", code: Language.es),
   ];
 
-  const LanguagePage({super.key});
+  LanguagePage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -32,8 +39,8 @@ class LanguagePage extends StatelessWidget {
         child: ListView.builder(
           itemCount: language.length,
           itemBuilder: (context, index) {
-            if (context.read<LocaleCubit>().state.languageCode ==
-                language[index]["code"]) {
+            if (context.read<LanguageCubit>().state ==
+                Locale(language[index].code.name)) {
               return buildItem(context, index, selected: true);
             }
             return buildItem(context, index);
@@ -51,7 +58,7 @@ class LanguagePage extends StatelessWidget {
       title: Padding(
         padding: const EdgeInsets.only(left: 16),
         child: Text(
-          language[index]["name"].toString().toUpperCase(),
+          language[index].name.toString().toUpperCase(),
           style: TextStyle(
             color:
                 Theme.of(context).textTheme.bodyText1!.color!.withOpacity(0.9),
@@ -60,7 +67,7 @@ class LanguagePage extends StatelessWidget {
         ),
       ),
       onTap: () {
-        context.read<LocaleCubit>().change(Locale(language[index]["code"]));
+        context.read<LanguageCubit>().change(language[index].code);
       },
     );
   }

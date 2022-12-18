@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todo/app_localizations.dart';
-import 'package:todo/locale/cubit/locale_cubit.dart';
-import 'package:todo/locale/ui/language_page.dart';
+import 'package:todo/language/cubit/language_cubit.dart';
+import 'package:todo/language/ui/language_page.dart';
 import 'package:todo/util/string_extension.dart';
 import 'package:provider/provider.dart';
 
@@ -20,14 +20,14 @@ class LanguageListTile extends StatelessWidget {
       onTap: () {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: ((context) => const LanguagePage())),
+          MaterialPageRoute(builder: ((context) => LanguagePage())),
         );
       },
     );
   }
 
   String getCurrentLanguage(BuildContext context) {
-    String lang = context.read<LocaleCubit>().state.languageCode;
+    String lang = context.read<LanguageCubit>().state.languageCode;
     switch (lang) {
       case "en":
         return "english";

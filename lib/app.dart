@@ -3,8 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:todo/filter/bloc/filter_bloc.dart';
 import 'package:todo/filter/preferences/filter_preferences.dart';
-import 'package:todo/locale/cubit/locale_cubit.dart';
-import 'package:todo/locale/preferences/locale_preferences.dart';
+import 'package:todo/language/cubit/language_cubit.dart';
+import 'package:todo/language/preferences/language_preferences.dart';
 import 'package:todo/todo_over_view/bloc/todo_over_view_bloc.dart';
 import 'package:todo/todo_over_view/bloc/todo_over_view_event.dart';
 import 'package:todo/todo_over_view/repository/todo_repository.dart';
@@ -19,8 +19,8 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     TodoRepository repository = TodoRepository();
-    LocalePreferences localePreferences =
-        LocalePreferences(preferences: preferences);
+    LanguagePreferences localePreferences =
+        LanguagePreferences(preferences: preferences);
     FilterPreferences filterPreferences =
         FilterPreferences(preferences: preferences);
 
@@ -39,17 +39,17 @@ class App extends StatelessWidget {
                 filter: filterPreferences.filter,
               ),
             ),
-            BlocProvider<LocaleCubit>(
-              create: (context) => LocaleCubit(
+            BlocProvider<LanguageCubit>(
+              create: (context) => LanguageCubit(
                 preferences: localePreferences,
-                locale: localePreferences.getLocale(),
+                code: localePreferences.language.name,
               ),
             ),
             BlocProvider<TodoOverViewBloc>(
               create: (BuildContext context) => todoOverViewBloc,
             ),
           ],
-          child: BlocBuilder<LocaleCubit, Locale>(
+          child: BlocBuilder<LanguageCubit, Locale>(
             builder: (context, Locale locale) {
               return MaterialApp(
                 debugShowCheckedModeBanner: false,
