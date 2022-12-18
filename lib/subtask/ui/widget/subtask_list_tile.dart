@@ -21,6 +21,20 @@ class SubtaskListTile extends StatelessWidget {
               Subtask subtask = state.subtasks[index];
               TextEditingController controller =
                   TextEditingController(text: subtask.name);
+              FocusNode focusNodes = FocusNode();
+              focusNodes.addListener(() {
+                if (!focusNodes.hasFocus) {
+                  if (controller.text == "") {
+                    controller.text = subtask.name;
+                  } else {
+                    context.read<SubtaskBloc>().add(
+                          UpdateSubtaskEvent(
+                            subtask: subtask.copyWith(name: controller.text),
+                          ),
+                        );
+                  }
+                }
+              });
               return ListTile(
                 leading: Padding(
                   padding: const EdgeInsets.only(left: 8.0),
@@ -47,6 +61,7 @@ class SubtaskListTile extends StatelessWidget {
                   ),
                 ),
                 title: TextField(
+                  focusNode: focusNodes,
                   controller: controller,
                   style: TextStyle(
                     color: subtask.complete ? Colors.grey : Colors.black,

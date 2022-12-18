@@ -13,9 +13,11 @@ class TodoEditListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      leading: const TodoCheckBox(),
-      title: TodoInput(),
+    return Card(
+      child: ListTile(
+        leading: const TodoCheckBox(),
+        title: TodoInput(),
+      ),
     );
   }
 }
@@ -72,7 +74,20 @@ class TodoInput extends StatelessWidget {
     return BlocBuilder<TodoEditBloc, TodoEditState>(
       builder: (context, state) {
         controller.text = state.todo.name.replaceAll("\n", " ");
+        FocusNode focusNodes = FocusNode();
+        focusNodes.addListener(() {
+          if (!focusNodes.hasFocus) {
+            if (controller.text == "") {
+              controller.text = state.todo.name;
+            } else {
+              context
+                  .read<TodoEditBloc>()
+                  .add(TodoEditTitleChanged(title: controller.text));
+            }
+          }
+        });
         return TextField(
+          focusNode: focusNodes,
           controller: controller,
           onSubmitted: (value) {
             BlocProvider.of<TodoEditBloc>(context)

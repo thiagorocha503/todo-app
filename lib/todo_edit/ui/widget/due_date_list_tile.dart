@@ -18,34 +18,37 @@ class DueDateListTile extends StatelessWidget {
       buildWhen: (TodoEditState previous, TodoEditState current) =>
           current.todo.dueDate != previous.todo.dueDate,
       builder: (context, state) {
-        return ListTile(
-          leading: Padding(
-            padding: const EdgeInsets.only(left: 0.0),
-            child: IconButton(
-              onPressed: () {
+        return Card(
+          child: ListTile(
+            leading: Padding(
+              padding: const EdgeInsets.only(left: 0.0),
+              child: IconButton(
+                onPressed: () {
+                  showDueDatePicker(
+                      context, BlocProvider.of(context), state.todo);
+                },
+                icon: buildCalendarIconButton(context, state.todo),
+              ),
+            ),
+            title: GestureDetector(
+              onTap: () {
                 showDueDatePicker(
                     context, BlocProvider.of(context), state.todo);
               },
-              icon: buildCalendarIconButton(context, state.todo),
+              child: buildDueDateText(
+                context,
+                state.todo.dueDate,
+              ),
             ),
-          ),
-          title: GestureDetector(
-            onTap: () {
-              showDueDatePicker(context, BlocProvider.of(context), state.todo);
-            },
-            child: buildDueDateText(
-              context,
-              state.todo.dueDate,
-            ),
-          ),
-          trailing: IconButton(
-            onPressed: () {
-              BlocProvider.of<TodoEditBloc>(context).add(
-                const TodoEditDueDateChanged(dueDate: null),
-              );
-            },
-            icon: const Icon(
-              Icons.close,
+            trailing: IconButton(
+              onPressed: () {
+                BlocProvider.of<TodoEditBloc>(context).add(
+                  const TodoEditDueDateChanged(dueDate: null),
+                );
+              },
+              icon: const Icon(
+                Icons.close,
+              ),
             ),
           ),
         );

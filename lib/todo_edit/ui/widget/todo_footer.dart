@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todo/app_localizations.dart';
 import 'package:todo/todo_edit/bloc/todo_edit_bloc.dart';
@@ -20,13 +20,21 @@ class Footer extends StatelessWidget {
         if (createdAt != null) {
           createAtWidget = Text(
             "${AppLocalizations.of(context).translate("created-at").capitalize()} ${DateFormatter(AppLocalizations.of(context)).getVerboseDateTimeRepresentation(createdAt)}",
+            style: const TextStyle(
+              color: Colors.grey,
+              fontSize: 16,
+            ),
           );
         } else {
           createAtWidget = const Text("");
         }
         if (completeAt != null) {
           completeAtWidget = Text(
-            " 🔹${AppLocalizations.of(context).translate("completed-at").capitalize()} ${DateFormatter(AppLocalizations.of(context)).getVerboseDateTimeRepresentation(completeAt)}",
+            "  ${AppLocalizations.of(context).translate("completed-at").capitalize()} ${DateFormatter(AppLocalizations.of(context)).getVerboseDateTimeRepresentation(completeAt)}",
+            style: const TextStyle(
+              color: Colors.grey,
+              fontSize: 16,
+            ),
           );
         } else {
           completeAtWidget = const Text("");

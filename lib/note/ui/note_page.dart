@@ -18,7 +18,6 @@ class NotePage extends StatelessWidget {
     return BlocListener<TodoEditBloc, TodoEditState>(
         listener: (context, state) {
           if (state is TodoEditLoaded) {
-            Navigator.pop(context);
             if (Platform.isAndroid || Platform.isIOS) {
               showToast(
                 AppLocalizations.of(context).translate("saved").capitalize(),
@@ -61,6 +60,7 @@ class NotePage extends StatelessWidget {
                     BlocProvider.of<TodoEditBloc>(context).add(
                       TodoEditNoteChanged(note: _txtNote.text),
                     );
+                    Navigator.pop(context);
                   },
                 ),
               ),

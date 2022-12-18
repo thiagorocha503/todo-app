@@ -91,8 +91,14 @@ class TodoEditPageView extends StatelessWidget {
                 child: Column(
                   children: [
                     const TodoEditListTile(),
-                    const SubtaskListTile(),
-                    SubtaskInput(todoId: todo.id),
+                    Card(
+                      child: Column(
+                        children: [
+                          const SubtaskListTile(),
+                          SubtaskInput(todoId: todo.id),
+                        ],
+                      ),
+                    ),
                     const DueDateListTile(),
                     const NoteListTile(),
                   ],
