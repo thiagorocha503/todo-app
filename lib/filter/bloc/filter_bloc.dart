@@ -9,11 +9,14 @@ class FilterCubit extends Cubit<Filter> {
   FilterPreferences preferences;
   FilterCubit(
       {required this.preferences, required this.bloc, required Filter filter})
-      : super(filter);
+      : super(filter) {
+    preferences.stream.listen((Filter filter) {
+      emit(filter);
+      bloc.add(TodoOverFilterChange(filter: filter));
+    });
+  }
 
   void change(Filter filter) {
-    preferences.setFilter(filter);
-    bloc.add(TodoOverFilterChange(filter: filter));
-    emit(filter);
+    preferences.sink.add(filter);
   }
 }

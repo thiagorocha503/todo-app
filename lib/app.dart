@@ -25,7 +25,7 @@ class App extends StatelessWidget {
         FilterPreferences(preferences: preferences);
 
     TodoOverViewBloc todoOverViewBloc = TodoOverViewBloc(
-      filter: filterPreferences.getFilter(),
+      filter: filterPreferences.filter,
       repository: repository,
     )..add(TodoOverViewFetchEvent());
     return RepositoryProvider(
@@ -36,7 +36,7 @@ class App extends StatelessWidget {
               create: (context) => FilterCubit(
                 preferences: filterPreferences,
                 bloc: todoOverViewBloc,
-                filter: filterPreferences.getFilter(),
+                filter: filterPreferences.filter,
               ),
             ),
             BlocProvider<LocaleCubit>(
