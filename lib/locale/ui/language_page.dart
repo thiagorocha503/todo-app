@@ -28,15 +28,17 @@ class LanguagePage extends StatelessWidget {
           AppLocalizations.of(context).translate("language").capitalize(),
         ),
       ),
-      body: ListView.builder(
-        itemCount: language.length,
-        itemBuilder: (context, index) {
-          if (context.read<LocaleCubit>().state.languageCode ==
-              language[index]["code"]) {
-            return buildItem(context, index, selected: true);
-          }
-          return buildItem(context, index);
-        },
+      body: SafeArea(
+        child: ListView.builder(
+          itemCount: language.length,
+          itemBuilder: (context, index) {
+            if (context.read<LocaleCubit>().state.languageCode ==
+                language[index]["code"]) {
+              return buildItem(context, index, selected: true);
+            }
+            return buildItem(context, index);
+          },
+        ),
       ),
     );
   }

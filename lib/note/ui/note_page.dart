@@ -66,45 +66,48 @@ class NotePage extends StatelessWidget {
               ),
             ],
           ),
-          body: BlocBuilder<TodoEditBloc, TodoEditState>(
-            builder: (context, state) {
-              _txtNote.text = state.todo.note;
-              return LayoutBuilder(
-                builder: (BuildContext context, BoxConstraints constraints) =>
-                    SingleChildScrollView(
-                  child: ConstrainedBox(
-                    constraints: BoxConstraints(
-                      minWidth: constraints.maxWidth,
-                      minHeight: constraints.maxHeight,
-                    ),
-                    child: IntrinsicHeight(
-                      child: Padding(
-                        padding: const EdgeInsets.all(15),
-                        child: Column(
-                          children: [
-                            Expanded(
-                              child: TextFormField(
-                                autofocus: state.todo.note == "" ? true : false,
-                                controller: _txtNote,
-                                decoration: InputDecoration(
-                                  border: InputBorder.none,
-                                  hintText: AppLocalizations.of(context)
-                                      .translate("add-note")
-                                      .capitalize(),
-                                  hintStyle: const TextStyle(
-                                      fontWeight: FontWeight.w400),
+          body: SafeArea(
+            child: BlocBuilder<TodoEditBloc, TodoEditState>(
+              builder: (context, state) {
+                _txtNote.text = state.todo.note;
+                return LayoutBuilder(
+                  builder: (BuildContext context, BoxConstraints constraints) =>
+                      SingleChildScrollView(
+                    child: ConstrainedBox(
+                      constraints: BoxConstraints(
+                        minWidth: constraints.maxWidth,
+                        minHeight: constraints.maxHeight,
+                      ),
+                      child: IntrinsicHeight(
+                        child: Padding(
+                          padding: const EdgeInsets.all(15),
+                          child: Column(
+                            children: [
+                              Expanded(
+                                child: TextFormField(
+                                  autofocus:
+                                      state.todo.note == "" ? true : false,
+                                  controller: _txtNote,
+                                  decoration: InputDecoration(
+                                    border: InputBorder.none,
+                                    hintText: AppLocalizations.of(context)
+                                        .translate("add-note")
+                                        .capitalize(),
+                                    hintStyle: const TextStyle(
+                                        fontWeight: FontWeight.w400),
+                                  ),
+                                  maxLines: null,
                                 ),
-                                maxLines: null,
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
                     ),
                   ),
-                ),
-              );
-            },
+                );
+              },
+            ),
           ),
         ));
   }

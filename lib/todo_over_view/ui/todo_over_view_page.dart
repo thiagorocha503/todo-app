@@ -30,84 +30,86 @@ class TodoOverViewPage extends StatelessWidget {
           Padding(padding: EdgeInsets.only(right: 16.0), child: MoreButton())
         ],
       ),
-      body: BlocConsumer<TodoOverViewBloc, TodoOverviewState>(
-        listener: ((context, state) {
-          if (state is TodoOverViewErrorState) {
-            showDialog(
-              context: context,
-              builder: (context) => ErrorDialog(
-                message: state.message,
-              ),
-            );
-          }
-        }),
-        builder: (BuildContext context, TodoOverviewState state) {
-          if (state is TodoOverViewLoadedState) {
-            List<Todo> todos = state.todos;
-            if (todos.isEmpty) {
-              return Center(
-                child: Text(
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: Colors.grey,
-                    fontSize: 16,
-                  ),
-                  AppLocalizations.of(context)
-                      .translate("no-todo")
-                      .capitalize(),
+      body: SafeArea(
+        child: BlocConsumer<TodoOverViewBloc, TodoOverviewState>(
+          listener: ((context, state) {
+            if (state is TodoOverViewErrorState) {
+              showDialog(
+                context: context,
+                builder: (context) => ErrorDialog(
+                  message: state.message,
                 ),
               );
             }
-            return ListView.builder(
-              itemCount: todos.length,
-              itemBuilder: (BuildContext context, int index) {
-                Todo todo = todos[index];
-                return TodoOverviewListTile(
-                  todo: todos[index],
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => TodoEditPage(todo: todo),
-                      ),
-                    );
-                  },
-                  onToggleCompleted: (bool value) {
-                    context.read<TodoOverViewBloc>().add(
-                          TodoOverViewUpdate(
-                            todo: todo.copyWith(
-                              createdDate: todo.createdDate,
-                              dueDate: todo.dueDate,
-                              completeDate: value ? DateTime.now() : null,
-                            ),
-                          ),
-                        );
-                  },
-                  onDelete: () {
-                    showDialog(
-                      context: context,
-                      builder: (context) => TodoDeleteAlertDialog(
-                        onConfirm: () {
-                          context
-                              .read<TodoOverViewBloc>()
-                              .add(TodoOverViewDeleted(id: todo.id));
-                        },
-                      ),
-                    );
-                  },
+          }),
+          builder: (BuildContext context, TodoOverviewState state) {
+            if (state is TodoOverViewLoadedState) {
+              List<Todo> todos = state.todos;
+              if (todos.isEmpty) {
+                return Center(
+                  child: Text(
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.grey,
+                      fontSize: 16,
+                    ),
+                    AppLocalizations.of(context)
+                        .translate("no-todo")
+                        .capitalize(),
+                  ),
                 );
-              },
-            );
-          } else if (state is TodoOverViewErrorState) {
-            return Center(
-              child: Text(" Error: ${state.message}"),
-            );
-          } else {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-        },
+              }
+              return ListView.builder(
+                itemCount: todos.length,
+                itemBuilder: (BuildContext context, int index) {
+                  Todo todo = todos[index];
+                  return TodoOverviewListTile(
+                    todo: todos[index],
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => TodoEditPage(todo: todo),
+                        ),
+                      );
+                    },
+                    onToggleCompleted: (bool value) {
+                      context.read<TodoOverViewBloc>().add(
+                            TodoOverViewUpdate(
+                              todo: todo.copyWith(
+                                createdDate: todo.createdDate,
+                                dueDate: todo.dueDate,
+                                completeDate: value ? DateTime.now() : null,
+                              ),
+                            ),
+                          );
+                    },
+                    onDelete: () {
+                      showDialog(
+                        context: context,
+                        builder: (context) => TodoDeleteAlertDialog(
+                          onConfirm: () {
+                            context
+                                .read<TodoOverViewBloc>()
+                                .add(TodoOverViewDeleted(id: todo.id));
+                          },
+                        ),
+                      );
+                    },
+                  );
+                },
+              );
+            } else if (state is TodoOverViewErrorState) {
+              return Center(
+                child: Text(" Error: ${state.message}"),
+              );
+            } else {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+          },
+        ),
       ),
       floatingActionButton: const AddTodoButton(),
     );
