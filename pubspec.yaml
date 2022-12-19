@@ -41,7 +41,7 @@ dependencies:
   launch_review: ^3.0.1
   package_info_plus: ^3.0.2
   path_provider: ^2.0.11
-  provider: ^6.0.4
+  provider: ^6.0.5
   share_plus: ^6.3.0
   shared_preferences: ^2.0.15
   roundcheckbox: ^2.0.5
