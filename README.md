@@ -1,15 +1,14 @@
 # Todo
-[![Codemagic build status](https://api.codemagic.io/apps/5fb29cea6050966c26cb0529/5fb29cea6050966c26cb0528/status_badge.svg)](https://codemagic.io/apps/5fb29cea6050966c26cb0529/5fb29cea6050966c26cb0528/latest_build) ![build](https://github.com/thiagorocha503/todo-app/actions/workflows/flutter.yml/badge.svg?event=push&pull_request) [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+[![Codemagic build status](https://api.codemagic.io/apps/5fb29cea6050966c26cb0529/5fb29cea6050966c26cb0528/status_badge.svg)](https://codemagic.io/apps/5fb29cea6050966c26cb0529/5fb29cea6050966c26cb0528/latest_build) ![build](https://github.com/thiagorocha503/todo-app/actions/workflows/flutter.yml/badge.svg?event=push&pull_request) [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0) ![release](https://img.shields.io/github/v/release/thiagorocha503/todo-app) ![issue open](https://img.shields.io/github/issues/thiagorocha503/todo-app.svg) ![closed issue](https://img.shields.io/github/issues-closed/thiagorocha503/todo-app.svg)  ![last commit](https://badgen.net/github/last-commit/thiagorocha503/todo-app/master)
 
-<img src="https://i.ibb.co/LhFG4SH/ic-launcher.png" alt="ic-launcher" style="border: 0">
+![app icon](https://i.ibb.co/LhFG4SH/ic-launcher.png)
 
 > To do list app built in flutter framework.
 
 ## Screenshoots
 
-<center>
-  <img src="https://github.com/thiagorocha503/thiagorocha503.github.io/blob/master/images/screenshot/screenshot_20221214-161845.jpg" style="width:300px">
-</center>
+![screenshoots](https://i.ibb.co/GsZx8m6/screenshot-20221214-161845-w300px.jpg)
+ 
 
 ## Getting Started
 For help getting started with Flutter, view our
@@ -54,9 +53,8 @@ flutter test
 ```
 ## Download
 
-<a href="https://play.google.com/store/apps/details?id=io.github.thiagorocha503.lista_de_tarefas" alt="Get it on Google play">
-  <img src="https://i.ibb.co/51Q4zYb/google-play-badge.png" alt="google-play-badge" style="border:0; height:50px">
-</a>
+[![google play](https://i.ibb.co/GMZg2td/google-play-badge-50.png)](https://play.google.com/store/apps/details?id=io.github.thiagorocha503.lista_de_tarefas)
+
 
 ## Author
 * **Thiago Rocha Ferreira** - [Thiagorocha503](https://github.com/thiagorocha503)
