@@ -20,3 +20,4 @@ jobs:
       # Analyze our Dart code
       - run: flutter analyze
       - run: flutter test
+      - run: flutter build apk
