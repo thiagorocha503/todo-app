@@ -6,7 +6,7 @@ import 'package:todo/constants/database.dart';
 // ignore: depend_on_referenced_packages
 import 'package:path/path.dart';
 import 'package:flutter/foundation.dart';
-import 'package:todo/data/migration.dart';
+import 'package:todo/data/schema.dart';
 
 /// Database para platorm Mobile ou Desktop
 class DBProvider {
@@ -74,11 +74,11 @@ class DBProvider {
   }
 
   void onOpen(db) {
-    debugPrint("> onOpen");
+    debugPrint("DB> onOpen");
   }
 
   void onConfigure(Database db) {
-    debugPrint("> onConfigure");
+    debugPrint("DB> onConfigure");
     db.execute("PRAGMA foreign_keys = 1");
   }
 
@@ -102,9 +102,10 @@ class DBProvider {
   }
 
   void onCreate(Database db, int version) async {
-    debugPrint("> onCreate");
+    debugPrint("DB> onCreate");
     const List<String> schema = [
-      todo_scheme_v2,
+      todoSchemav2,
+      subtaskSchemaV1,
     ];
 
     for (String sql in schema) {
@@ -116,25 +117,34 @@ class DBProvider {
   }
 
   void onUpgrade(Database db, int oldVersion, int newVersion) async {
-    debugPrint("> onUpgrade");
+    debugPrint("DB> onUpgrade");
+    List<String> scheme = [];
     if (oldVersion == 1) {
-      updateToV2(db);
-      updateToV3(db);
+      scheme.add(todoSchemav2); // new todo scheme
+      scheme.add(
+        """ 
+        INSERT INTO todo(title, note, due, complete_at)
+        SELECT 
+          title,
+          description,
+          date_end,
+          CASE done
+            WHEN 1 THEN
+              datetime('now', 'localtime')
+            ELSE
+              NULL
+          END as complete_at
+        from 
+          note;
+      """,
+      ); // migrate data
+      scheme.add("DROP table note;"); // drop old table
     }
-    if (oldVersion == 2) {
-      updateToV3(db);
+    if (oldVersion <= 2) {
+      scheme.add(subtaskSchemaV1);
     }
-  }
-}
-
-void updateToV2(Database db) async {
-  for (String sql in upgrade_002) {
-    await db.execute(sql);
-  }
-}
-
-void updateToV3(Database db) async {
-  for (String sql in upgrade_003) {
-    await db.execute(sql);
+    for (String sql in scheme) {
+      await db.execute(sql);
+    }
   }
 }
