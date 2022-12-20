@@ -3,6 +3,7 @@ import 'package:roundcheckbox/roundcheckbox.dart';
 import 'package:todo/app_localizations.dart';
 import 'package:todo/todo_over_view/model/todo.dart';
 import 'package:todo/util/string_extension.dart';
+import 'package:todo/util/datetime_extension.dart';
 
 class TodoOverviewListTile extends StatelessWidget {
   final Todo todo;
@@ -73,16 +74,11 @@ class TodoOverviewListTile extends StatelessWidget {
       return Colors.blue;
     }
     if (dueDate != null) {
-      if (now.day == dueDate.day &&
-          now.month == dueDate.month &&
-          now.year == dueDate.year) {
-        return Colors.grey;
-      }
-      if (dueDate.compareTo(now) == -1) {
+      if (dueDate.compareDateTo(now) == -1) {
         return Colors.red;
       }
     }
-    return Colors.grey; // default style
+    return Colors.grey;
   }
 
   Color _getTextColor(BuildContext context, Todo todo) {
@@ -93,12 +89,7 @@ class TodoOverviewListTile extends StatelessWidget {
       return Colors.grey;
     }
     if (dueDate != null) {
-      if (now.day == dueDate.day &&
-          now.month == dueDate.month &&
-          now.year == dueDate.year) {
-        return Colors.black;
-      }
-      if (dueDate.compareTo(now) == -1) {
+      if (dueDate.compareDateTo(now) == -1) {
         return Colors.red;
       }
     }

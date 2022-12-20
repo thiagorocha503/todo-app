@@ -62,7 +62,7 @@ class DueDateListTile extends StatelessWidget {
     DateTime? dueDate = todo.dueDate;
     if (dueDate != null) {
       if (dueDate.compareDateTo(today) >= 0) {
-        color = color = getColor(context);
+        color = Theme.of(context).primaryColor;
       } else {
         color = Colors.red;
       }
@@ -128,24 +128,16 @@ class DueDateListTile extends StatelessWidget {
       return Text(
         text,
         style: TextStyle(
-          color: getColor(context),
+          color: Theme.of(context).primaryColor,
         ),
       );
     } else {
       return Text(
         AppLocalizations.of(context).translate("today").capitalize(),
         style: TextStyle(
-          color: getColor(context),
+          color: Theme.of(context).primaryColor,
         ),
       );
-    }
-  }
-
-  Color getColor(BuildContext context) {
-    if (Theme.of(context).brightness == Brightness.light) {
-      return Theme.of(context).primaryColor;
-    } else {
-      return Colors.white;
     }
   }
 }
