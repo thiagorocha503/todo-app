@@ -1,10 +1,12 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mockito/annotations.dart';
 import 'package:todo/filter/model/filter.dart';
 import 'package:todo/todo_over_view/bloc/todo_over_view_event.dart';
 import 'package:todo/todo_over_view/bloc/todo_over_view_state.dart';
 import 'package:todo/todo_over_view/model/todo.dart';
 import 'package:todo/todo_over_view/repository/repository.dart';
 
+@GenerateNiceMocks([MockSpec<TodoOverViewBloc>()])
 class TodoOverViewBloc extends Bloc<TodoOverViewEvent, TodoOverviewState> {
   final ITodoRepository repository;
   Filter filter;
