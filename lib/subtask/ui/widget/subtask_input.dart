@@ -10,7 +10,7 @@ import 'package:todo/util/string_extension.dart';
 enum SubtaskInputState { selected, unselected }
 
 class SubtaskInputBloc extends Cubit<SubtaskInputState> {
-  SubtaskInputBloc() : super(SubtaskInputState.unselected);
+  SubtaskInputBloc({required SubtaskInputState state}) : super(state);
 
   void change(SubtaskInputState state) {
     emit(state);
