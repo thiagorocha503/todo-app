@@ -4,14 +4,14 @@ import 'package:todo/app_localizations.dart';
 import 'package:todo/subtask/bloc/subtask_bloc.dart';
 import 'package:todo/subtask/bloc/subtask_event.dart';
 import 'package:todo/subtask/repository/subtask_repository.dart';
-import 'package:todo/subtask/ui/widget/subtask_list_tile.dart';
-import 'package:todo/subtask/ui/widget/subtask_input.dart';
+import 'package:todo/subtask/ui/subtask_add_list_tile.dart';
+import 'package:todo/subtask/ui/subtask_over_view_list_tile.dart';
 import 'package:todo/todo_edit/bloc/todo_edit_bloc.dart';
 import 'package:todo/todo_edit/bloc/todo_edit_state.dart';
-import 'package:todo/todo_edit/ui/widget/todo_footer.dart';
+import 'package:todo/todo_edit/ui/widget/due_date_list_tile.dart';
+import 'package:todo/todo_edit/ui/widget/footer.dart';
 import 'package:todo/todo_over_view/model/todo.dart';
 import 'package:todo/todo_over_view/repository/todo_repository.dart';
-import 'package:todo/todo_edit/ui/widget/due_date_list_tile.dart';
 import 'package:todo/todo_edit/ui/widget/note_list_tile.dart';
 import 'package:todo/widget/error_dialog.dart';
 import 'package:todo/todo_edit/ui/widget/todo_list_tile.dart';
@@ -36,7 +36,7 @@ class TodoEditPage extends StatelessWidget {
         ),
         BlocProvider(
             create: (context) =>
-                SubtaskInputBloc(state: SubtaskInputState.unselected)),
+                SubtaskInputBloc(state: SubtaskInputAddState.disabled)),
         BlocProvider<TodoEditBloc>(
           lazy: false,
           create: (context) => TodoEditBloc(
@@ -97,8 +97,8 @@ class TodoEditPageView extends StatelessWidget {
                       Card(
                         child: Column(
                           children: [
-                            const SubtaskListTile(),
-                            SubtaskInput(todoId: todo.id),
+                            const SubtaskOverViewListTile(),
+                            SubtaskAddListTile(todoId: todo.id),
                           ],
                         ),
                       ),

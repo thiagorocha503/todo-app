@@ -16,7 +16,7 @@ class TodoEditListTile extends StatelessWidget {
     return Card(
       child: ListTile(
         leading: const TodoCheckBox(),
-        title: TodoInput(),
+        title: TodoTextField(),
       ),
     );
   }
@@ -64,10 +64,10 @@ class TodoCheckBox extends StatelessWidget {
   }
 }
 
-class TodoInput extends StatelessWidget {
+class TodoTextField extends StatelessWidget {
   final TextEditingController controller = TextEditingController();
 
-  TodoInput({super.key});
+  TodoTextField({super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -3,7 +3,6 @@ import 'dart:io' show Platform;
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:todo/app_localizations.dart';
 import 'package:todo/constants/app_about.dart' as constants;
-import 'package:todo/settings/ui/widgets/language_list_tile.dart';
 import 'package:todo/settings/ui/widgets/widgets.dart';
 
 import 'package:todo/util/string_extension.dart';

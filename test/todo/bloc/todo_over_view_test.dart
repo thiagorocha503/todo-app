@@ -50,7 +50,7 @@ void main() {
   });
 
   blocTest(
-    "Fetched event",
+    "Fetched todo event",
     build: () => bloc,
     act: (bloc) => bloc.add(
       TodoOverViewFetchEvent(),
@@ -82,7 +82,7 @@ void main() {
   );
 
   blocTest(
-    "Added event",
+    "Added todo event",
     setUp: () {
       when(repository.fetch(filter: Filter.all))
           .thenAnswer((realInvocation) async {
@@ -170,7 +170,7 @@ void main() {
   );
 
   blocTest(
-    "Deleted event",
+    "Deleted todo event",
     build: () => bloc,
     act: (bloc) => bloc.add(
       TodoOverViewDeleted(id: 2),
@@ -214,7 +214,7 @@ void main() {
   );
 
   blocTest(
-    "Updated event",
+    "Updated todo event",
     setUp: () {
       when(repository.fetch(filter: Filter.all))
           .thenAnswer((realInvocation) async {

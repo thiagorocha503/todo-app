@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:todo/app_localizations.dart';
+import 'package:todo/note/note_page.dart';
 import 'package:todo/todo_edit/bloc/todo_edit_bloc.dart';
 import 'package:todo/todo_edit/bloc/todo_edit_state.dart';
 import 'package:todo/widget/error_dialog.dart';
 import 'package:todo/util/string_extension.dart';
-import 'package:todo/note/ui/note_page.dart';
 
 class NoteListTile extends StatelessWidget {
   const NoteListTile({Key? key}) : super(key: key);
@@ -36,7 +36,7 @@ class NoteListTile extends StatelessWidget {
                 builder: (context_) {
                   return BlocProvider<TodoEditBloc>.value(
                     value: BlocProvider.of(context),
-                    child: NotePage(),
+                    child: NotePage(note: state.todo.note),
                   );
                 },
               ),

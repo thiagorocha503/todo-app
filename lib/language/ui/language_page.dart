@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:todo/app_localizations.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:todo/language/cubit/language_cubit.dart';
 import 'package:todo/language/model/language.dart';
+import 'package:todo/language/ui/widget/language_list_tile.dart';
 import 'package:todo/util/string_extension.dart';
 
 class LanguageItem {
@@ -12,13 +11,13 @@ class LanguageItem {
 }
 
 class LanguagePage extends StatelessWidget {
-  final List<LanguageItem> language = [
+  LanguagePage({super.key});
+
+  final List<LanguageItem> languages = [
     LanguageItem(name: "english", code: Language.en),
     LanguageItem(name: "português", code: Language.pt),
     LanguageItem(name: "español", code: Language.es),
   ];
-
-  LanguagePage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -37,38 +36,12 @@ class LanguagePage extends StatelessWidget {
       ),
       body: SafeArea(
         child: ListView.builder(
-          itemCount: language.length,
+          itemCount: languages.length,
           itemBuilder: (context, index) {
-            if (context.read<LanguageCubit>().state ==
-                Locale(language[index].code.name)) {
-              return buildItem(context, index, selected: true);
-            }
-            return buildItem(context, index);
+            return LanguageListTile(language: languages[index]);
           },
         ),
       ),
-    );
-  }
-
-  Widget buildItem(BuildContext context, int index, {bool selected = false}) {
-    return ListTile(
-      trailing: selected
-          ? Icon(Icons.check, color: Theme.of(context).colorScheme.secondary)
-          : null,
-      title: Padding(
-        padding: const EdgeInsets.only(left: 16),
-        child: Text(
-          language[index].name.toString().toUpperCase(),
-          style: TextStyle(
-            color:
-                Theme.of(context).textTheme.bodyText1!.color!.withOpacity(0.9),
-            fontWeight: FontWeight.w800,
-          ),
-        ),
-      ),
-      onTap: () {
-        context.read<LanguageCubit>().change(language[index].code);
-      },
     );
   }
 }

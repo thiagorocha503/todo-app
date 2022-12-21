@@ -30,7 +30,7 @@ void main() {
   });
 
   blocTest<SubtaskBloc, SubtaskState>(
-    'Fetched event',
+    'Fetched subtask event',
     build: () => bloc,
     act: (bloc) => bloc.add(FetchSubtasksEvent()),
     verify: (_) {
@@ -47,7 +47,7 @@ void main() {
   );
 
   blocTest<SubtaskBloc, SubtaskState>(
-    'Addded event',
+    'Added subtask event',
     setUp: () {
       when(repository.fetch(todoId: 1)).thenAnswer((realInvocation) async {
         return Future.value(const [
@@ -92,7 +92,7 @@ void main() {
   );
 
   blocTest<SubtaskBloc, SubtaskState>(
-    'Deleted event',
+    'Deleted subtask event',
     build: () => bloc,
     setUp: () {
       when(repository.fetch(todoId: 1)).thenAnswer((realInvocation) async {
@@ -117,7 +117,7 @@ void main() {
   );
 
   blocTest<SubtaskBloc, SubtaskState>(
-    'Updated event',
+    'Updated  subtask event',
     build: () => bloc,
     setUp: () {
       when(repository.fetch(todoId: 1)).thenAnswer((realInvocation) async {
