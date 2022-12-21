@@ -17,6 +17,7 @@ class NotePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    controller.text = note;
     return BlocListener<TodoEditBloc, TodoEditState>(
       listener: (context, state) {
         if (state is TodoEditLoaded) {
