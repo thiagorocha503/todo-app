@@ -29,7 +29,7 @@ class TodoEditPage extends StatelessWidget {
           lazy: false,
           create: (context) {
             return SubtaskBloc(
-              repository: SubtaskRepository(),
+              repository: RepositoryProvider.of<SubtaskRepository>(context),
               todoId: todo.id,
             )..add(FetchSubtasksEvent());
           },
