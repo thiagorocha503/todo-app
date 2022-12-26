@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todo/app_localizations.dart';
 import 'package:todo/subtask/bloc/subtask_bloc.dart';
 import 'package:todo/subtask/bloc/subtask_event.dart';
-import 'package:todo/subtask/repository/subtask_repository.dart';
+import 'package:todo/subtask/repository/repository.dart';
 import 'package:todo/subtask/ui/subtask_add_list_tile.dart';
 import 'package:todo/subtask/ui/subtask_over_view_list_tile.dart';
 import 'package:todo/todo_edit/bloc/todo_edit_bloc.dart';
@@ -11,7 +11,7 @@ import 'package:todo/todo_edit/bloc/todo_edit_state.dart';
 import 'package:todo/todo_edit/ui/widget/due_date_list_tile.dart';
 import 'package:todo/todo_edit/ui/widget/footer.dart';
 import 'package:todo/todo_over_view/model/todo.dart';
-import 'package:todo/todo_over_view/repository/todo_repository.dart';
+import 'package:todo/todo_over_view/repository/repository.dart';
 import 'package:todo/todo_edit/ui/widget/note_list_tile.dart';
 import 'package:todo/widget/error_dialog.dart';
 import 'package:todo/todo_edit/ui/widget/todo_list_tile.dart';
@@ -27,9 +27,9 @@ class TodoEditPage extends StatelessWidget {
       providers: [
         BlocProvider<SubtaskBloc>(
           lazy: false,
-          create: (context) {
+          create: (_) {
             return SubtaskBloc(
-              repository: RepositoryProvider.of<SubtaskRepository>(context),
+              repository: RepositoryProvider.of<ISubtaskRepository>(context),
               todoId: todo.id,
             )..add(FetchSubtasksEvent());
           },
@@ -39,9 +39,9 @@ class TodoEditPage extends StatelessWidget {
                 SubtaskInputBloc(state: SubtaskInputAddState.disabled)),
         BlocProvider<TodoEditBloc>(
           lazy: false,
-          create: (context) => TodoEditBloc(
+          create: (_) => TodoEditBloc(
             todo,
-            TodoRepository(),
+            RepositoryProvider.of<ITodoRepository>(context),
             BlocProvider.of(context),
           ),
         ),
