@@ -15,7 +15,7 @@ class SubtaskAddListTileDisabled extends StatelessWidget {
         child: IconButton(
           icon: Icon(
             Icons.add,
-            color: Theme.of(context).primaryColor,
+            color: Theme.of(context).colorScheme.primary,
           ),
           onPressed: () {
             context
@@ -31,7 +31,7 @@ class SubtaskAddListTileDisabled extends StatelessWidget {
         child: Text(
           AppLocalizations.of(context).translate("add-subtask").capitalize(),
           style: TextStyle(
-            color: Theme.of(context).primaryColor,
+            color: Theme.of(context).colorScheme.primary,
             fontSize: 16,
             fontWeight: FontWeight.w400,
           ),

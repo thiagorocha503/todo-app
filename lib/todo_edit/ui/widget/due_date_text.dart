@@ -29,14 +29,14 @@ class DueDateText extends StatelessWidget {
     return TextDecoration.none;
   }
 
-  Color _getColor(BuildContext context, DateTime? dueDate) {
+  Color? _getColor(BuildContext context, DateTime? dueDate) {
     if (dueDate == null) {
-      return Colors.grey;
+      return Theme.of(context).textTheme.headline1?.color;
     }
     if (dueDate.compareDateTo(DateTime.now()) < 0) {
       return Colors.red;
     } else {
-      return Theme.of(context).primaryColor;
+      return Theme.of(context).colorScheme.primary;
     }
   }
 

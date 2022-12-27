@@ -30,8 +30,9 @@ class TodoOverviewListTile extends StatelessWidget {
           ),
           animationDuration: const Duration(milliseconds: 300),
           isChecked: todo.completeDate == null ? false : true,
-          checkedColor: Theme.of(context).primaryColor,
+          checkedColor: Theme.of(context).colorScheme.primary,
           disabledColor: Colors.grey,
+          uncheckedColor: Colors.transparent,
           onTap: (bool? value) {
             if (value == null) {
               return;
@@ -53,9 +54,9 @@ class TodoOverviewListTile extends StatelessWidget {
         trailing: IconButton(
           tooltip:
               AppLocalizations.of(context).translate("delete").capitalize(),
-          icon: const Icon(
+          icon: Icon(
             Icons.delete,
-            color: Colors.blue,
+            color: Theme.of(context).colorScheme.primary,
           ),
           onPressed: () {
             onDelete();
@@ -71,7 +72,7 @@ class TodoOverviewListTile extends StatelessWidget {
     DateTime? completeDate = todo.completeDate;
     DateTime? dueDate = todo.dueDate;
     if (completeDate != null) {
-      return Colors.blue;
+      return Theme.of(context).colorScheme.primary;
     }
     if (dueDate != null) {
       if (dueDate.compareDateTo(now) == -1) {
@@ -81,7 +82,7 @@ class TodoOverviewListTile extends StatelessWidget {
     return Colors.grey;
   }
 
-  Color _getTextColor(BuildContext context, Todo todo) {
+  Color? _getTextColor(BuildContext context, Todo todo) {
     DateTime now = DateTime.now();
     DateTime? completeDate = todo.completeDate;
     DateTime? dueDate = todo.dueDate;
@@ -93,6 +94,6 @@ class TodoOverviewListTile extends StatelessWidget {
         return Colors.red;
       }
     }
-    return Colors.black;
+    return null;
   }
 }
