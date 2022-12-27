@@ -32,5 +32,9 @@
     "delete":"remover tarefa",
     "enter-name":"Digite o name",
     "fill-out-name":"preencha este campo",
-    "add-subtask":"adicionar subtarefa"
+    "add-subtask":"adicionar subtarefa",
+    "theme":"tema",
+    "light":"claro",
+    "dark":"escuro",
+    "system":"sistema"
 }

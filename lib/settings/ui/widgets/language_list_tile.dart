@@ -23,6 +23,7 @@ class LanguageListTile extends StatelessWidget {
           MaterialPageRoute(builder: ((context) => LanguagePage())),
         );
       },
+      trailing: const Icon(Icons.arrow_forward_ios_rounded),
     );
   }
 

@@ -15,7 +15,7 @@ class DueDateCalendarButton extends StatelessWidget {
     DateTime? dueDate = todo.dueDate;
     if (dueDate != null) {
       if (dueDate.compareDateTo(today) >= 0) {
-        color = Theme.of(context).primaryColor;
+        color = Theme.of(context).colorScheme.primary;
       } else {
         color = Colors.red;
       }

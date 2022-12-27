@@ -40,8 +40,9 @@ class TodoCheckBox extends StatelessWidget {
             width: 2,
           ),
           isChecked: state.todo.completeDate == null ? false : true,
-          checkedColor: Theme.of(context).primaryColor,
+          checkedColor: Theme.of(context).colorScheme.primary,
           disabledColor: Colors.grey,
+          uncheckedColor: Colors.transparent,
           onTap: (bool? value) {
             if (value == null) {
               return;
@@ -59,7 +60,7 @@ class TodoCheckBox extends StatelessWidget {
     if (todo.completeDate == null) {
       return Colors.grey;
     } else {
-      return Theme.of(context).primaryColor;
+      return Theme.of(context).colorScheme.primary;
     }
   }
 }

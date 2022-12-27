@@ -19,32 +19,35 @@ class DueDateListTile extends StatelessWidget {
       builder: (context, state) {
         return Card(
           child: ListTile(
-              leading: Padding(
-                padding: const EdgeInsets.only(left: 0.0),
-                child: IconButton(
-                  onPressed: () {
-                    showDueDatePicker(
-                        context, BlocProvider.of(context), state.todo);
-                  },
-                  icon: DueDateCalendarButton(
-                    todo: state.todo,
-                    onTap: () {
-                      showDueDatePicker(
-                          context, BlocProvider.of(context), state.todo);
-                    },
-                  ),
-                ),
-              ),
-              title: GestureDetector(
-                onTap: () {
+            leading: Padding(
+              padding: const EdgeInsets.only(left: 0.0),
+              child: IconButton(
+                onPressed: () {
                   showDueDatePicker(
                       context, BlocProvider.of(context), state.todo);
                 },
-                child: DueDateText(
-                  dueDate: state.todo.dueDate,
+                icon: DueDateCalendarButton(
+                  todo: state.todo,
+                  onTap: () {
+                    showDueDatePicker(
+                        context, BlocProvider.of(context), state.todo);
+                  },
                 ),
               ),
-              trailing: const DueDateClearIconButton()),
+            ),
+            title: GestureDetector(
+              onTap: () {
+                showDueDatePicker(
+                    context, BlocProvider.of(context), state.todo);
+              },
+              child: DueDateText(
+                dueDate: state.todo.dueDate,
+              ),
+            ),
+            trailing: state.todo.dueDate != null
+                ? const DueDateClearIconButton()
+                : null,
+          ),
         );
       },
     );

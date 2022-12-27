@@ -5,8 +5,15 @@ import 'package:todo/filter/bloc/filter_bloc.dart';
 import 'package:todo/filter/preferences/filter_preferences.dart';
 import 'package:todo/language/cubit/language_cubit.dart';
 import 'package:todo/language/preferences/language_preferences.dart';
+import 'package:todo/subtask/repository/repository.dart';
+import 'package:todo/subtask/repository/subtask_repository.dart';
+import 'package:todo/theme/cubit/theme_cubit.dart';
+import 'package:todo/theme/model/app_theme.dart';
+import 'package:todo/theme/preferences/theme_preferences.dart';
+import 'package:todo/theme/ui/widget/theme_data.dart';
 import 'package:todo/todo_over_view/bloc/todo_over_view_bloc.dart';
 import 'package:todo/todo_over_view/bloc/todo_over_view_event.dart';
+import 'package:todo/todo_over_view/repository/repository.dart';
 import 'package:todo/todo_over_view/repository/todo_repository.dart';
 import 'package:todo/todo_over_view/ui/todo_over_view_page.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -18,45 +25,83 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    TodoRepository repository = TodoRepository();
-    LanguagePreferences localePreferences =
-        LanguagePreferences(preferences: preferences);
-    FilterPreferences filterPreferences =
-        FilterPreferences(preferences: preferences);
+    ITodoRepository todoRepository = TodoRepository();
+    ISubtaskRepository subtaskRepository = SubtaskRepository();
+    LanguagePreferences localePreferences = LanguagePreferences(
+      preferences: preferences,
+    );
+    FilterPreferences filterPreferences = FilterPreferences(
+      preferences: preferences,
+    );
+    ThemePreferences themePreferences = ThemePreferences(
+      preferences: preferences,
+    );
 
     TodoOverViewBloc todoOverViewBloc = TodoOverViewBloc(
       filter: filterPreferences.filter,
-      repository: repository,
+      repository: todoRepository,
     )..add(TodoOverViewFetchEvent());
-    return RepositoryProvider(
-      create: (context) => repository,
+
+    return MultiRepositoryProvider(
+      providers: [
+        RepositoryProvider<ITodoRepository>(
+          create: (context) => todoRepository,
+        ),
+        RepositoryProvider<ISubtaskRepository>(
+          create: (context) => subtaskRepository,
+        ),
+      ],
       child: MultiBlocProvider(
-          providers: [
-            BlocProvider<FilterCubit>(
-              create: (context) => FilterCubit(
-                preferences: filterPreferences,
-                bloc: todoOverViewBloc,
-                filter: filterPreferences.filter,
-              ),
+        providers: [
+          BlocProvider<ThemeCubit>(
+            create: (context) => ThemeCubit(
+              preferences: themePreferences,
+              theme: themePreferences.getTheme(),
             ),
-            BlocProvider<LanguageCubit>(
-              create: (context) => LanguageCubit(
-                preferences: localePreferences,
-                code: localePreferences.language.name,
-              ),
+          ),
+          BlocProvider<FilterCubit>(
+            create: (context) => FilterCubit(
+              preferences: filterPreferences,
+              bloc: todoOverViewBloc,
+              filter: filterPreferences.filter,
             ),
-            BlocProvider<TodoOverViewBloc>(
-              create: (BuildContext context) => todoOverViewBloc,
+          ),
+          BlocProvider<LanguageCubit>(
+            create: (context) => LanguageCubit(
+              preferences: localePreferences,
+              code: localePreferences.language.name,
             ),
-          ],
-          child: BlocBuilder<LanguageCubit, Locale>(
+          ),
+          BlocProvider<TodoOverViewBloc>(
+            create: (BuildContext context) => todoOverViewBloc,
+          ),
+        ],
+        child: BlocBuilder<ThemeCubit, AppTheme>(
+            builder: (conttext, AppTheme appTheme) {
+          ThemeData theme;
+          switch (appTheme) {
+            case AppTheme.light:
+              theme = lightTheme;
+              break;
+            case AppTheme.dark:
+              theme = darkTheme;
+              break;
+            case AppTheme.system:
+              if (MediaQueryData.fromWindow(WidgetsBinding.instance.window)
+                      .platformBrightness ==
+                  Brightness.light) {
+                theme = lightTheme;
+              } else {
+                theme = darkTheme;
+              }
+              break;
+          }
+          return BlocBuilder<LanguageCubit, Locale>(
             builder: (context, Locale locale) {
               return MaterialApp(
                 debugShowCheckedModeBanner: false,
                 title: 'Tasks',
-                theme: ThemeData(
-                  primarySwatch: Colors.blue,
-                ),
+                theme: theme,
                 home: const TodoOverViewPage(),
                 localizationsDelegates: const [
                   AppLocalizations.delegate,
@@ -72,7 +117,9 @@ class App extends StatelessWidget {
                 ],
               );
             },
-          )),
+          );
+        }),
+      ),
     );
   }
 }

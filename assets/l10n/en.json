@@ -32,5 +32,9 @@
     "delete":"delete task",
     "enter-name":"Enter name",
     "fill-out-name":"fill out this field",
-    "add-subtask":"add subtask"
+    "add-subtask":"add subtask",
+    "theme":"theme",
+    "light":"light",
+    "dark":"dark",
+    "system":"system"
 }
