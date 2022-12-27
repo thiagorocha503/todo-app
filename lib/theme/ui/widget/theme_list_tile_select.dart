@@ -19,8 +19,13 @@ class ThemeListTileSelect extends StatelessWidget {
           padding: const EdgeInsets.only(left: 16),
           child: Text(
             themeItem.name.capitalize(),
-            style: const TextStyle(
+            style: TextStyle(
               fontWeight: FontWeight.w600,
+              color: Theme.of(context)
+                  .textTheme
+                  .bodyText1!
+                  .color!
+                  .withOpacity(0.9),
             ),
           ),
         ),
