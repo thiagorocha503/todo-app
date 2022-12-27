@@ -1,8 +1,10 @@
 import 'dart:async';
 
+import 'package:mockito/annotations.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:todo/theme/model/app_theme.dart';
 
+@GenerateNiceMocks([MockSpec<ThemePreferences>()])
 class ThemePreferences {
   final SharedPreferences preferences;
   // ignore: non_constant_identifier_names
