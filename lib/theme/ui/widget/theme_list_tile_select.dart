@@ -10,25 +10,30 @@ class ThemeListTileSelect extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      title: Padding(
-        padding: const EdgeInsets.only(left: 16),
-        child: Text(
-          themeItem.name.capitalize(),
-          style: const TextStyle(
-            fontWeight: FontWeight.w600,
+    return Theme(
+      data: ThemeData(
+        splashColor: Colors.transparent,
+      ),
+      child: ListTile(
+        title: Padding(
+          padding: const EdgeInsets.only(left: 16),
+          child: Text(
+            themeItem.name.capitalize(),
+            style: const TextStyle(
+              fontWeight: FontWeight.w600,
+            ),
           ),
         ),
+        trailing: context.read<ThemeCubit>().state == themeItem.value
+            ? Icon(
+                Icons.check,
+                color: Theme.of(context).colorScheme.secondary,
+              )
+            : null,
+        onTap: () {
+          context.read<ThemeCubit>().changue(themeItem.value);
+        },
       ),
-      trailing: context.read<ThemeCubit>().state == themeItem.value
-          ? Icon(
-              Icons.check,
-              color: Theme.of(context).colorScheme.primary,
-            )
-          : null,
-      onTap: () {
-        context.read<ThemeCubit>().changue(themeItem.value);
-      },
     );
   }
 }

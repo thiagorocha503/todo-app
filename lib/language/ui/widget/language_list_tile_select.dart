@@ -14,22 +14,27 @@ class LanguageListTileSelect extends StatelessWidget {
     if (context.read<LanguageCubit>().state == Locale(language.code.name)) {
       selected = true;
     }
-    return ListTile(
-      trailing: selected
-          ? Icon(Icons.check, color: Theme.of(context).colorScheme.secondary)
-          : null,
-      title: Padding(
-        padding: const EdgeInsets.only(left: 16),
-        child: Text(
-          language.name.toString().capitalize(),
-          style: const TextStyle(
-            fontWeight: FontWeight.w600,
+    return Theme(
+      data: ThemeData(
+        splashColor: Colors.transparent,
+      ),
+      child: ListTile(
+        trailing: selected
+            ? Icon(Icons.check, color: Theme.of(context).colorScheme.secondary)
+            : null,
+        title: Padding(
+          padding: const EdgeInsets.only(left: 16),
+          child: Text(
+            language.name.toString().capitalize(),
+            style: const TextStyle(
+              fontWeight: FontWeight.w600,
+            ),
           ),
         ),
+        onTap: () {
+          context.read<LanguageCubit>().change(language.code);
+        },
       ),
-      onTap: () {
-        context.read<LanguageCubit>().change(language.code);
-      },
     );
   }
 }
