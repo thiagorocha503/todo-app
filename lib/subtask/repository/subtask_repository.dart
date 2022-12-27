@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:mockito/annotations.dart';
-import 'package:todo/data/database.dart';
+import 'package:todo/database/database.dart';
 import 'package:todo/subtask/model/subtask.dart';
 import 'package:todo/subtask/provider/provider.dart';
 import 'package:todo/subtask/provider/subtask_db.dart';

@@ -6,7 +6,7 @@ import 'package:todo/constants/database.dart';
 // ignore: depend_on_referenced_packages
 import 'package:path/path.dart';
 import 'package:flutter/foundation.dart';
-import 'package:todo/data/schema.dart';
+import 'package:todo/database/schema.dart';
 
 /// Database para platorm Mobile ou Desktop
 class DBProvider {
