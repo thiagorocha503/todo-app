@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:todo/app_localizations.dart';
 import 'package:todo/language/model/language.dart';
-import 'package:todo/language/ui/widget/language_list_tile.dart';
+import 'package:todo/language/ui/widget/language_list_tile_select.dart';
 import 'package:todo/util/string_extension.dart';
 
 class LanguageItem {
@@ -38,7 +38,7 @@ class LanguagePage extends StatelessWidget {
         child: ListView.builder(
           itemCount: languages.length,
           itemBuilder: (context, index) {
-            return LanguageListTile(language: languages[index]);
+            return LanguageListTileSelect(language: languages[index]);
           },
         ),
       ),

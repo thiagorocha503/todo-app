@@ -4,6 +4,7 @@ import 'package:package_info_plus/package_info_plus.dart';
 import 'package:todo/app_localizations.dart';
 import 'package:todo/constants/app_about.dart' as constants;
 import 'package:todo/settings/ui/widgets/widgets.dart';
+import 'package:todo/settings/ui/widgets/theme_list_tile.dart';
 
 import 'package:todo/util/string_extension.dart';
 
@@ -43,6 +44,7 @@ class _SettingsPageState extends State<SettingsPage> {
             Expanded(
               child: ListView(
                 children: <Widget>[
+                  const ThemeListTile(),
                   const LanguageListTile(),
                   if (Platform.isAndroid) const RateListTile(),
                   const ShareListTile(),

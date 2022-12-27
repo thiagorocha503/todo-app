@@ -34,9 +34,11 @@ class TodoEditPage extends StatelessWidget {
             )..add(FetchSubtasksEvent());
           },
         ),
-        BlocProvider(
-            create: (context) =>
-                SubtaskInputBloc(state: SubtaskInputAddState.disabled)),
+        BlocProvider<SubtaskInputBloc>(
+          create: (context) => SubtaskInputBloc(
+            state: SubtaskInputAddState.disabled,
+          ),
+        ),
         BlocProvider<TodoEditBloc>(
           lazy: false,
           create: (_) => TodoEditBloc(

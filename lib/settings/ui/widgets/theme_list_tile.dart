@@ -1,0 +1,54 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:todo/app_localizations.dart';
+import 'package:todo/theme/cubit/theme_cubit.dart';
+import 'package:todo/theme/model/app_theme.dart';
+import 'package:todo/theme/ui/theme_page.dart';
+import 'package:todo/util/string_extension.dart';
+
+class ThemeListTile extends StatelessWidget {
+  const ThemeListTile({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      leading: const Icon(Icons.brightness_6),
+      title: Text(
+        AppLocalizations.of(context).translate("theme").capitalize(),
+      ),
+      subtitle: const SubtitleTheme(),
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const ThemePage()),
+        );
+      },
+      trailing: const Icon(Icons.arrow_forward_ios_rounded),
+    );
+  }
+}
+
+class SubtitleTheme extends StatelessWidget {
+  const SubtitleTheme({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<ThemeCubit, AppTheme>(
+      builder: (context, state) {
+        String text;
+        switch (state) {
+          case AppTheme.light:
+            text = AppLocalizations.of(context).translate("light");
+            break;
+          case AppTheme.dark:
+            text = AppLocalizations.of(context).translate("dark");
+            break;
+          case AppTheme.system:
+            text = AppLocalizations.of(context).translate("system");
+            break;
+        }
+        return Text(text.capitalize());
+      },
+    );
+  }
+}

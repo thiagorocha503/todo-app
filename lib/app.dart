@@ -7,6 +7,10 @@ import 'package:todo/language/cubit/language_cubit.dart';
 import 'package:todo/language/preferences/language_preferences.dart';
 import 'package:todo/subtask/repository/repository.dart';
 import 'package:todo/subtask/repository/subtask_repository.dart';
+import 'package:todo/theme/cubit/theme_cubit.dart';
+import 'package:todo/theme/model/app_theme.dart';
+import 'package:todo/theme/preferences/theme_preferences.dart';
+import 'package:todo/theme/ui/widget/theme_data.dart';
 import 'package:todo/todo_over_view/bloc/todo_over_view_bloc.dart';
 import 'package:todo/todo_over_view/bloc/todo_over_view_event.dart';
 import 'package:todo/todo_over_view/repository/repository.dart';
@@ -23,15 +27,21 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     ITodoRepository todoRepository = TodoRepository();
     ISubtaskRepository subtaskRepository = SubtaskRepository();
-    LanguagePreferences localePreferences =
-        LanguagePreferences(preferences: preferences);
-    FilterPreferences filterPreferences =
-        FilterPreferences(preferences: preferences);
+    LanguagePreferences localePreferences = LanguagePreferences(
+      preferences: preferences,
+    );
+    FilterPreferences filterPreferences = FilterPreferences(
+      preferences: preferences,
+    );
+    ThemePreferences themePreferences = ThemePreferences(
+      preferences: preferences,
+    );
 
     TodoOverViewBloc todoOverViewBloc = TodoOverViewBloc(
       filter: filterPreferences.filter,
       repository: todoRepository,
     )..add(TodoOverViewFetchEvent());
+
     return MultiRepositoryProvider(
       providers: [
         RepositoryProvider<ITodoRepository>(
@@ -43,6 +53,12 @@ class App extends StatelessWidget {
       ],
       child: MultiBlocProvider(
         providers: [
+          BlocProvider<ThemeCubit>(
+            create: (context) => ThemeCubit(
+              preferences: themePreferences,
+              theme: themePreferences.getTheme(),
+            ),
+          ),
           BlocProvider<FilterCubit>(
             create: (context) => FilterCubit(
               preferences: filterPreferences,
@@ -60,30 +76,48 @@ class App extends StatelessWidget {
             create: (BuildContext context) => todoOverViewBloc,
           ),
         ],
-        child: BlocBuilder<LanguageCubit, Locale>(
-          builder: (context, Locale locale) {
-            return MaterialApp(
-              debugShowCheckedModeBanner: false,
-              title: 'Tasks',
-              theme: ThemeData(
-                primarySwatch: Colors.blue,
-              ),
-              home: const TodoOverViewPage(),
-              localizationsDelegates: const [
-                AppLocalizations.delegate,
-                GlobalMaterialLocalizations.delegate,
-                GlobalCupertinoLocalizations.delegate,
-                GlobalWidgetsLocalizations.delegate,
-              ],
-              locale: locale,
-              supportedLocales: const [
-                Locale('en', ''),
-                Locale('pt', ''),
-                Locale('es', '')
-              ],
-            );
-          },
-        ),
+        child: BlocBuilder<ThemeCubit, AppTheme>(
+            builder: (conttext, AppTheme appTheme) {
+          ThemeData theme;
+          switch (appTheme) {
+            case AppTheme.light:
+              theme = lightTheme;
+              break;
+            case AppTheme.dark:
+              theme = darkTheme;
+              break;
+            case AppTheme.system:
+              if (MediaQuery.platformBrightnessOf(context) ==
+                  Brightness.light) {
+                theme = lightTheme;
+              } else {
+                theme = darkTheme;
+              }
+              break;
+          }
+          return BlocBuilder<LanguageCubit, Locale>(
+            builder: (context, Locale locale) {
+              return MaterialApp(
+                debugShowCheckedModeBanner: false,
+                title: 'Tasks',
+                theme: theme,
+                home: const TodoOverViewPage(),
+                localizationsDelegates: const [
+                  AppLocalizations.delegate,
+                  GlobalMaterialLocalizations.delegate,
+                  GlobalCupertinoLocalizations.delegate,
+                  GlobalWidgetsLocalizations.delegate,
+                ],
+                locale: locale,
+                supportedLocales: const [
+                  Locale('en', ''),
+                  Locale('pt', ''),
+                  Locale('es', '')
+                ],
+              );
+            },
+          );
+        }),
       ),
     );
   }

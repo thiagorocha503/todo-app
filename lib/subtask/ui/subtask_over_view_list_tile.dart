@@ -45,7 +45,8 @@ class SubtaskOverViewListTile extends StatelessWidget {
                       color: _getCheckboxBorderColor(context, subtask),
                       width: 2,
                     ),
-                    checkedColor: Theme.of(context).primaryColor,
+                    uncheckedColor: Colors.transparent,
+                    checkedColor: Theme.of(context).colorScheme.primary,
                     onTap: (bool? value) {
                       if (value == null) {
                         return;
@@ -64,7 +65,7 @@ class SubtaskOverViewListTile extends StatelessWidget {
                   focusNode: focusNodes,
                   controller: controller,
                   style: TextStyle(
-                    color: subtask.complete ? Colors.grey : Colors.black,
+                    color: subtask.complete ? Colors.grey : null,
                     fontStyle:
                         subtask.complete ? FontStyle.italic : FontStyle.normal,
                     decoration:
@@ -102,7 +103,7 @@ class SubtaskOverViewListTile extends StatelessWidget {
 
   Color _getCheckboxBorderColor(BuildContext context, Subtask subtask) {
     if (subtask.complete) {
-      return Theme.of(context).primaryColor;
+      return Theme.of(context).colorScheme.primary;
     } else {
       return Colors.grey;
     }
