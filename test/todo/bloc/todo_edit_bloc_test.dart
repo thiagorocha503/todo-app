@@ -33,7 +33,7 @@ void main() {
         .thenAnswer((realInvocation) async {
       return await Future.value(todos);
     });
-    todoOverviewBloc = MockTodoOverViewBloc();
+    todoOverviewBloc = MockTodoOverviewBloc();
     when(todoOverviewBloc.add(TodoOverviewFetchEvent()))
         .thenAnswer((realInvocation) {});
     todoEditbloc = TodoEditBloc(
