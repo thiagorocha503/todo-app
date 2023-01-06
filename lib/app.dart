@@ -11,11 +11,11 @@ import 'package:todo/theme/cubit/theme_cubit.dart';
 import 'package:todo/theme/model/app_theme.dart';
 import 'package:todo/theme/preferences/theme_preferences.dart';
 import 'package:todo/theme/ui/widget/theme_data.dart';
-import 'package:todo/todo_over_view/bloc/todo_over_view_bloc.dart';
-import 'package:todo/todo_over_view/bloc/todo_over_view_event.dart';
+import 'package:todo/todo_over_view/bloc/todo_overview_bloc.dart';
+import 'package:todo/todo_over_view/bloc/todo_overview_event.dart';
 import 'package:todo/todo_over_view/repository/repository.dart';
 import 'package:todo/todo_over_view/repository/todo_repository.dart';
-import 'package:todo/todo_over_view/ui/todo_over_view_page.dart';
+import 'package:todo/todo_over_view/ui/todo_overview_page.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:todo/app_localizations.dart';
 
@@ -37,10 +37,10 @@ class App extends StatelessWidget {
       preferences: preferences,
     );
 
-    TodoOverViewBloc todoOverViewBloc = TodoOverViewBloc(
+    TodoOverviewBloc todoOverViewBloc = TodoOverviewBloc(
       filter: filterPreferences.filter,
       repository: todoRepository,
-    )..add(TodoOverViewFetchEvent());
+    )..add(TodoOverviewFetchEvent());
 
     return MultiRepositoryProvider(
       providers: [
@@ -72,7 +72,7 @@ class App extends StatelessWidget {
               code: localePreferences.language.name,
             ),
           ),
-          BlocProvider<TodoOverViewBloc>(
+          BlocProvider<TodoOverviewBloc>(
             create: (BuildContext context) => todoOverViewBloc,
           ),
         ],
@@ -102,7 +102,7 @@ class App extends StatelessWidget {
                 debugShowCheckedModeBanner: false,
                 title: 'Tasks',
                 theme: theme,
-                home: const TodoOverViewPage(),
+                home: const TodoOverviewPage(),
                 localizationsDelegates: const [
                   AppLocalizations.delegate,
                   GlobalMaterialLocalizations.delegate,

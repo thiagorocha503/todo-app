@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:roundcheckbox/roundcheckbox.dart';
 import 'package:todo/app_localizations.dart';
-import 'package:todo/todo_over_view/bloc/todo_over_view_bloc.dart';
-import 'package:todo/todo_over_view/bloc/todo_over_view_event.dart';
-import 'package:todo/todo_over_view/model/todo.dart';
+import 'package:todo/todo_over_view/bloc/todo_overview_event.dart';
 import 'package:todo/util/string_extension.dart';
+import 'package:todo/todo_over_view/model/todo.dart';
+import 'package:todo/todo_over_view/bloc/todo_overview_bloc.dart';
 
 class TodoBottomSheet extends StatelessWidget {
   const TodoBottomSheet({super.key});
@@ -105,8 +105,8 @@ class _TodoBottomSheetContentState extends State<TodoBottomSheetContent> {
         createdDate: DateTime.now(),
         completeDate: _check ? DateTime.now() : null,
       );
-      BlocProvider.of<TodoOverViewBloc>(context)
-          .add(TodoOverViewAdded(todo: todo));
+      BlocProvider.of<TodoOverviewBloc>(context)
+          .add(TodoOverviewAdded(todo: todo));
       setState(() {
         _titleController.text = '';
         _check = false;
