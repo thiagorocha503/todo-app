@@ -43,7 +43,7 @@ dependencies:
   path_provider: ^2.0.11
   provider: ^6.0.5
   share_plus: ^6.3.0
-  shared_preferences: ^2.0.15
+  shared_preferences: ^2.0.16
   roundcheckbox: ^2.0.5
   sqflite: ^2.2.2
   sqflite_common_ffi: ^2.2.0+1
