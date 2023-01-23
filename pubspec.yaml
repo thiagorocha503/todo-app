@@ -47,7 +47,7 @@ dependencies:
   roundcheckbox: ^2.0.5
   sqflite: ^2.2.2
   sqflite_common_ffi: ^2.2.0+1
-  url_launcher: ^6.1.7
+  url_launcher: ^6.1.8
   mockito: ^5.3.2
   
 dev_dependencies:
