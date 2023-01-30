@@ -23,7 +23,7 @@ class ThemeListTileSelect extends StatelessWidget {
               fontWeight: FontWeight.w600,
               color: Theme.of(context)
                   .textTheme
-                  .bodyText1!
+                  .bodyLarge!
                   .color!
                   .withOpacity(0.9),
             ),
