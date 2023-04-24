@@ -45,7 +45,7 @@ dependencies:
   share_plus: ^6.3.1
   shared_preferences: ^2.1.0
   roundcheckbox: ^2.0.5
-  sqflite_common_ffi: ^2.2.2
+  sqflite_common_ffi: ^2.2.4
   url_launcher: ^6.1.10
   sqflite: ^2.2.6
   mockito: ^5.4.0
