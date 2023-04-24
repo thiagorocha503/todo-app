@@ -42,7 +42,7 @@ dependencies:
   package_info_plus: ^3.1.0
   path_provider: ^2.0.14
   provider: ^6.0.5
-  share_plus: ^6.3.1
+  share_plus: ^6.3.2
   shared_preferences: ^2.1.0
   roundcheckbox: ^2.0.5
   sqflite_common_ffi: ^2.2.2
