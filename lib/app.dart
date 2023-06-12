@@ -87,7 +87,7 @@ class App extends StatelessWidget {
               theme = darkTheme;
               break;
             case AppTheme.system:
-              if (MediaQueryData.fromWindow(WidgetsBinding.instance.window)
+              if (MediaQueryData.fromView(View.of(context))
                       .platformBrightness ==
                   Brightness.light) {
                 theme = lightTheme;
