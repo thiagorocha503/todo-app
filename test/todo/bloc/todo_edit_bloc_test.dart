@@ -5,16 +5,16 @@ import 'package:todo/filter/model/filter.dart';
 import 'package:todo/todo_edit/bloc/todo_edit_bloc.dart';
 import 'package:todo/todo_edit/bloc/todo_edit_event.dart';
 import 'package:todo/todo_edit/bloc/todo_edit_state.dart';
-import 'package:todo/todo_over_view/bloc/todo_over_view_bloc.dart';
-import 'package:todo/todo_over_view/bloc/todo_over_view_bloc.mocks.dart';
-import 'package:todo/todo_over_view/bloc/todo_over_view_event.dart';
+import 'package:todo/todo_over_view/bloc/todo_overview_bloc.dart';
+import 'package:todo/todo_over_view/bloc/todo_overview_bloc.mocks.dart';
+import 'package:todo/todo_over_view/bloc/todo_overview_event.dart';
 import 'package:todo/todo_over_view/model/todo.dart';
 import 'package:todo/todo_over_view/repository/repository.dart';
 import 'package:todo/todo_over_view/repository/todo_repository.mocks.dart';
 
 void main() {
   late TodoEditBloc todoEditbloc;
-  late TodoOverViewBloc todoOverviewBloc;
+  late TodoOverviewBloc todoOverviewBloc;
   late ITodoRepository repository;
   final List<Todo> todos = [
     Todo(
@@ -33,8 +33,8 @@ void main() {
         .thenAnswer((realInvocation) async {
       return await Future.value(todos);
     });
-    todoOverviewBloc = MockTodoOverViewBloc();
-    when(todoOverviewBloc.add(TodoOverViewFetchEvent()))
+    todoOverviewBloc = MockTodoOverviewBloc();
+    when(todoOverviewBloc.add(TodoOverviewFetchEvent()))
         .thenAnswer((realInvocation) {});
     todoEditbloc = TodoEditBloc(
       Todo(
@@ -54,7 +54,7 @@ void main() {
     'Title changed event.',
     build: () => todoEditbloc,
     verify: (_) {
-      verify(todoOverviewBloc.add(TodoOverViewFetchEvent()));
+      verify(todoOverviewBloc.add(TodoOverviewFetchEvent()));
       verify(repository.update(
         Todo(
           id: 1,
@@ -85,7 +85,7 @@ void main() {
     'Complete date changed event',
     build: () => todoEditbloc,
     verify: (_) {
-      verify(todoOverviewBloc.add(TodoOverViewFetchEvent()));
+      verify(todoOverviewBloc.add(TodoOverviewFetchEvent()));
       verify(repository.update(
         Todo(
           id: 1,
@@ -120,7 +120,7 @@ void main() {
     'Due date changed event',
     build: () => todoEditbloc,
     verify: (_) {
-      verify(todoOverviewBloc.add(TodoOverViewFetchEvent()));
+      verify(todoOverviewBloc.add(TodoOverviewFetchEvent()));
       verify(repository.update(
         Todo(
           id: 1,
@@ -155,7 +155,7 @@ void main() {
     'Note changed event',
     build: () => todoEditbloc,
     verify: (_) {
-      verify(todoOverviewBloc.add(TodoOverViewFetchEvent()));
+      verify(todoOverviewBloc.add(TodoOverviewFetchEvent()));
       verify(repository.update(
         Todo(
           id: 1,

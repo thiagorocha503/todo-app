@@ -31,7 +31,7 @@ class DueDateText extends StatelessWidget {
 
   Color? _getColor(BuildContext context, DateTime? dueDate) {
     if (dueDate == null) {
-      return Theme.of(context).textTheme.headline1?.color;
+      return Theme.of(context).textTheme.displayLarge?.color;
     }
     if (dueDate.compareDateTo(DateTime.now()) < 0) {
       return Colors.red;

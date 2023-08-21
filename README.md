@@ -1,5 +1,5 @@
 # Todo
-[![Codemagic build status](https://api.codemagic.io/apps/5fb29cea6050966c26cb0529/5fb29cea6050966c26cb0528/status_badge.svg)](https://codemagic.io/apps/5fb29cea6050966c26cb0529/5fb29cea6050966c26cb0528/latest_build) ![build](https://github.com/thiagorocha503/todo-app/actions/workflows/flutter.yml/badge.svg?event=push&pull_request) [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0) ![release](https://img.shields.io/github/v/release/thiagorocha503/todo-app) ![issue open](https://img.shields.io/github/issues/thiagorocha503/todo-app.svg) ![closed issue](https://img.shields.io/github/issues-closed/thiagorocha503/todo-app.svg)  ![last commit](https://badgen.net/github/last-commit/thiagorocha503/todo-app/master)
+[![Codemagic build status](https://api.codemagic.io/apps/5fb29cea6050966c26cb0529/5fb29cea6050966c26cb0528/status_badge.svg)](https://codemagic.io/apps/5fb29cea6050966c26cb0529/5fb29cea6050966c26cb0528/latest_build) ![build](https://github.com/thiagorocha503/todo-app/actions/workflows/flutter.yml/badge.svg?event=push&pull_request) [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0) ![release](https://img.shields.io/github/v/release/thiagorocha503/todo-app)
 
 ![app icon](https://i.ibb.co/LhFG4SH/ic-launcher.png)
 

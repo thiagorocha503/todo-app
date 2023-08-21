@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:roundcheckbox/roundcheckbox.dart';
 import 'package:todo/app_localizations.dart';
+import 'package:todo/constants/keys.dart';
 import 'package:todo/todo_over_view/model/todo.dart';
 import 'package:todo/util/string_extension.dart';
 import 'package:todo/util/datetime_extension.dart';
@@ -23,6 +24,7 @@ class TodoOverviewListTile extends StatelessWidget {
     return Card(
       child: ListTile(
         leading: RoundCheckBox(
+          key: Key("$TODO_CHECKBOX-${todo.id}"),
           size: 26,
           border: Border.all(
             color: _getCheckboxBorderColor(context, todo),
@@ -52,6 +54,7 @@ class TodoOverviewListTile extends StatelessWidget {
           ),
         ),
         trailing: IconButton(
+          key: Key("$TODO_DELETE_ICON_BUTTON-${todo.id}"),
           tooltip:
               AppLocalizations.of(context).translate("delete").capitalize(),
           icon: Icon(

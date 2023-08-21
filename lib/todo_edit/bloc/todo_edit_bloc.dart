@@ -1,15 +1,15 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todo/todo_edit/bloc/todo_edit_event.dart';
 import 'package:todo/todo_edit/bloc/todo_edit_state.dart';
-import 'package:todo/todo_over_view/bloc/todo_over_view_bloc.dart';
-import 'package:todo/todo_over_view/bloc/todo_over_view_event.dart';
+import 'package:todo/todo_over_view/bloc/todo_overview_bloc.dart';
+import 'package:todo/todo_over_view/bloc/todo_overview_event.dart';
 import 'package:todo/todo_over_view/model/todo.dart';
 import 'package:todo/todo_over_view/repository/repository.dart';
 
 class TodoEditBloc extends Bloc<TodoEditEvent, TodoEditState> {
   Todo todo;
   final ITodoRepository repository;
-  final TodoOverViewBloc bloc;
+  final TodoOverviewBloc bloc;
 
   TodoEditBloc(this.todo, this.repository, this.bloc)
       : super(TodoEditLoaded(
@@ -75,7 +75,7 @@ class TodoEditBloc extends Bloc<TodoEditEvent, TodoEditState> {
       repository.update(newTodo);
       // updates
       todo = newTodo;
-      bloc.add(TodoOverViewFetchEvent());
+      bloc.add(TodoOverviewFetchEvent());
       emit(TodoEditLoaded(todo: newTodo));
     } on Exception catch (error) {
       emit(TodoEditError(todo: todo, message: error.toString()));

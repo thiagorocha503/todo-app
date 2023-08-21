@@ -3,9 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:todo/filter/model/filter.dart';
-import 'package:todo/todo_over_view/bloc/todo_over_view_bloc.dart';
-import 'package:todo/todo_over_view/bloc/todo_over_view_event.dart';
-import 'package:todo/todo_over_view/bloc/todo_over_view_state.dart';
+import 'package:todo/todo_over_view/bloc/todo_overview_bloc.dart';
+import 'package:todo/todo_over_view/bloc/todo_overview_event.dart';
+import 'package:todo/todo_over_view/bloc/todo_overview_state.dart';
 import 'package:todo/todo_over_view/model/todo.dart';
 import 'package:todo/todo_over_view/repository/repository.dart';
 import 'package:todo/todo_over_view/repository/todo_repository.mocks.dart';
@@ -43,7 +43,7 @@ void main() {
         .thenAnswer((realInvocation) async {
       return Future.value(todos);
     });
-    bloc = TodoOverViewBloc(
+    bloc = TodoOverviewBloc(
       filter: Filter.all,
       repository: repository,
     );
@@ -53,14 +53,14 @@ void main() {
     "Fetched todo event",
     build: () => bloc,
     act: (bloc) => bloc.add(
-      TodoOverViewFetchEvent(),
+      TodoOverviewFetchEvent(),
     ),
     verify: (_) {
       verify(repository.fetch(filter: Filter.all));
     },
     expect: () => [
-      TodoOverViewLoadingState(),
-      TodoOverViewLoadedState(todos: [
+      const TodoOverviewLoadingState(todos: []),
+      TodoOverviewLoadedState(todos: [
         Todo(
           id: 1,
           name: "delectus aut autem",
@@ -129,7 +129,7 @@ void main() {
     },
     build: () => bloc,
     act: (bloc) => bloc.add(
-      TodoOverViewAdded(
+      TodoOverviewAdded(
         todo: Todo(
           id: 4,
           name: "et doloremque nulla",
@@ -138,8 +138,8 @@ void main() {
       ),
     ),
     expect: () => [
-      TodoOverViewLoadingState(),
-      TodoOverViewLoadedState(todos: [
+      const TodoOverviewLoadingState(todos: []),
+      TodoOverviewLoadedState(todos: [
         Todo(
           id: 1,
           name: "delectus aut autem",
@@ -173,7 +173,7 @@ void main() {
     "Deleted todo event",
     build: () => bloc,
     act: (bloc) => bloc.add(
-      TodoOverViewDeleted(id: 2),
+      TodoOverviewDeleted(id: 2),
     ),
     setUp: () {
       when(repository.fetch(filter: Filter.all))
@@ -197,8 +197,8 @@ void main() {
       verify(repository.fetch(filter: Filter.all));
     },
     expect: () => [
-      TodoOverViewLoadingState(),
-      TodoOverViewLoadedState(todos: [
+      const TodoOverviewLoadingState(todos: []),
+      TodoOverviewLoadedState(todos: [
         Todo(
           id: 1,
           name: "delectus aut autem",
@@ -253,7 +253,7 @@ void main() {
     },
     build: () => bloc,
     act: (bloc) => bloc.add(
-      TodoOverViewUpdate(
+      TodoOverviewUpdate(
         todo: Todo(
           id: 1,
           name: "delectus aut autem",
@@ -263,7 +263,7 @@ void main() {
       ),
     ),
     expect: () => [
-      TodoOverViewLoadedState(todos: [
+      TodoOverviewLoadedState(todos: [
         Todo(
           id: 1,
           name: "delectus aut autem",

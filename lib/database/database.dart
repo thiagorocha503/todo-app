@@ -1,12 +1,10 @@
 import 'dart:io';
 import 'package:path_provider/path_provider.dart';
-import 'package:sqflite/sqflite.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:todo/constants/database.dart';
-// ignore: depend_on_referenced_packages
 import 'package:path/path.dart';
 import 'package:flutter/foundation.dart';
-import 'package:todo/data/schema.dart';
+import 'package:todo/database/schema.dart';
 
 /// Database para platorm Mobile ou Desktop
 class DBProvider {

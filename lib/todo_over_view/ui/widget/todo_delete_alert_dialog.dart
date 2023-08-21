@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:todo/app_localizations.dart';
+import 'package:todo/constants/keys.dart';
 import 'package:todo/util/string_extension.dart';
 
 class TodoDeleteAlertDialog extends StatelessWidget {
@@ -30,6 +31,7 @@ class TodoDeleteAlertDialog extends StatelessWidget {
           },
         ),
         TextButton(
+          key: const Key(TODO_DELETE_TEXT_BUTTON),
           onPressed: () {
             Navigator.pop(context);
             onConfirm();

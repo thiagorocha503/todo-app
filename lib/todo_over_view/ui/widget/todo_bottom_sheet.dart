@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:roundcheckbox/roundcheckbox.dart';
 import 'package:todo/app_localizations.dart';
-import 'package:todo/todo_over_view/bloc/todo_over_view_bloc.dart';
-import 'package:todo/todo_over_view/bloc/todo_over_view_event.dart';
+import 'package:todo/todo_over_view/bloc/todo_overview_bloc.dart';
+import 'package:todo/todo_over_view/bloc/todo_overview_event.dart';
+import 'package:todo/constants/keys.dart';
 import 'package:todo/todo_over_view/model/todo.dart';
 import 'package:todo/util/string_extension.dart';
 
@@ -71,6 +72,7 @@ class _TodoBottomSheetContentState extends State<TodoBottomSheetContent> {
       title: Form(
         key: _formKey,
         child: TextFormField(
+          key: const Key(TODO_NEW_INPUT),
           controller: _titleController,
           decoration: InputDecoration(
             hintText: AppLocalizations.of(context)
@@ -89,6 +91,7 @@ class _TodoBottomSheetContentState extends State<TodoBottomSheetContent> {
         ),
       ),
       trailing: IconButton(
+        key: const Key(TODO_SAVE_ICON_BUTTON),
         icon: Icon(
           Icons.send_rounded,
           color: Theme.of(context).primaryColor,
@@ -105,8 +108,8 @@ class _TodoBottomSheetContentState extends State<TodoBottomSheetContent> {
         createdDate: DateTime.now(),
         completeDate: _check ? DateTime.now() : null,
       );
-      BlocProvider.of<TodoOverViewBloc>(context)
-          .add(TodoOverViewAdded(todo: todo));
+      BlocProvider.of<TodoOverviewBloc>(context)
+          .add(TodoOverviewAdded(todo: todo));
       setState(() {
         _titleController.text = '';
         _check = false;
