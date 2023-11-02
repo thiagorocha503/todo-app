@@ -17,12 +17,12 @@ class TodoBottomSheet extends StatelessWidget {
       padding: EdgeInsets.only(
         bottom: MediaQuery.of(context).viewInsets.bottom,
       ),
-      child: Container(
+      child: SizedBox(
         height: 80,
-        color: const Color(0xFF737373),
+        // color: const Color(0xFF737373),
         child: Container(
           decoration: const BoxDecoration(
-            color: Colors.white,
+            // color: Colors.white,
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(10.0),
               topRight: Radius.circular(10.0),
