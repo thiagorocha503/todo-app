@@ -9,7 +9,7 @@ import 'package:todo/subtask/repository/repository.dart';
 import 'package:todo/subtask/repository/subtask_repository.dart';
 import 'package:todo/theme/cubit/theme_cubit.dart';
 import 'package:todo/theme/preferences/theme_preferences.dart';
-import 'package:todo/theme/ui/widget/theme_data.dart';
+import 'package:todo/theme/ui/widget/color_schemes.dart';
 import 'package:todo/todo_over_view/bloc/todo_overview_bloc.dart';
 import 'package:todo/todo_over_view/bloc/todo_overview_event.dart';
 import 'package:todo/todo_over_view/repository/repository.dart';
@@ -83,8 +83,10 @@ class App extends StatelessWidget {
                 debugShowCheckedModeBanner: false,
                 title: 'Tasks',
                 themeMode: themeMode,
-                theme: lightTheme,
-                darkTheme: darkTheme,
+                theme: ThemeData(
+                    useMaterial3: true, colorScheme: lightColorScheme),
+                darkTheme:
+                    ThemeData(useMaterial3: true, colorScheme: darkColorScheme),
                 home: const TodoOverviewPage(),
                 localizationsDelegates: const [
                   AppLocalizations.delegate,

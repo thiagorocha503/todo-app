@@ -24,7 +24,7 @@ class TodoDeleteAlertDialog extends StatelessWidget {
       actions: [
         TextButton(
           child: Text(
-            AppLocalizations.of(context).translate("cancel").toUpperCase(),
+            AppLocalizations.of(context).translate("cancel").capitalize(),
           ),
           onPressed: () {
             Navigator.pop(context);
@@ -37,7 +37,7 @@ class TodoDeleteAlertDialog extends StatelessWidget {
             onConfirm();
           },
           child: Text(
-            AppLocalizations.of(context).translate("delete").toUpperCase(),
+            AppLocalizations.of(context).translate("delete").capitalize(),
           ),
         )
       ],
