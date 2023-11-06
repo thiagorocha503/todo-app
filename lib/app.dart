@@ -8,7 +8,6 @@ import 'package:todo/language/preferences/language_preferences.dart';
 import 'package:todo/subtask/repository/repository.dart';
 import 'package:todo/subtask/repository/subtask_repository.dart';
 import 'package:todo/theme/cubit/theme_cubit.dart';
-import 'package:todo/theme/model/app_theme.dart';
 import 'package:todo/theme/preferences/theme_preferences.dart';
 import 'package:todo/theme/ui/widget/theme_data.dart';
 import 'package:todo/todo_over_view/bloc/todo_overview_bloc.dart';
@@ -76,32 +75,16 @@ class App extends StatelessWidget {
             create: (BuildContext context) => todoOverViewBloc,
           ),
         ],
-        child: BlocBuilder<ThemeCubit, AppTheme>(
-            builder: (conttext, AppTheme appTheme) {
-          ThemeData theme;
-          switch (appTheme) {
-            case AppTheme.light:
-              theme = lightTheme;
-              break;
-            case AppTheme.dark:
-              theme = darkTheme;
-              break;
-            case AppTheme.system:
-              if (MediaQueryData.fromView(View.of(context))
-                      .platformBrightness ==
-                  Brightness.light) {
-                theme = lightTheme;
-              } else {
-                theme = darkTheme;
-              }
-              break;
-          }
+        child: BlocBuilder<ThemeCubit, ThemeMode>(
+            builder: (conttext, ThemeMode themeMode) {
           return BlocBuilder<LanguageCubit, Locale>(
             builder: (context, Locale locale) {
               return MaterialApp(
                 debugShowCheckedModeBanner: false,
                 title: 'Tasks',
-                theme: theme,
+                themeMode: themeMode,
+                theme: lightTheme,
+                darkTheme: darkTheme,
                 home: const TodoOverviewPage(),
                 localizationsDelegates: const [
                   AppLocalizations.delegate,
