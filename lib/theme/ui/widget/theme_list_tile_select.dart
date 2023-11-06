@@ -32,7 +32,7 @@ class ThemeListTileSelect extends StatelessWidget {
         trailing: context.read<ThemeCubit>().state == themeItem.value
             ? Icon(
                 Icons.check,
-                color: Theme.of(context).colorScheme.secondary,
+                color: Theme.of(context).colorScheme.primary,
               )
             : null,
         onTap: () {

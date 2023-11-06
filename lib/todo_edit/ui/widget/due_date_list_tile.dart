@@ -57,14 +57,16 @@ class DueDateListTile extends StatelessWidget {
       BuildContext context, TodoEditBloc bloc, Todo todo) async {
     DateTime? dueDate = todo.dueDate;
     DateTime selectedDate;
-    if (dueDate != null) {
-      selectedDate = dueDate;
-    } else {
+    late DateTime firstDate;
+    DateTime lastDate = DateTime.now().add(const Duration(days: 365));
+    if (dueDate == null) {
       selectedDate = DateTime.now();
+      firstDate = DateTime.now().subtract(const Duration(days: 365));
+    } else {
+      selectedDate = dueDate;
+      firstDate = dueDate.subtract(const Duration(days: 365));
     }
 
-    DateTime firstDate = DateTime.now().subtract(const Duration(days: 30));
-    DateTime lastDate = DateTime.now().add(const Duration(days: 360));
     DateTime? picked = await showDatePicker(
       context: context,
       initialDate: selectedDate,

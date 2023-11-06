@@ -56,11 +56,11 @@ class _TodoBottomSheetContentState extends State<TodoBottomSheetContent> {
       leading: RoundCheckBox(
         size: 24,
         border: Border.all(
-          color: Theme.of(context).primaryColor,
+          color: Theme.of(context).colorScheme.primary,
           width: 2,
         ),
-        checkedColor: Theme.of(context).primaryColor,
-        borderColor: Theme.of(context).primaryColor,
+        checkedColor: Theme.of(context).colorScheme.primary,
+        borderColor: Theme.of(context).colorScheme.primary,
         isChecked: _check,
         onTap: (bool? value) {
           if (value == null) {
@@ -94,7 +94,7 @@ class _TodoBottomSheetContentState extends State<TodoBottomSheetContent> {
         key: const Key(TODO_SAVE_ICON_BUTTON),
         icon: Icon(
           Icons.send_rounded,
-          color: Theme.of(context).primaryColor,
+          color: Theme.of(context).colorScheme.primary,
         ),
         onPressed: onSave,
       ),
