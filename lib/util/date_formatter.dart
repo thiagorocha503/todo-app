@@ -1,10 +1,32 @@
+import 'package:flutter/material.dart';
 import 'package:todo/app_localizations.dart';
 import 'package:intl/intl.dart';
+import 'package:todo/util/datetime_extension.dart';
+import 'package:todo/util/string_extension.dart';
 
 class DateFormatter {
   final AppLocalizations appLocalizations;
 
   DateFormatter(this.appLocalizations);
+  String getVerboseDateRepresentation(DateTime date, BuildContext context) {
+    DateTime today = DateTime.now();
+    DateTime localeDateTime = date.toLocal();
+
+    if (date.compareDateTo(today) < 0) {
+      if (date.day == today.day - 1) {
+        return AppLocalizations.of(context).translate("yesterday").capitalize();
+      }
+    } else if (date.compareDateTo(today) > 0) {
+      if (date.day == today.day + 1) {
+        return AppLocalizations.of(context).translate("tomorrow").capitalize();
+      }
+    } else {
+      return AppLocalizations.of(context).translate("today").capitalize();
+    }
+    return DateFormat("${date.year != today.year ? 'y' : ''}MMMd",
+            AppLocalizations.of(context).locale.languageCode)
+        .format(localeDateTime);
+  }
 
   String getVerboseDateTimeRepresentation(DateTime dateTime) {
     DateTime now = DateTime.now();
