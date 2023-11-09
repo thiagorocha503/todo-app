@@ -4,7 +4,6 @@ import 'package:todo/app_localizations.dart';
 import 'package:todo/constants/keys.dart';
 import 'package:todo/todo_over_view/model/todo.dart';
 import 'package:todo/util/date_formatter.dart';
-import 'package:todo/util/string_extension.dart';
 import 'package:todo/util/datetime_extension.dart';
 
 class TodoOverviewListTile extends StatelessWidget {
@@ -55,15 +54,6 @@ class TodoOverviewListTile extends StatelessWidget {
           ),
         ),
         subtitle: _buildSubtitle(todo, context),
-        trailing: IconButton(
-          key: Key("$TODO_DELETE_ICON_BUTTON-${todo.id}"),
-          tooltip:
-              AppLocalizations.of(context).translate("delete").capitalize(),
-          icon: const Icon(Icons.delete),
-          onPressed: () {
-            onDelete();
-          },
-        ),
         onTap: () => onTap(),
       ),
     );
