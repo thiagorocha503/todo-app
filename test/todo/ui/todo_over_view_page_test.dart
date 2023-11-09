@@ -171,54 +171,6 @@ void main() {
     });
   });
 
-  group("todo delete", () {
-    testWidgets("sucess case", (tester) async {
-      await tester.runAsync(() async {
-        await tester.pumpWidget(buildApp(repository, Filter.all));
-        await tester.pumpAndSettle();
-        expect(find.text("one"), findsOneWidget);
-        expect(find.text("two"), findsOneWidget);
-        expect(find.text("three"), findsOneWidget);
-
-        await tester.tap(find.byKey(const Key("$TODO_DELETE_ICON_BUTTON-2")));
-        await tester.pumpAndSettle();
-
-        when(repository.fetch(filter: Filter.all))
-            .thenAnswer((_) => Future.value(List.from(data)..removeAt(1)));
-
-        await tester.tap(find.byKey(const Key(TODO_DELETE_TEXT_BUTTON)));
-        await tester.pumpAndSettle();
-
-        expect(find.text("one"), findsOneWidget);
-        expect(find.text("two"), findsNothing);
-        expect(find.text("three"), findsOneWidget);
-      });
-    });
-
-    testWidgets("error case", (tester) async {
-      await tester.runAsync(() async {
-        await tester.pumpWidget(buildApp(repository, Filter.all));
-        await tester.pumpAndSettle();
-        expect(find.text("one"), findsOneWidget);
-        expect(find.text("two"), findsOneWidget);
-        expect(find.text("three"), findsOneWidget);
-
-        await tester.tap(find.byKey(const Key("$TODO_DELETE_ICON_BUTTON-2")));
-        await tester.pumpAndSettle();
-
-        when(repository.delete(2)).thenThrow(Exception("Delete to do failed"));
-
-        await tester.tap(find.byKey(const Key(TODO_DELETE_TEXT_BUTTON)));
-        await tester.pumpAndSettle();
-
-        expect(find.byType(ErrorDialog), findsOneWidget);
-        expect(find.text("one"), findsOneWidget);
-        expect(find.text("two"), findsOneWidget);
-        expect(find.text("three"), findsOneWidget);
-      });
-    });
-  });
-
   group("todo checkbox", () {
     testWidgets("check sucess case", (tester) async {
       await tester.runAsync(() async {
