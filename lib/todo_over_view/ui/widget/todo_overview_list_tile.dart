@@ -28,10 +28,11 @@ class TodoOverviewListTile extends StatelessWidget {
           key: Key("$TODO_CHECKBOX-${todo.id}"),
           size: 26,
           border: Border.all(
-            color: Theme.of(context).colorScheme.primary,
+            color: todo.completeDate == null
+                ? Theme.of(context).colorScheme.secondary
+                : Theme.of(context).colorScheme.primary,
             width: 2,
           ),
-          animationDuration: const Duration(milliseconds: 300),
           isChecked: todo.completeDate == null ? false : true,
           checkedColor: Theme.of(context).colorScheme.primary,
           disabledColor: Colors.grey,
@@ -58,10 +59,7 @@ class TodoOverviewListTile extends StatelessWidget {
           key: Key("$TODO_DELETE_ICON_BUTTON-${todo.id}"),
           tooltip:
               AppLocalizations.of(context).translate("delete").capitalize(),
-          icon: Icon(
-            Icons.delete,
-            color: Theme.of(context).colorScheme.primary,
-          ),
+          icon: const Icon(Icons.delete),
           onPressed: () {
             onDelete();
           },

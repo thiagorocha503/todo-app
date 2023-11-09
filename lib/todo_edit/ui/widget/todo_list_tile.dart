@@ -5,7 +5,6 @@ import 'package:todo/app_localizations.dart';
 import 'package:todo/todo_edit/bloc/todo_edit_bloc.dart';
 import 'package:todo/todo_edit/bloc/todo_edit_event.dart';
 import 'package:todo/todo_edit/bloc/todo_edit_state.dart';
-import 'package:todo/todo_over_view/model/todo.dart';
 import 'package:todo/util/string_extension.dart';
 
 class TodoEditListTile extends StatelessWidget {
@@ -36,7 +35,9 @@ class TodoCheckBox extends StatelessWidget {
           key: const Key("check"),
           size: 36,
           border: Border.all(
-            color: _getCheckboxBorder(context, state.todo),
+            color: state.todo.completeDate != null
+                ? Theme.of(context).colorScheme.primary
+                : Theme.of(context).colorScheme.secondary,
             width: 2,
           ),
           isChecked: state.todo.completeDate == null ? false : true,
@@ -54,14 +55,6 @@ class TodoCheckBox extends StatelessWidget {
         );
       },
     );
-  }
-
-  Color _getCheckboxBorder(BuildContext context, Todo todo) {
-    if (todo.completeDate == null) {
-      return Colors.grey;
-    } else {
-      return Theme.of(context).colorScheme.primary;
-    }
   }
 }
 

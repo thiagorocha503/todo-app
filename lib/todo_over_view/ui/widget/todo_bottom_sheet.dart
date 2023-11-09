@@ -54,19 +54,23 @@ class _TodoBottomSheetContentState extends State<TodoBottomSheetContent> {
   Widget build(BuildContext context) {
     return ListTile(
       leading: RoundCheckBox(
-        size: 24,
+        size: 26,
         border: Border.all(
-          color: Theme.of(context).colorScheme.primary,
+          color: _check
+              ? Theme.of(context).colorScheme.primary
+              : Theme.of(context).colorScheme.secondary,
           width: 2,
         ),
         checkedColor: Theme.of(context).colorScheme.primary,
-        borderColor: Theme.of(context).colorScheme.primary,
         isChecked: _check,
+        uncheckedColor: Colors.transparent,
         onTap: (bool? value) {
           if (value == null) {
             return;
           }
-          _check = value;
+          setState(() {
+            _check = value;
+          });
         },
       ),
       title: Form(
