@@ -20,7 +20,7 @@ class LanguageListTileSelect extends StatelessWidget {
       ),
       child: ListTile(
         trailing: selected
-            ? Icon(Icons.check, color: Theme.of(context).colorScheme.secondary)
+            ? Icon(Icons.check, color: Theme.of(context).colorScheme.primary)
             : null,
         title: Padding(
           padding: const EdgeInsets.only(left: 16),

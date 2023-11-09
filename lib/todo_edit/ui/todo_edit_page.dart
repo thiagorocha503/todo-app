@@ -10,9 +10,12 @@ import 'package:todo/todo_edit/bloc/todo_edit_bloc.dart';
 import 'package:todo/todo_edit/bloc/todo_edit_state.dart';
 import 'package:todo/todo_edit/ui/widget/due_date_list_tile.dart';
 import 'package:todo/todo_edit/ui/widget/footer.dart';
+import 'package:todo/todo_over_view/bloc/todo_overview_bloc.dart';
+import 'package:todo/todo_over_view/bloc/todo_overview_event.dart';
 import 'package:todo/todo_over_view/model/todo.dart';
 import 'package:todo/todo_over_view/repository/repository.dart';
 import 'package:todo/todo_edit/ui/widget/note_list_tile.dart';
+import 'package:todo/todo_over_view/ui/widget/todo_delete_alert_dialog.dart';
 import 'package:todo/widget/error_dialog.dart';
 import 'package:todo/todo_edit/ui/widget/todo_list_tile.dart';
 import 'package:todo/util/string_extension.dart';
@@ -82,9 +85,24 @@ class TodoEditPageView extends StatelessWidget {
           title: Text(
             AppLocalizations.of(context).translate("todo").capitalize(),
           ),
-          actions: const [
-            SizedBox(
-              width: 32,
+          actions: [
+            Padding(
+              padding: const EdgeInsets.only(right: 16),
+              child: IconButton(
+                onPressed: () {
+                  showDialog(
+                    context: context,
+                    builder: (context) => TodoDeleteAlertDialog(onConfirm: () {
+                      context
+                          .read<TodoOverviewBloc>()
+                          .add(TodoOverviewDeleted(id: todo.id));
+                      Navigator.pop(context);
+                    }),
+                  );
+                },
+                icon: const Icon(Icons.delete),
+                tooltip: AppLocalizations.of(context).translate("delete"),
+              ),
             )
           ],
         ),

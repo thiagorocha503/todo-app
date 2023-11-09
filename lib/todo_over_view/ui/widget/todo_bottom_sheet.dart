@@ -17,12 +17,12 @@ class TodoBottomSheet extends StatelessWidget {
       padding: EdgeInsets.only(
         bottom: MediaQuery.of(context).viewInsets.bottom,
       ),
-      child: Container(
+      child: SizedBox(
         height: 80,
-        color: const Color(0xFF737373),
+        // color: const Color(0xFF737373),
         child: Container(
           decoration: const BoxDecoration(
-            color: Colors.white,
+            // color: Colors.white,
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(10.0),
               topRight: Radius.circular(10.0),
@@ -54,19 +54,23 @@ class _TodoBottomSheetContentState extends State<TodoBottomSheetContent> {
   Widget build(BuildContext context) {
     return ListTile(
       leading: RoundCheckBox(
-        size: 24,
+        size: 26,
         border: Border.all(
-          color: Theme.of(context).primaryColor,
+          color: _check
+              ? Theme.of(context).colorScheme.primary
+              : Theme.of(context).colorScheme.secondary,
           width: 2,
         ),
-        checkedColor: Theme.of(context).primaryColor,
-        borderColor: Theme.of(context).primaryColor,
+        checkedColor: Theme.of(context).colorScheme.primary,
         isChecked: _check,
+        uncheckedColor: Colors.transparent,
         onTap: (bool? value) {
           if (value == null) {
             return;
           }
-          _check = value;
+          setState(() {
+            _check = value;
+          });
         },
       ),
       title: Form(
@@ -94,7 +98,7 @@ class _TodoBottomSheetContentState extends State<TodoBottomSheetContent> {
         key: const Key(TODO_SAVE_ICON_BUTTON),
         icon: Icon(
           Icons.send_rounded,
-          color: Theme.of(context).primaryColor,
+          color: Theme.of(context).colorScheme.primary,
         ),
         onPressed: onSave,
       ),

@@ -2,13 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todo/app_localizations.dart';
 import 'package:todo/theme/cubit/theme_cubit.dart';
-import 'package:todo/theme/model/app_theme.dart';
 import 'package:todo/theme/ui/widget/theme_list_tile_select.dart';
 import 'package:todo/util/string_extension.dart';
 
 class ThemeItem {
   final String name;
-  final AppTheme value;
+  final ThemeMode value;
 
   ThemeItem({required this.name, required this.value});
 }
@@ -21,15 +20,15 @@ class ThemePage extends StatelessWidget {
     List<ThemeItem> themes = [
       ThemeItem(
         name: AppLocalizations.of(context).translate("system"),
-        value: AppTheme.system,
+        value: ThemeMode.system,
       ),
       ThemeItem(
         name: AppLocalizations.of(context).translate("light"),
-        value: AppTheme.light,
+        value: ThemeMode.light,
       ),
       ThemeItem(
         name: AppLocalizations.of(context).translate("dark"),
-        value: AppTheme.dark,
+        value: ThemeMode.dark,
       ),
     ];
     return Scaffold(
@@ -44,7 +43,7 @@ class ThemePage extends StatelessWidget {
         title:
             Text(AppLocalizations.of(context).translate("theme").capitalize()),
       ),
-      body: BlocBuilder<ThemeCubit, AppTheme>(
+      body: BlocBuilder<ThemeCubit, ThemeMode>(
         builder: (context, appTheme) {
           return ListView.builder(
             itemCount: themes.length,

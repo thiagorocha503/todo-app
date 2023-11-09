@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todo/app_localizations.dart';
 import 'package:todo/theme/cubit/theme_cubit.dart';
-import 'package:todo/theme/model/app_theme.dart';
 import 'package:todo/theme/ui/theme_page.dart';
 import 'package:todo/util/string_extension.dart';
 
@@ -33,17 +32,17 @@ class SubtitleTheme extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ThemeCubit, AppTheme>(
+    return BlocBuilder<ThemeCubit, ThemeMode>(
       builder: (context, state) {
         String text;
         switch (state) {
-          case AppTheme.light:
+          case ThemeMode.light:
             text = AppLocalizations.of(context).translate("light");
             break;
-          case AppTheme.dark:
+          case ThemeMode.dark:
             text = AppLocalizations.of(context).translate("dark");
             break;
-          case AppTheme.system:
+          case ThemeMode.system:
             text = AppLocalizations.of(context).translate("system");
             break;
         }

@@ -23,8 +23,14 @@ class TodoOverviewPage extends StatelessWidget {
           AppLocalizations.of(context).translate("todos").capitalize(),
         ),
         actions: const [
-          TodoFilterButton(),
-          Padding(padding: EdgeInsets.only(right: 16.0), child: MoreButton())
+          Padding(
+            padding: EdgeInsets.only(right: 24),
+            child: TodoFilterButton(),
+          ),
+          Padding(
+            padding: EdgeInsets.only(right: 16.0),
+            child: MoreButton(),
+          )
         ],
       ),
       body: SafeArea(

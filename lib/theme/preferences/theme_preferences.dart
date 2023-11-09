@@ -1,8 +1,8 @@
 import 'dart:async';
 
+import 'package:flutter/material.dart';
 import 'package:mockito/annotations.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:todo/theme/model/app_theme.dart';
 
 @GenerateNiceMocks([MockSpec<ThemePreferences>()])
 class ThemePreferences {
@@ -10,22 +10,22 @@ class ThemePreferences {
   // ignore: non_constant_identifier_names
   final KEY = "todo-theme";
 
-  final StreamController<AppTheme> _controller = StreamController();
+  final StreamController<ThemeMode> _controller = StreamController();
 
-  Stream<AppTheme> get stream => _controller.stream;
+  Stream<ThemeMode> get stream => _controller.stream;
 
   ThemePreferences({required this.preferences});
 
-  AppTheme getTheme() {
+  ThemeMode getTheme() {
     int? index = preferences.getInt(KEY);
     if (index != null) {
-      return AppTheme.values[index];
+      return ThemeMode.values[index];
     }
-    setTheme(AppTheme.light);
-    return AppTheme.light;
+    setTheme(ThemeMode.light);
+    return ThemeMode.light;
   }
 
-  void setTheme(AppTheme theme) {
+  void setTheme(ThemeMode theme) {
     preferences.setInt(KEY, theme.index);
     _controller.sink.add(theme);
   }

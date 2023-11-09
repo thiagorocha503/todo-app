@@ -42,7 +42,9 @@ class SubtaskOverViewListTile extends StatelessWidget {
                     isChecked: subtask.complete,
                     size: 26,
                     border: Border.all(
-                      color: _getCheckboxBorderColor(context, subtask),
+                      color: subtask.complete
+                          ? Theme.of(context).colorScheme.primary
+                          : Theme.of(context).colorScheme.secondary,
                       width: 2,
                     ),
                     uncheckedColor: Colors.transparent,
@@ -99,13 +101,5 @@ class SubtaskOverViewListTile extends StatelessWidget {
             }),
           );
         });
-  }
-
-  Color _getCheckboxBorderColor(BuildContext context, Subtask subtask) {
-    if (subtask.complete) {
-      return Theme.of(context).colorScheme.primary;
-    } else {
-      return Colors.grey;
-    }
   }
 }

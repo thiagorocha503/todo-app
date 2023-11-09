@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:todo/app_localizations.dart';
+import 'package:todo/util/date_formatter.dart';
 import 'package:todo/util/string_extension.dart';
 import 'package:todo/util/datetime_extension.dart';
 
@@ -34,7 +34,7 @@ class DueDateText extends StatelessWidget {
       return Theme.of(context).textTheme.displayLarge?.color;
     }
     if (dueDate.compareDateTo(DateTime.now()) < 0) {
-      return Colors.red;
+      return Theme.of(context).colorScheme.error;
     } else {
       return Theme.of(context).colorScheme.primary;
     }
@@ -46,22 +46,7 @@ class DueDateText extends StatelessWidget {
           .translate("add-due-date")
           .capitalize();
     }
-    DateTime today = DateTime.now();
-    DateTime localeDateTime = date.toLocal();
-
-    if (date.compareDateTo(today) < 0) {
-      if (date.day == today.day - 1) {
-        return AppLocalizations.of(context).translate("yesterday").capitalize();
-      }
-    } else if (date.compareDateTo(today) > 0) {
-      if (date.day == today.day + 1) {
-        return AppLocalizations.of(context).translate("tomorrow").capitalize();
-      }
-    } else {
-      return AppLocalizations.of(context).translate("today").capitalize();
-    }
-
-    return DateFormat("yMMMd", AppLocalizations.of(context).locale.languageCode)
-        .format(localeDateTime);
+    return DateFormatter(AppLocalizations.of(context))
+        .getVerboseDateRepresentation(date, context);
   }
 }

@@ -3,7 +3,7 @@ import 'package:roundcheckbox/roundcheckbox.dart';
 import 'package:todo/app_localizations.dart';
 import 'package:todo/constants/keys.dart';
 import 'package:todo/todo_over_view/model/todo.dart';
-import 'package:todo/util/string_extension.dart';
+import 'package:todo/util/date_formatter.dart';
 import 'package:todo/util/datetime_extension.dart';
 
 class TodoOverviewListTile extends StatelessWidget {
@@ -27,10 +27,11 @@ class TodoOverviewListTile extends StatelessWidget {
           key: Key("$TODO_CHECKBOX-${todo.id}"),
           size: 26,
           border: Border.all(
-            color: _getCheckboxBorderColor(context, todo),
+            color: todo.completeDate == null
+                ? Theme.of(context).colorScheme.secondary
+                : Theme.of(context).colorScheme.primary,
             width: 2,
           ),
-          animationDuration: const Duration(milliseconds: 300),
           isChecked: todo.completeDate == null ? false : true,
           checkedColor: Theme.of(context).colorScheme.primary,
           disabledColor: Colors.grey,
@@ -50,53 +51,40 @@ class TodoOverviewListTile extends StatelessWidget {
             decoration: todo.completeDate == null
                 ? TextDecoration.none
                 : TextDecoration.lineThrough,
-            color: _getTextColor(context, todo),
           ),
         ),
-        trailing: IconButton(
-          key: Key("$TODO_DELETE_ICON_BUTTON-${todo.id}"),
-          tooltip:
-              AppLocalizations.of(context).translate("delete").capitalize(),
-          icon: Icon(
-            Icons.delete,
-            color: Theme.of(context).colorScheme.primary,
-          ),
-          onPressed: () {
-            onDelete();
-          },
-        ),
+        subtitle: _buildSubtitle(todo, context),
         onTap: () => onTap(),
       ),
     );
   }
 
-  Color _getCheckboxBorderColor(BuildContext context, Todo todo) {
-    DateTime now = DateTime.now();
-    DateTime? completeDate = todo.completeDate;
+  Widget? _buildSubtitle(Todo todo, BuildContext context) {
     DateTime? dueDate = todo.dueDate;
-    if (completeDate != null) {
-      return Theme.of(context).colorScheme.primary;
+    DateTime today = DateTime.now();
+    if (dueDate == null) {
+      return null;
     }
-    if (dueDate != null) {
-      if (dueDate.compareDateTo(now) == -1) {
-        return Colors.red;
+    Color? color = Theme.of(context).colorScheme.primary;
+    if (todo.completeDate == null) {
+      if (dueDate.compareDateTo(today) < 0) {
+        color = Theme.of(context).colorScheme.error;
       }
     }
-    return Colors.grey;
-  }
-
-  Color? _getTextColor(BuildContext context, Todo todo) {
-    DateTime now = DateTime.now();
-    DateTime? completeDate = todo.completeDate;
-    DateTime? dueDate = todo.dueDate;
-    if (completeDate != null) {
-      return Colors.grey;
-    }
-    if (dueDate != null) {
-      if (dueDate.compareDateTo(now) == -1) {
-        return Colors.red;
-      }
-    }
-    return null;
+    String text = DateFormatter(AppLocalizations.of(context))
+        .getVerboseDateRepresentation(dueDate, context);
+    return Row(
+      children: [
+        Icon(
+          Icons.calendar_month,
+          color: color,
+          size: 16,
+        ),
+        Text(
+          text,
+          style: TextStyle(color: color),
+        ),
+      ],
+    );
   }
 }

@@ -50,7 +50,7 @@ class NotePage extends StatelessWidget {
           ),
           actions: [
             Padding(
-              padding: const EdgeInsets.only(right: 10.0),
+              padding: const EdgeInsets.only(right: 16.0),
               child: NoteSaveButton(controller: controller),
             ),
           ],

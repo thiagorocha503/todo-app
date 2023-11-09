@@ -15,10 +15,6 @@ class NoteSaveButton extends StatelessWidget {
     return TextButton(
       child: Text(
         AppLocalizations.of(context).translate("done").capitalize(),
-        style: const TextStyle(
-          color: Colors.white,
-          fontWeight: FontWeight.bold,
-        ),
       ),
       onPressed: () {
         if (controller.text != initialNote) {
