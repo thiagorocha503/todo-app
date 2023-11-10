@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:todo/app_localizations.dart';
 import 'package:todo/constants/app_about.dart' as constants;
+import 'package:todo/generated/l10n.dart';
 import 'package:todo/util/string_extension.dart';
 import 'package:share_plus/share_plus.dart';
 
@@ -12,9 +12,7 @@ class ShareListTile extends StatelessWidget {
     return ListTile(
       leading: const Icon(Icons.share),
       title: Text(
-        AppLocalizations.of(context)
-            .translate("share-with-your-friends")
-            .capitalize(),
+        AppLocalizations.of(context).shareWithYourFriends.capitalize(),
       ),
       onTap: () {
         onShare();

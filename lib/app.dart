@@ -16,7 +16,7 @@ import 'package:todo/todo_over_view/repository/repository.dart';
 import 'package:todo/todo_over_view/repository/todo_repository.dart';
 import 'package:todo/todo_over_view/ui/todo_overview_page.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:todo/app_localizations.dart';
+import 'generated/l10n.dart';
 
 class App extends StatelessWidget {
   final SharedPreferences preferences;
@@ -95,11 +95,7 @@ class App extends StatelessWidget {
                   GlobalWidgetsLocalizations.delegate,
                 ],
                 locale: locale,
-                supportedLocales: const [
-                  Locale('en', ''),
-                  Locale('pt', ''),
-                  Locale('es', '')
-                ],
+                supportedLocales: AppLocalizations.delegate.supportedLocales,
               );
             },
           );

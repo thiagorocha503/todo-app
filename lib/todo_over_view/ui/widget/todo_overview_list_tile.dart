@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:roundcheckbox/roundcheckbox.dart';
-import 'package:todo/app_localizations.dart';
 import 'package:todo/constants/keys.dart';
+import 'package:todo/generated/l10n.dart';
+import 'package:todo/language/cubit/language_cubit.dart';
 import 'package:todo/todo_over_view/model/todo.dart';
 import 'package:todo/util/date_formatter.dart';
 import 'package:todo/util/datetime_extension.dart';
@@ -71,7 +73,9 @@ class TodoOverviewListTile extends StatelessWidget {
         color = Theme.of(context).colorScheme.error;
       }
     }
-    String text = DateFormatter(AppLocalizations.of(context))
+    String text = DateFormatter(
+            s: AppLocalizations.of(context),
+            locale: context.read<LanguageCubit>().state)
         .getVerboseDateRepresentation(dueDate, context);
     return Row(
       children: [

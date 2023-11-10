@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import 'package:todo/app_localizations.dart';
+import 'package:todo/generated/l10n.dart';
 import 'package:todo/note/note_page.dart';
 import 'package:todo/todo_edit/bloc/todo_edit_bloc.dart';
 import 'package:todo/todo_edit/bloc/todo_edit_state.dart';
@@ -50,9 +49,7 @@ class NoteListTile extends StatelessWidget {
               width: double.infinity,
               child: Text(
                 state.todo.note == ""
-                    ? AppLocalizations.of(context)
-                        .translate("add-note")
-                        .capitalize()
+                    ? AppLocalizations.of(context).addNote.capitalize()
                     : state.todo.note,
                 overflow: TextOverflow.ellipsis,
                 maxLines: 8,

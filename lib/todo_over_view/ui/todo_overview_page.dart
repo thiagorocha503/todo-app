@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:todo/app_localizations.dart';
 import 'package:todo/filter/ui/filter_button.dart';
+import 'package:todo/generated/l10n.dart';
 import 'package:todo/todo_over_view/bloc/todo_overview_bloc.dart';
 import 'package:todo/todo_over_view/bloc/todo_overview_state.dart';
 import 'package:todo/todo_over_view/ui/widget/more_button.dart';
@@ -20,7 +20,7 @@ class TodoOverviewPage extends StatelessWidget {
       appBar: AppBar(
         centerTitle: true,
         title: Text(
-          AppLocalizations.of(context).translate("todos").capitalize(),
+          AppLocalizations.of(context).todos.capitalize(),
         ),
         actions: const [
           Padding(

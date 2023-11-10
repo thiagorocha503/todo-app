@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:todo/app_localizations.dart';
+import 'package:todo/generated/l10n.dart';
 import 'package:todo/util/string_extension.dart';
 
 class NoteTextField extends StatelessWidget {
@@ -13,8 +13,7 @@ class NoteTextField extends StatelessWidget {
       controller: controller,
       decoration: InputDecoration(
         border: InputBorder.none,
-        hintText:
-            AppLocalizations.of(context).translate("add-note").capitalize(),
+        hintText: AppLocalizations.of(context).addNote.capitalize(),
         hintStyle: const TextStyle(fontWeight: FontWeight.w400),
       ),
       maxLines: null,

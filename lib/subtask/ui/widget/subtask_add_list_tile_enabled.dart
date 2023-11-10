@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:roundcheckbox/roundcheckbox.dart';
-import 'package:todo/app_localizations.dart';
+import 'package:todo/generated/l10n.dart';
 import 'package:todo/subtask/bloc/subtask_bloc.dart';
 import 'package:todo/subtask/bloc/subtask_event.dart';
 import 'package:todo/subtask/model/subtask.dart';
@@ -48,9 +48,7 @@ class SubtaskAddListTileEnabled extends StatelessWidget {
           textInputAction: TextInputAction.done,
           decoration: InputDecoration(
             border: InputBorder.none,
-            hintText: AppLocalizations.of(context)
-                .translate("add-subtask")
-                .capitalize(),
+            hintText: AppLocalizations.of(context).addSubtask.capitalize(),
           ),
           onFieldSubmitted: (String? value) {
             if (formKey.currentState!.validate()) {
@@ -69,15 +67,8 @@ class SubtaskAddListTileEnabled extends StatelessWidget {
             }
           },
           validator: (String? value) {
-            if (value == null) {
-              return AppLocalizations.of(context)
-                  .translate("fill-out-name")
-                  .capitalize();
-            }
-            if (value.isEmpty) {
-              return AppLocalizations.of(context)
-                  .translate("fill-out-name")
-                  .capitalize();
+            if (value?.isEmpty ?? true) {
+              return AppLocalizations.of(context).fillOutName.capitalize();
             }
             return null;
           },

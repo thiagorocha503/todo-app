@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:todo/app_localizations.dart';
+import 'package:todo/generated/l10n.dart';
 import 'package:todo/theme/cubit/theme_cubit.dart';
 import 'package:todo/theme/ui/widget/theme_list_tile_select.dart';
 import 'package:todo/util/string_extension.dart';
@@ -19,15 +19,15 @@ class ThemePage extends StatelessWidget {
   Widget build(BuildContext context) {
     List<ThemeItem> themes = [
       ThemeItem(
-        name: AppLocalizations.of(context).translate("system"),
+        name: AppLocalizations.of(context).system,
         value: ThemeMode.system,
       ),
       ThemeItem(
-        name: AppLocalizations.of(context).translate("light"),
+        name: AppLocalizations.of(context).light,
         value: ThemeMode.light,
       ),
       ThemeItem(
-        name: AppLocalizations.of(context).translate("dark"),
+        name: AppLocalizations.of(context).dark,
         value: ThemeMode.dark,
       ),
     ];
@@ -40,8 +40,7 @@ class ThemePage extends StatelessWidget {
           },
         ),
         centerTitle: true,
-        title:
-            Text(AppLocalizations.of(context).translate("theme").capitalize()),
+        title: Text(AppLocalizations.of(context).theme.capitalize()),
       ),
       body: BlocBuilder<ThemeCubit, ThemeMode>(
         builder: (context, appTheme) {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:todo/app_localizations.dart';
 import 'package:todo/constants/keys.dart';
+import 'package:todo/generated/l10n.dart';
 import 'package:todo/util/string_extension.dart';
 
 class TodoDeleteAlertDialog extends StatelessWidget {
@@ -12,19 +12,15 @@ class TodoDeleteAlertDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return AlertDialog(
       title: Text(
-        AppLocalizations.of(context)
-            .translate("delete-alert-title")
-            .capitalize(),
+        AppLocalizations.of(context).deleteAlertTitle.capitalize(),
       ),
       content: Text(
-        AppLocalizations.of(context)
-            .translate("delete-alert-content")
-            .capitalize(),
+        AppLocalizations.of(context).deleteAlertContent.capitalize(),
       ),
       actions: [
         TextButton(
           child: Text(
-            AppLocalizations.of(context).translate("cancel").capitalize(),
+            AppLocalizations.of(context).cancel.capitalize(),
           ),
           onPressed: () {
             Navigator.pop(context);
@@ -37,7 +33,7 @@ class TodoDeleteAlertDialog extends StatelessWidget {
             onConfirm();
           },
           child: Text(
-            AppLocalizations.of(context).translate("delete").capitalize(),
+            AppLocalizations.of(context).delete.capitalize(),
           ),
         )
       ],

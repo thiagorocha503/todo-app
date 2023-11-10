@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:roundcheckbox/roundcheckbox.dart';
-import 'package:todo/app_localizations.dart';
+import 'package:todo/generated/l10n.dart';
 import 'package:todo/todo_edit/bloc/todo_edit_bloc.dart';
 import 'package:todo/todo_edit/bloc/todo_edit_event.dart';
 import 'package:todo/todo_edit/bloc/todo_edit_state.dart';
@@ -100,8 +100,7 @@ class TodoTextField extends StatelessWidget {
             color: state.todo.completeDate == null ? null : Colors.grey,
           ),
           decoration: InputDecoration(
-            hintText:
-                AppLocalizations.of(context).translate("add-todo").capitalize(),
+            hintText: AppLocalizations.of(context).addTodo.capitalize(),
             border: InputBorder.none,
           ),
         );

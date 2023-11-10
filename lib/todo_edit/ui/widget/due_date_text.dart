@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:todo/app_localizations.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:todo/generated/l10n.dart';
+import 'package:todo/language/cubit/language_cubit.dart';
 import 'package:todo/util/date_formatter.dart';
 import 'package:todo/util/string_extension.dart';
 import 'package:todo/util/datetime_extension.dart';
@@ -42,11 +44,11 @@ class DueDateText extends StatelessWidget {
 
   String _getText(BuildContext context, DateTime? date) {
     if (date == null) {
-      return AppLocalizations.of(context)
-          .translate("add-due-date")
-          .capitalize();
+      return AppLocalizations.of(context).addDueDate.capitalize();
     }
-    return DateFormatter(AppLocalizations.of(context))
-        .getVerboseDateRepresentation(date, context);
+    return DateFormatter(
+      s: AppLocalizations.of(context),
+      locale: context.read<LanguageCubit>().state,
+    ).getVerboseDateRepresentation(date, context);
   }
 }

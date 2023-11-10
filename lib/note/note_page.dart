@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:todo/app_localizations.dart';
+import 'package:todo/generated/l10n.dart';
 import 'package:todo/note/ui/note_save_button.dart';
 import 'package:todo/note/ui/note_text_field.dart';
 import 'package:todo/todo_edit/bloc/todo_edit_bloc.dart';
@@ -23,7 +23,7 @@ class NotePage extends StatelessWidget {
         if (state is TodoEditLoaded) {
           if (Platform.isAndroid || Platform.isIOS) {
             showToast(
-              AppLocalizations.of(context).translate("saved").capitalize(),
+              AppLocalizations.of(context).saved.capitalize(),
             );
           }
         }
@@ -46,7 +46,7 @@ class NotePage extends StatelessWidget {
             icon: const Icon(Icons.arrow_back_ios),
           ),
           title: Text(
-            AppLocalizations.of(context).translate("note").capitalize(),
+            AppLocalizations.of(context).note.capitalize(),
           ),
           actions: [
             Padding(

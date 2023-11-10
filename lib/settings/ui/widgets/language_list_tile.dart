@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:todo/app_localizations.dart';
+import 'package:todo/generated/l10n.dart';
 import 'package:todo/language/cubit/language_cubit.dart';
 import 'package:todo/language/ui/language_page.dart';
 import 'package:todo/util/string_extension.dart';
@@ -14,7 +14,7 @@ class LanguageListTile extends StatelessWidget {
     return ListTile(
       leading: const Icon(Icons.language),
       title: Text(
-        AppLocalizations.of(context).translate("language").capitalize(),
+        AppLocalizations.of(context).language.capitalize(),
       ),
       subtitle: Text(getCurrentLanguage(context).capitalize()),
       onTap: () {

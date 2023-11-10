@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:todo/app_localizations.dart';
+import 'package:todo/generated/l10n.dart';
 import 'package:todo/subtask/bloc/subtask_bloc.dart';
 import 'package:todo/subtask/bloc/subtask_event.dart';
 import 'package:todo/subtask/repository/repository.dart';
@@ -83,7 +83,7 @@ class TodoEditPageView extends StatelessWidget {
             },
           ),
           title: Text(
-            AppLocalizations.of(context).translate("todo").capitalize(),
+            AppLocalizations.of(context).todo.capitalize(),
           ),
           actions: [
             Padding(
@@ -101,7 +101,7 @@ class TodoEditPageView extends StatelessWidget {
                   );
                 },
                 icon: const Icon(Icons.delete),
-                tooltip: AppLocalizations.of(context).translate("delete"),
+                tooltip: AppLocalizations.of(context).delete,
               ),
             )
           ],

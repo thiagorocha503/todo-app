@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:todo/app_localizations.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:todo/generated/l10n.dart';
 import 'package:todo/todo_edit/ui/todo_edit_page.dart';
 import 'package:todo/todo_over_view/bloc/todo_overview_bloc.dart';
 import 'package:todo/todo_over_view/bloc/todo_overview_event.dart';
@@ -22,12 +22,12 @@ class TodoOverviewListView extends StatelessWidget {
     if (todos.isEmpty) {
       return Center(
         child: Text(
+          AppLocalizations.of(context).noTodo.capitalize(),
           style: const TextStyle(
             fontWeight: FontWeight.bold,
             color: Colors.grey,
             fontSize: 16,
           ),
-          AppLocalizations.of(context).translate("no-todo").capitalize(),
         ),
       );
     }

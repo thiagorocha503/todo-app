@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:todo/app_localizations.dart';
+import 'package:todo/generated/l10n.dart';
 import 'package:todo/language/model/language.dart';
 import 'package:todo/language/ui/widget/language_list_tile_select.dart';
 import 'package:todo/util/string_extension.dart';
@@ -31,7 +31,7 @@ class LanguagePage extends StatelessWidget {
         ),
         centerTitle: true,
         title: Text(
-          AppLocalizations.of(context).translate("language").capitalize(),
+          AppLocalizations.of(context).language.capitalize(),
         ),
       ),
       body: SafeArea(

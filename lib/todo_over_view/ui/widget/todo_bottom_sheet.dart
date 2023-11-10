@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:roundcheckbox/roundcheckbox.dart';
-import 'package:todo/app_localizations.dart';
+import 'package:todo/generated/l10n.dart';
 import 'package:todo/todo_over_view/bloc/todo_overview_bloc.dart';
 import 'package:todo/todo_over_view/bloc/todo_overview_event.dart';
 import 'package:todo/constants/keys.dart';
@@ -79,15 +79,11 @@ class _TodoBottomSheetContentState extends State<TodoBottomSheetContent> {
           key: const Key(TODO_NEW_INPUT),
           controller: _titleController,
           decoration: InputDecoration(
-            hintText: AppLocalizations.of(context)
-                .translate("enter-name")
-                .capitalize(),
+            hintText: AppLocalizations.of(context).enterName.capitalize(),
           ),
           validator: (String? value) {
             if (value == null || value.isEmpty) {
-              return AppLocalizations.of(context)
-                  .translate("fill-out-name")
-                  .capitalize();
+              return AppLocalizations.of(context).fillOutName.capitalize();
             }
             return null;
           },

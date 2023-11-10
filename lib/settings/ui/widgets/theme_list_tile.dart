@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:todo/app_localizations.dart';
+import 'package:todo/generated/l10n.dart';
 import 'package:todo/theme/cubit/theme_cubit.dart';
 import 'package:todo/theme/ui/theme_page.dart';
 import 'package:todo/util/string_extension.dart';
@@ -13,7 +13,7 @@ class ThemeListTile extends StatelessWidget {
     return ListTile(
       leading: const Icon(Icons.brightness_6),
       title: Text(
-        AppLocalizations.of(context).translate("theme").capitalize(),
+        AppLocalizations.of(context).theme.capitalize(),
       ),
       subtitle: const SubtitleTheme(),
       onTap: () {
@@ -37,13 +37,13 @@ class SubtitleTheme extends StatelessWidget {
         String text;
         switch (state) {
           case ThemeMode.light:
-            text = AppLocalizations.of(context).translate("light");
+            text = AppLocalizations.of(context).light;
             break;
           case ThemeMode.dark:
-            text = AppLocalizations.of(context).translate("dark");
+            text = AppLocalizations.of(context).dark;
             break;
           case ThemeMode.system:
-            text = AppLocalizations.of(context).translate("system");
+            text = AppLocalizations.of(context).system;
             break;
         }
         return Text(text.capitalize());

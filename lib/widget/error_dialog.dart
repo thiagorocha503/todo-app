@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:todo/app_localizations.dart';
+import 'package:todo/generated/l10n.dart';
 import 'package:todo/util/string_extension.dart';
 
 class ErrorDialog extends StatelessWidget {
@@ -9,7 +9,7 @@ class ErrorDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text(AppLocalizations.of(context).translate("error").capitalize()),
+      title: Text(AppLocalizations.of(context).error.capitalize()),
       content: Text(message),
       actions: [
         ElevatedButton(
@@ -17,7 +17,7 @@ class ErrorDialog extends StatelessWidget {
             Navigator.pop(context);
           },
           child: Text(
-            AppLocalizations.of(context).translate("ok").capitalize(),
+            AppLocalizations.of(context).ok.toUpperCase(),
           ),
         ),
       ],
