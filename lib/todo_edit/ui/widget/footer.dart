@@ -19,22 +19,13 @@ class Footer extends StatelessWidget {
         return Padding(
           padding: const EdgeInsets.all(8.0),
           child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Flexible(
                 child: Text(
-                  "${AppLocalizations.of(context).createdAt.capitalize()} "
-                  "${DateFormatter(s: AppLocalizations.of(context), locale: context.read<LanguageCubit>().state).getVerboseDateRepresentation(state.todo.createdDate!, context)}",
-                  style: const TextStyle(
-                    color: Colors.grey,
-                    fontSize: 16,
-                  ),
-                ),
-              ),
-              Flexible(
-                child: Text(
-                  state.todo.completeDate == null
-                      ? ''
-                      : '${AppLocalizations.of(context).createdAt.capitalize()} ${DateFormatter(s: AppLocalizations.of(context), locale: context.read<LanguageCubit>().state).getVerboseDateRepresentation(todo.completeDate!, context)}',
+                  todo.completeDate == null
+                      ? "${AppLocalizations.of(context).createdAt.capitalize()} ${DateFormatter(s: AppLocalizations.of(context), locale: context.read<LanguageCubit>().state).getVerboseDateRepresentation(state.todo.createdDate!, context)}"
+                      : "${AppLocalizations.of(context).completedAt.capitalize()} ${DateFormatter(s: AppLocalizations.of(context), locale: context.read<LanguageCubit>().state).getVerboseDateRepresentation(state.todo.completeDate!, context)}",
                   style: const TextStyle(
                     color: Colors.grey,
                     fontSize: 16,

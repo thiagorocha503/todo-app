@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:todo/generated/l10n.dart';
 import 'package:todo/util/datetime_extension.dart';
-import 'package:todo/util/string_extension.dart';
 
 class DateFormatter {
   final AppLocalizations s;
@@ -14,14 +13,14 @@ class DateFormatter {
 
     if (date.compareDateTo(today) < 0) {
       if (date.day == today.day - 1) {
-        return AppLocalizations.of(context).yesterday.capitalize();
+        return AppLocalizations.of(context).yesterday;
       }
     } else if (date.compareDateTo(today) > 0) {
       if (date.day == today.day + 1) {
-        return AppLocalizations.of(context).tomorrow.capitalize();
+        return AppLocalizations.of(context).tomorrow;
       }
     } else {
-      return AppLocalizations.of(context).today.capitalize();
+      return AppLocalizations.of(context).today;
     }
     return DateFormat(
             "${date.year != today.year ? 'y' : ''}MMMd", locale.languageCode)
