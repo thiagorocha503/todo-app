@@ -7,14 +7,7 @@
 
 ## Screenshoots
 
-![screenshoots](https://i.ibb.co/GsZx8m6/screenshot-20221214-161845-w300px.jpg)
- 
-
-## Getting Started
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
-
+<img src="https://i.ibb.co/VDJFWhX/Insta-Mocks-20231110-085355280-transformed.png" alt="Insta-Mocks-20231110-085355280-transformed" border="0" width="350">
 
 ## Prerequisites
  * Fluter (https://flutter.dev/docs/get-started/install)
@@ -56,9 +49,6 @@ flutter test
 [![google play](https://i.ibb.co/GMZg2td/google-play-badge-50.png)](https://play.google.com/store/apps/details?id=io.github.thiagorocha503.lista_de_tarefas)
 
 
-## Author
-* **Thiago Rocha Ferreira** - [Thiagorocha503](https://github.com/thiagorocha503)
-
 ## Contributing
 
 1. Fork it
@@ -66,6 +56,14 @@ flutter test
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create new Pull Request
+
+
+## Author
+* **Thiago Ferreira** - [Thiagorocha503](https://github.com/thiagorocha503)
+
+## Inspiration
+
+This App is based on [Flutter Todos Tutorial](https://bloclibrary.dev/#/fluttertodostutorial) from [Felix Angelov](https://github.com/felangel)
 
 
 ## License
