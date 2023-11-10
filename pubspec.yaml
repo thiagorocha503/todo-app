@@ -94,4 +94,5 @@ flutter:
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
 flutter_intl:
-  enabled: true
+  enabled: true # Required. Must be set to true to activate the plugin. Default: false
+  class_name: AppLocalizations # O

@@ -19,7 +19,7 @@ class AppLocalizations {
 
   static AppLocalizations get current {
     assert(_current != null,
-        'No instance of S was loaded. Try to initialize the S delegate before accessing S.current.');
+        'No instance of AppLocalizations was loaded. Try to initialize the AppLocalizations delegate before accessing AppLocalizations.current.');
     return _current!;
   }
 
@@ -42,7 +42,7 @@ class AppLocalizations {
   static AppLocalizations of(BuildContext context) {
     final instance = AppLocalizations.maybeOf(context);
     assert(instance != null,
-        'No instance of S present in the widget tree. Did you add S.delegate in localizationsDelegates?');
+        'No instance of AppLocalizations present in the widget tree. Did you add AppLocalizations.delegate in localizationsDelegates?');
     return instance!;
   }
 
