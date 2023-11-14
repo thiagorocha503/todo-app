@@ -18,11 +18,11 @@ class TodoOverviewAdded extends TodoOverViewEvent {
 }
 
 class TodoOverviewDeleted extends TodoOverViewEvent {
-  final int id;
+  final List<int> ids;
 
-  TodoOverviewDeleted({required this.id});
+  TodoOverviewDeleted({required this.ids});
   @override
-  List<Object?> get props => [id];
+  List<Object?> get props => [ids];
 }
 
 class TodoOverviewUpdate extends TodoOverViewEvent {

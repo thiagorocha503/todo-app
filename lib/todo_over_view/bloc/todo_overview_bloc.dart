@@ -94,7 +94,7 @@ class TodoOverviewBloc extends Bloc<TodoOverViewEvent, TodoOverviewState> {
       TodoOverviewDeleted event, Emitter<TodoOverviewState> emit) async {
     try {
       emit(TodoOverviewLoadingState(todos: previusTodos));
-      repository.delete(event.id);
+      repository.delete(event.ids);
       previusTodos = await repository.fetch(filter: filter);
       emit(TodoOverviewLoadedState(todos: previusTodos));
     } on Exception catch (error) {

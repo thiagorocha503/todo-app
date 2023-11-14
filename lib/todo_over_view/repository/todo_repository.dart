@@ -7,7 +7,7 @@ import 'package:todo/todo_over_view/provider/provider.dart';
 import 'package:todo/todo_over_view/provider/todo_provider.dart';
 import 'package:todo/todo_over_view/repository/repository.dart';
 
-@GenerateNiceMocks([MockSpec<TodoRepository>()])
+@GenerateNiceMocks([MockSpec<ITodoRepository>()])
 class TodoRepository implements ITodoRepository {
   late ITodoProvider _provider;
   TodoRepository() {
@@ -23,8 +23,8 @@ class TodoRepository implements ITodoRepository {
   }
 
   @override
-  void delete(int id) {
-    _provider.delete(id);
+  void delete(List<int> ids) {
+    _provider.delete(ids);
   }
 
   @override

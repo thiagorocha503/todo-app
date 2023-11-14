@@ -1,5 +1,6 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:todo/filter/model/filter.dart';
 import 'package:todo/todo_edit/bloc/todo_edit_bloc.dart';
@@ -10,8 +11,10 @@ import 'package:todo/todo_over_view/bloc/todo_overview_bloc.mocks.dart';
 import 'package:todo/todo_over_view/bloc/todo_overview_event.dart';
 import 'package:todo/todo_over_view/model/todo.dart';
 import 'package:todo/todo_over_view/repository/repository.dart';
-import 'package:todo/todo_over_view/repository/todo_repository.mocks.dart';
 
+import 'todo_edit_bloc_test.mocks.dart';
+
+@GenerateNiceMocks([MockSpec<ITodoRepository>()])
 void main() {
   late TodoEditBloc todoEditbloc;
   late TodoOverviewBloc todoOverviewBloc;
@@ -28,7 +31,7 @@ void main() {
   ];
 
   setUp(() async {
-    repository = MockTodoRepository();
+    repository = MockITodoRepository();
     when(repository.fetch(filter: Filter.all))
         .thenAnswer((realInvocation) async {
       return await Future.value(todos);

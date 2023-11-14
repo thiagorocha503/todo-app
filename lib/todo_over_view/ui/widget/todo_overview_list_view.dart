@@ -63,7 +63,7 @@ class TodoOverviewListView extends StatelessWidget {
                 onConfirm: () {
                   context
                       .read<TodoOverviewBloc>()
-                      .add(TodoOverviewDeleted(id: todo.id));
+                      .add(TodoOverviewDeleted(ids: [todo.id]));
                 },
               ),
             );

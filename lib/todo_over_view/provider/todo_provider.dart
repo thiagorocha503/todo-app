@@ -43,9 +43,13 @@ class TodoDBProvider implements ITodoProvider {
   }
 
   @override
-  Future<int> delete(int id) async {
+  Future<int> delete(List<int> ids) async {
     Database db = await appDataBase.getDataBase();
-    return await db.delete(TABLE_TODO_NAME, where: "id = ?", whereArgs: [id]);
+    return await db.delete(
+      TABLE_TODO_NAME,
+      where: "id in ${ids.map((e) => '?')}",
+      whereArgs: ids.map((e) => e).toList(),
+    );
   }
 
   @override

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:roundcheckbox/roundcheckbox.dart';
 import 'package:todo/constants/keys.dart';
@@ -11,10 +12,11 @@ import 'package:todo/todo_over_view/bloc/todo_overview_bloc.dart';
 import 'package:todo/todo_over_view/bloc/todo_overview_event.dart';
 import 'package:todo/todo_over_view/model/todo.dart';
 import 'package:todo/todo_over_view/repository/repository.dart';
-import 'package:todo/todo_over_view/repository/todo_repository.mocks.dart';
 import 'package:todo/todo_over_view/ui/todo_overview_page.dart';
 import 'package:todo/todo_over_view/ui/widget/todo_overview_list_tile.dart';
 import 'package:todo/widget/error_dialog.dart';
+
+import '../bloc/todo_edit_bloc_test.mocks.dart';
 
 Widget buildApp(ITodoRepository repository, Filter filter) {
   return MultiRepositoryProvider(
@@ -55,11 +57,12 @@ List<Todo> data = [
   const Todo(id: 3, name: "three", completeDate: null)
 ];
 
+@GenerateNiceMocks([MockSpec<ITodoRepository>()])
 void main() {
-  late MockTodoRepository repository;
+  late MockITodoRepository repository;
 
   setUp(() {
-    repository = MockTodoRepository();
+    repository = MockITodoRepository();
     when(repository.fetch(filter: Filter.all)).thenAnswer(
       (_) => Future.value(List.from(data)),
     );

@@ -95,7 +95,7 @@ class TodoEditPageView extends StatelessWidget {
                     builder: (context) => TodoDeleteAlertDialog(onConfirm: () {
                       context
                           .read<TodoOverviewBloc>()
-                          .add(TodoOverviewDeleted(id: todo.id));
+                          .add(TodoOverviewDeleted(ids: [todo.id]));
                       Navigator.pop(context);
                     }),
                   );

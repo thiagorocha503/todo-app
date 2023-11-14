@@ -3,7 +3,7 @@ import 'package:todo/todo_over_view/model/todo.dart';
 
 abstract class ITodoRepository {
   void insert(Todo todo);
-  void delete(int id);
+  void delete(List<int> ids);
   void update(Todo todo);
   Future<List<Todo>> fetch({required Filter filter});
 }
