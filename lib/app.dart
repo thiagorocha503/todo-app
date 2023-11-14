@@ -5,6 +5,8 @@ import 'package:todo/filter/bloc/filter_bloc.dart';
 import 'package:todo/filter/preferences/filter_preferences.dart';
 import 'package:todo/language/cubit/language_cubit.dart';
 import 'package:todo/language/preferences/language_preferences.dart';
+import 'package:todo/select_list/bloc/selectable_list_bloc.dart';
+import 'package:todo/select_list/bloc/selectable_list_state.dart';
 import 'package:todo/subtask/repository/repository.dart';
 import 'package:todo/subtask/repository/subtask_repository.dart';
 import 'package:todo/theme/cubit/theme_cubit.dart';
@@ -74,6 +76,11 @@ class App extends StatelessWidget {
           BlocProvider<TodoOverviewBloc>(
             create: (BuildContext context) => todoOverViewBloc,
           ),
+          BlocProvider<SelectableListBloc<int>>(
+            create: (_) => SelectableListBloc(
+              const SelectableListState<int>(enabled: false, itens: []),
+            ),
+          )
         ],
         child: BlocBuilder<ThemeCubit, ThemeMode>(
             builder: (conttext, ThemeMode themeMode) {

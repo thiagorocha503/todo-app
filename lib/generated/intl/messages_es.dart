@@ -20,6 +20,8 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'es';
 
+  static String m0(n) => "${n} seleccionado";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "active": MessageLookupByLibrary.simpleMessage("activa"),
@@ -34,11 +36,14 @@ class MessageLookup extends MessageLookupByLibrary {
         "completedAt": MessageLookupByLibrary.simpleMessage("terminada"),
         "createdAt": MessageLookupByLibrary.simpleMessage("creada"),
         "dark": MessageLookupByLibrary.simpleMessage("dark"),
-        "delete": MessageLookupByLibrary.simpleMessage("eliminar tarea"),
+        "delete": MessageLookupByLibrary.simpleMessage("eliminar"),
         "deleteAlertContent": MessageLookupByLibrary.simpleMessage(
             "¿Está seguro de que desea eliminar esta tarea de forma permanente?"),
         "deleteAlertTitle":
             MessageLookupByLibrary.simpleMessage("eliminar tarea"),
+        "deleteTooltip": MessageLookupByLibrary.simpleMessage("eliminar tarea"),
+        "deselectAll":
+            MessageLookupByLibrary.simpleMessage("deseleccionar todo"),
         "done": MessageLookupByLibrary.simpleMessage("guardar"),
         "enterName": MessageLookupByLibrary.simpleMessage("Ingrese nombre"),
         "error": MessageLookupByLibrary.simpleMessage("error"),
@@ -48,6 +53,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "justNow": MessageLookupByLibrary.simpleMessage("en este momento"),
         "language": MessageLookupByLibrary.simpleMessage("idioma"),
         "light": MessageLookupByLibrary.simpleMessage("light"),
+        "nSelected": m0,
         "noTodo": MessageLookupByLibrary.simpleMessage("sin tareas"),
         "note": MessageLookupByLibrary.simpleMessage("nota"),
         "ok": MessageLookupByLibrary.simpleMessage("ok"),
@@ -55,6 +61,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("califícanos en Play Store"),
         "save": MessageLookupByLibrary.simpleMessage("guardar"),
         "saved": MessageLookupByLibrary.simpleMessage("salvado"),
+        "selectAll": MessageLookupByLibrary.simpleMessage("seleccionar todo"),
         "settings": MessageLookupByLibrary.simpleMessage("ajustes"),
         "shareWithYourFriends":
             MessageLookupByLibrary.simpleMessage("comparte con tu amigos"),

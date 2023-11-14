@@ -29,12 +29,16 @@
     "ok":"ok",
     "deleteAlertTitle":"excluir tarefa",
     "deleteAlertContent":"tem certeza de que deseja excluir esta tarefa?",
-    "delete":"remover tarefa",
+    "deleteTooltip":"remover tarefa",
+    "delete":"remover",
     "enterName":"Digite o name",
     "fillOutName":"preencha este campo",
     "addSubtask":"adicionar subtarefa",
     "theme":"tema",
     "light":"claro",
     "dark":"escuro",
-    "system":"sistema"
+    "system":"sistema",
+    "nSelected": "{n} selecionado",
+    "selectAll":"selecionar tudo",
+    "deselectAll":"desmarcar tudo"
 }

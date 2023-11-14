@@ -101,7 +101,8 @@ class TodoEditPageView extends StatelessWidget {
                   );
                 },
                 icon: const Icon(Icons.delete),
-                tooltip: AppLocalizations.of(context).delete,
+                tooltip:
+                    AppLocalizations.of(context).deleteTooltip.capitalize(),
               ),
             )
           ],

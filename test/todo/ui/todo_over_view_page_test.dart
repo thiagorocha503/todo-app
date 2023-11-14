@@ -8,6 +8,8 @@ import 'package:roundcheckbox/roundcheckbox.dart';
 import 'package:todo/constants/keys.dart';
 import 'package:todo/filter/model/filter.dart';
 import 'package:todo/generated/l10n.dart';
+import 'package:todo/select_list/bloc/selectable_list_bloc.dart';
+import 'package:todo/select_list/bloc/selectable_list_state.dart';
 import 'package:todo/todo_over_view/bloc/todo_overview_bloc.dart';
 import 'package:todo/todo_over_view/bloc/todo_overview_event.dart';
 import 'package:todo/todo_over_view/model/todo.dart';
@@ -31,6 +33,11 @@ Widget buildApp(ITodoRepository repository, Filter filter) {
                 ..add(
                   TodoOverviewFetchEvent(),
                 ),
+        ),
+        BlocProvider<SelectableListBloc<int>>(
+          create: (_) => SelectableListBloc(
+            const SelectableListState<int>(enabled: false, itens: []),
+          ),
         )
       ],
       child: const MaterialApp(

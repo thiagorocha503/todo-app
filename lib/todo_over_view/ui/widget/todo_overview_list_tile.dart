@@ -4,45 +4,67 @@ import 'package:roundcheckbox/roundcheckbox.dart';
 import 'package:todo/constants/keys.dart';
 import 'package:todo/generated/l10n.dart';
 import 'package:todo/language/cubit/language_cubit.dart';
+import 'package:todo/select_list/bloc/selectable_list_bloc.dart';
+import 'package:todo/select_list/bloc/selectable_list_event.dart';
+import 'package:todo/select_list/bloc/selectable_list_state.dart';
+import 'package:todo/todo_edit/ui/todo_edit_page.dart';
+import 'package:todo/todo_over_view/bloc/todo_overview_bloc.dart';
+import 'package:todo/todo_over_view/bloc/todo_overview_event.dart';
 import 'package:todo/todo_over_view/model/todo.dart';
 import 'package:todo/util/date_formatter.dart';
 import 'package:todo/util/datetime_extension.dart';
 
 class TodoOverviewListTile extends StatelessWidget {
   final Todo todo;
-  final Function(bool value) onToggleCompleted;
-  final Function onDelete;
-  final Function onTap;
   const TodoOverviewListTile({
     required this.todo,
     super.key,
-    required this.onTap,
-    required this.onToggleCompleted,
-    required this.onDelete,
   });
 
   @override
   Widget build(BuildContext context) {
     return Card(
       child: ListTile(
-        leading: RoundCheckBox(
-          key: Key("$TODO_CHECKBOX-${todo.id}"),
-          size: 26,
-          border: Border.all(
-            color: todo.completeDate == null
-                ? Theme.of(context).colorScheme.secondary
-                : Theme.of(context).colorScheme.primary,
-            width: 2,
-          ),
-          isChecked: todo.completeDate == null ? false : true,
-          checkedColor: Theme.of(context).colorScheme.primary,
-          disabledColor: Colors.grey,
-          uncheckedColor: Colors.transparent,
-          onTap: (bool? value) {
-            if (value == null) {
-              return;
+        leading: BlocBuilder<SelectableListBloc<int>, SelectableListState<int>>(
+          builder: (context, state) {
+            if (state.enabled) {
+              return Checkbox(
+                value: state.itens.firstWhere((e) => e.id == todo.id).selected,
+                onChanged: (a) {
+                  context
+                      .read<SelectableListBloc<int>>()
+                      .add(SelectableListTappedItem<int>(id: todo.id));
+                },
+              );
             }
-            onToggleCompleted(value);
+            return RoundCheckBox(
+              key: Key("$TODO_CHECKBOX-${todo.id}"),
+              size: 26,
+              border: Border.all(
+                color: todo.completeDate == null
+                    ? Theme.of(context).colorScheme.secondary
+                    : Theme.of(context).colorScheme.primary,
+                width: 2,
+              ),
+              isChecked: todo.completeDate == null ? false : true,
+              checkedColor: Theme.of(context).colorScheme.primary,
+              disabledColor: Colors.grey,
+              uncheckedColor: Colors.transparent,
+              onTap: (bool? value) {
+                if (value == null) {
+                  return;
+                }
+                context.read<TodoOverviewBloc>().add(
+                      TodoOverviewUpdate(
+                        todo: todo.copyWith(
+                          createdDate: todo.createdDate,
+                          dueDate: todo.dueDate,
+                          completeDate: value ? DateTime.now() : null,
+                        ),
+                      ),
+                    );
+              },
+            );
           },
         ),
         title: Text(
@@ -56,7 +78,25 @@ class TodoOverviewListTile extends StatelessWidget {
           ),
         ),
         subtitle: _buildSubtitle(todo, context),
-        onTap: () => onTap(),
+        onTap: () {
+          if (context.read<SelectableListBloc<int>>().state.enabled) {
+            context
+                .read<SelectableListBloc<int>>()
+                .add(SelectableListTappedItem(id: todo.id));
+          } else {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => TodoEditPage(todo: todo),
+              ),
+            );
+          }
+        },
+        onLongPress: () {
+          context
+              .read<SelectableListBloc<int>>()
+              .add(SelectableListLongPressedItem<int>(id: todo.id));
+        },
       ),
     );
   }

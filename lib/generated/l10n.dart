@@ -351,9 +351,19 @@ class AppLocalizations {
   }
 
   /// `delete task`
-  String get delete {
+  String get deleteTooltip {
     return Intl.message(
       'delete task',
+      name: 'deleteTooltip',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `delete`
+  String get delete {
+    return Intl.message(
+      'delete',
       name: 'delete',
       desc: '',
       args: [],
@@ -425,6 +435,36 @@ class AppLocalizations {
     return Intl.message(
       'system',
       name: 'system',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `{n} selected`
+  String nSelected(Object n) {
+    return Intl.message(
+      '$n selected',
+      name: 'nSelected',
+      desc: '',
+      args: [n],
+    );
+  }
+
+  /// `select all`
+  String get selectAll {
+    return Intl.message(
+      'select all',
+      name: 'selectAll',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `deselect all`
+  String get deselectAll {
+    return Intl.message(
+      'deselect all',
+      name: 'deselectAll',
       desc: '',
       args: [],
     );

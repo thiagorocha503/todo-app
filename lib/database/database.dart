@@ -22,7 +22,6 @@ class DBProvider {
   static Database? _database;
 
   Future<Database> getDataBase() async {
-    debugPrint("> Get dataBase");
     Database? db = _database;
     if (db == null) {
       _database = db = await _initDataBase();
@@ -71,12 +70,9 @@ class DBProvider {
     }
   }
 
-  void onOpen(db) {
-    debugPrint("DB> onOpen");
-  }
+  void onOpen(db) {}
 
   void onConfigure(Database db) {
-    debugPrint("DB> onConfigure");
     db.execute("PRAGMA foreign_keys = 1");
   }
 
