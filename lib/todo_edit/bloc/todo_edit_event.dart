@@ -31,11 +31,11 @@ class TodoEditDueDateChanged extends TodoEditEvent {
   List<Object?> get props => [dueDate];
 }
 
-class TodoEditNoteChanged extends TodoEditEvent {
-  final String note;
+class TodoEditDescriptionChanged extends TodoEditEvent {
+  final String description;
 
-  const TodoEditNoteChanged({required this.note});
+  const TodoEditDescriptionChanged({required this.description});
 
   @override
-  List<Object?> get props => [note];
+  List<Object?> get props => [description];
 }

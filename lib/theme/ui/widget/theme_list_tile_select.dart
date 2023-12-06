@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todo/theme/cubit/theme_cubit.dart';
 import 'package:todo/theme/ui/theme_page.dart';
-import 'package:todo/util/string_extension.dart';
+import 'package:todo/shared/extensions/string_extension.dart';
 
 class ThemeListTileSelect extends StatelessWidget {
   final ThemeItem themeItem;
@@ -15,19 +15,9 @@ class ThemeListTileSelect extends StatelessWidget {
         splashColor: Colors.transparent,
       ),
       child: ListTile(
-        title: Padding(
-          padding: const EdgeInsets.only(left: 16),
-          child: Text(
-            themeItem.name.capitalize(),
-            style: TextStyle(
-              fontWeight: FontWeight.w600,
-              color: Theme.of(context)
-                  .textTheme
-                  .bodyLarge!
-                  .color!
-                  .withOpacity(0.9),
-            ),
-          ),
+        title: Text(
+          themeItem.name.capitalize(),
+          style: Theme.of(context).textTheme.titleMedium,
         ),
         trailing: context.read<ThemeCubit>().state == themeItem.value
             ? Icon(

@@ -120,23 +120,23 @@ class AppLocalizations {
     );
   }
 
-  /// `created`
-  String get createdAt {
+  /// `created {n}`
+  String createdAt(Object n) {
     return Intl.message(
-      'created',
+      'created $n',
       name: 'createdAt',
       desc: '',
-      args: [],
+      args: [n],
     );
   }
 
-  /// `completed`
-  String get completedAt {
+  /// `completed {n}`
+  String completedAt(Object n) {
     return Intl.message(
-      'completed',
+      'completed $n',
       name: 'completedAt',
       desc: '',
-      args: [],
+      args: [n],
     );
   }
 
@@ -191,30 +191,20 @@ class AppLocalizations {
   }
 
   /// `add note`
-  String get addNote {
+  String get addDescription {
     return Intl.message(
       'add note',
-      name: 'addNote',
+      name: 'addDescription',
       desc: '',
       args: [],
     );
   }
 
-  /// `note`
-  String get note {
+  /// `description`
+  String get description {
     return Intl.message(
-      'note',
-      name: 'note',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `done`
-  String get done {
-    return Intl.message(
-      'done',
-      name: 'done',
+      'description',
+      name: 'description',
       desc: '',
       args: [],
     );
@@ -270,43 +260,13 @@ class AppLocalizations {
     );
   }
 
-  /// `all`
-  String get all {
+  /// `complete ({n})`
+  String complete(Object n) {
     return Intl.message(
-      'all',
-      name: 'all',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `done`
-  String get complete {
-    return Intl.message(
-      'done',
+      'complete ($n)',
       name: 'complete',
       desc: '',
-      args: [],
-    );
-  }
-
-  /// `active`
-  String get active {
-    return Intl.message(
-      'active',
-      name: 'active',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `filter`
-  String get filter {
-    return Intl.message(
-      'filter',
-      name: 'filter',
-      desc: '',
-      args: [],
+      args: [n],
     );
   }
 
@@ -320,41 +280,31 @@ class AppLocalizations {
     );
   }
 
-  /// `ok`
-  String get ok {
+  /// `delete task?`
+  String get deleteTaskAlertTitle {
     return Intl.message(
-      'ok',
-      name: 'ok',
+      'delete task?',
+      name: 'deleteTaskAlertTitle',
       desc: '',
       args: [],
+    );
+  }
+
+  /// `this will delete '{task}' permanently. You cannot undo this action`
+  String deleteTaskAlertBody(Object task) {
+    return Intl.message(
+      'this will delete \'$task\' permanently. You cannot undo this action',
+      name: 'deleteTaskAlertBody',
+      desc: '',
+      args: [task],
     );
   }
 
   /// `delete task`
-  String get deleteAlertTitle {
+  String get deleteTaskTooltip {
     return Intl.message(
       'delete task',
-      name: 'deleteAlertTitle',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `are you sure you want to delete this task?`
-  String get deleteAlertContent {
-    return Intl.message(
-      'are you sure you want to delete this task?',
-      name: 'deleteAlertContent',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `delete task`
-  String get deleteTooltip {
-    return Intl.message(
-      'delete task',
-      name: 'deleteTooltip',
+      name: 'deleteTaskTooltip',
       desc: '',
       args: [],
     );
@@ -370,6 +320,26 @@ class AppLocalizations {
     );
   }
 
+  /// `delete list?`
+  String get deleteListAlertTitle {
+    return Intl.message(
+      'delete list?',
+      name: 'deleteListAlertTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `this will delete "{list}" permanently and all its tasks. You cannot undo this action`
+  String deleteListAlertBody(Object list) {
+    return Intl.message(
+      'this will delete "$list" permanently and all its tasks. You cannot undo this action',
+      name: 'deleteListAlertBody',
+      desc: '',
+      args: [list],
+    );
+  }
+
   /// `Enter name`
   String get enterName {
     return Intl.message(
@@ -381,10 +351,10 @@ class AppLocalizations {
   }
 
   /// `fill out this field`
-  String get fillOutName {
+  String get fillOutThisFiled {
     return Intl.message(
       'fill out this field',
-      name: 'fillOutName',
+      name: 'fillOutThisFiled',
       desc: '',
       args: [],
     );
@@ -465,6 +435,156 @@ class AppLocalizations {
     return Intl.message(
       'deselect all',
       name: 'deselectAll',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `New list`
+  String get addList {
+    return Intl.message(
+      'New list',
+      name: 'addList',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Edit list`
+  String get editList {
+    return Intl.message(
+      'Edit list',
+      name: 'editList',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `name`
+  String get name {
+    return Intl.message(
+      'name',
+      name: 'name',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `rename`
+  String get rename {
+    return Intl.message(
+      'rename',
+      name: 'rename',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `lists`
+  String get lists {
+    return Intl.message(
+      'lists',
+      name: 'lists',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `inbox`
+  String get inboxLabel {
+    return Intl.message(
+      'inbox',
+      name: 'inboxLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `inbox`
+  String get inboxTitle {
+    return Intl.message(
+      'inbox',
+      name: 'inboxTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `search`
+  String get search {
+    return Intl.message(
+      'search',
+      name: 'search',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `browse`
+  String get browse {
+    return Intl.message(
+      'browse',
+      name: 'browse',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `recent searches`
+  String get recentSearches {
+    return Intl.message(
+      'recent searches',
+      name: 'recentSearches',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `clear`
+  String get clear {
+    return Intl.message(
+      'clear',
+      name: 'clear',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `no result`
+  String get noResult {
+    return Intl.message(
+      'no result',
+      name: 'noResult',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `all tasks`
+  String get allTodo {
+    return Intl.message(
+      'all tasks',
+      name: 'allTodo',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `show complete`
+  String get showComplete {
+    return Intl.message(
+      'show complete',
+      name: 'showComplete',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `hide complete`
+  String get hidComplete {
+    return Intl.message(
+      'hide complete',
+      name: 'hidComplete',
       desc: '',
       args: [],
     );

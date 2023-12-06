@@ -5,5 +5,7 @@ import 'package:todo/app.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SharedPreferences preferences = await SharedPreferences.getInstance();
-  runApp(App(preferences: preferences));
+  runApp(
+    App(preferences: preferences),
+  );
 }

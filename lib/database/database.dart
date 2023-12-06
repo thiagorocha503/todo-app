@@ -1,21 +1,21 @@
 import 'dart:io';
+import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
-import 'package:todo/constants/database.dart';
+import 'package:todo/constants.dart';
 import 'package:path/path.dart';
-import 'package:flutter/foundation.dart';
-import 'package:todo/database/schema.dart';
+import 'package:todo/database/migration.dart';
 
 /// Database para platorm Mobile ou Desktop
-class DBProvider {
-  static DBProvider? _db;
-  DBProvider._();
+class DatabaseService {
+  static DatabaseService? _instance;
+  DatabaseService._();
 
-  final int version = 3;
+  final int version = 1;
 
-  static DBProvider getTodoDB() {
-    DBProvider? db = _db;
-    db ??= _db = DBProvider._();
+  static DatabaseService getInstance() {
+    DatabaseService? db = _instance;
+    db ??= _instance = DatabaseService._();
     return db;
   }
 
@@ -32,23 +32,15 @@ class DBProvider {
 
   Future<Database> _initDataBase() async {
     Directory documentsDirectory = await getApplicationDocumentsDirectory();
-    // old version
-    File file = File(join(documentsDirectory.path, "dataBase.db"));
-    if (await file.exists()) {
-      await file.copy(join(documentsDirectory.path, "$DATABASE_NAME.db"));
-      file.delete();
-    }
-
-    String path = join(documentsDirectory.path, "$DATABASE_NAME.db");
+    String path = join(documentsDirectory.path, "$dataBaseName.db");
     // Mobile
     if (Platform.isAndroid || Platform.isIOS) {
       return await openDatabase(
         path,
         version: version,
-        onOpen: onOpen,
         onCreate: onCreate,
         onUpgrade: onUpgrade,
-        onConfigure: onConfigure,
+        onDowngrade: onDowngrade,
       );
     } else if (Platform.isFuchsia) {
       throw Exception("Platform Fuchsia not suported");
@@ -59,9 +51,9 @@ class DBProvider {
         path,
         options: OpenDatabaseOptions(
           version: version,
-          onOpen: onOpen,
           onCreate: onCreate,
           onUpgrade: onUpgrade,
+          onDowngrade: onDowngrade,
           onConfigure: onConfigure,
         ),
       );
@@ -70,75 +62,48 @@ class DBProvider {
     }
   }
 
-  void onOpen(db) {}
-
-  void onConfigure(Database db) {
-    db.execute("PRAGMA foreign_keys = 1");
+  void onConfigure(Database db) async {
+    await db.execute('PRAGMA foreign_keys = ON');
   }
 
-  void dumpData(Database db) async {
-    List<String> schema = [];
-
-    for (int i = 0; i < 10; i++) {
-      String title = "Todo ${i + 1}";
-      if (i % 2 == 0) {
-        String date = DateTime.now().toIso8601String().replaceAll("T", " ");
-        schema.add(
-            "INSERT INTO todo(title, complete_at, note) values('$title','$date', '');");
-      } else {
-        schema.add("INSERT INTO todo(title, note) values('$title','');");
-        //
-      }
-    }
-    for (String sql in schema) {
-      await db.execute(sql);
-    }
-  }
-
-  void onCreate(Database db, int version) async {
-    debugPrint("DB> onCreate");
-    const List<String> schema = [
-      todoSchemav2,
-      subtaskSchemaV1,
-    ];
-
-    for (String sql in schema) {
-      await db.execute(sql);
-    }
-    if (kDebugMode) {
-      dumpData(db);
-    }
+  void onOpen(Database db) async {
+    debugPrint("on open");
   }
 
   void onUpgrade(Database db, int oldVersion, int newVersion) async {
-    debugPrint("DB> onUpgrade");
-    List<String> scheme = [];
-    if (oldVersion == 1) {
-      scheme.add(todoSchemav2); // new todo scheme
-      scheme.add(
-        """ 
-        INSERT INTO todo(title, note, due, complete_at)
-        SELECT 
-          title,
-          description,
-          date_end,
-          CASE done
-            WHEN 1 THEN
-              datetime('now', 'localtime')
-            ELSE
-              NULL
-          END as complete_at
-        from 
-          note;
-      """,
-      ); // migrate data
-      scheme.add("DROP table note;"); // drop old table
+    for (int version = oldVersion; version < newVersion; version++) {
+      debugPrint("upgrade ${version + 1}");
+      await _up(db, version + 1);
     }
-    if (oldVersion <= 2) {
-      scheme.add(subtaskSchemaV1);
+  }
+
+  void onDowngrade(Database db, int oldVersion, int newVersion) async {
+    for (int version = oldVersion; version > newVersion; version--) {
+      debugPrint("downgrade ${version - 1}");
+      await _down(db, version - 1);
     }
-    for (String sql in scheme) {
-      await db.execute(sql);
+  }
+
+  void onCreate(Database db, int newVersion) async {
+    for (int version = 0; version < newVersion; version++) {
+      debugPrint("oncreate ${version + 1}");
+      await _up(db, version + 1);
+    }
+  }
+
+  Future<void> _up(Database db, int version) async {
+    switch (version) {
+      case 1:
+        await MigrationInitial().up(db);
+        break;
+    }
+  }
+
+  Future<void> _down(Database db, int version) async {
+    switch (version) {
+      case 1:
+        MigrationInitial().down(db);
+        break;
     }
   }
 }

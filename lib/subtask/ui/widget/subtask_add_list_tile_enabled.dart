@@ -6,7 +6,7 @@ import 'package:todo/subtask/bloc/subtask_bloc.dart';
 import 'package:todo/subtask/bloc/subtask_event.dart';
 import 'package:todo/subtask/model/subtask.dart';
 import 'package:todo/subtask/ui/subtask_add_list_tile.dart';
-import 'package:todo/util/string_extension.dart';
+import 'package:todo/shared/extensions/string_extension.dart';
 
 class SubtaskAddListTileEnabled extends StatelessWidget {
   final int todoId;
@@ -54,21 +54,21 @@ class SubtaskAddListTileEnabled extends StatelessWidget {
             if (formKey.currentState!.validate()) {
               FocusScope.of(context).requestFocus(focusNode);
               context.read<SubtaskBloc>().add(
-                    AddSubtaskEvent(
+                    SubtaskSavedEvent(
                       subtask: Subtask(
-                        id: 0,
                         complete: false,
                         name: controller.text,
                         todoId: todoId,
                       ),
                     ),
                   );
+
               controller.text = "";
             }
           },
           validator: (String? value) {
             if (value?.isEmpty ?? true) {
-              return AppLocalizations.of(context).fillOutName.capitalize();
+              return AppLocalizations.of(context).fillOutThisFiled.capitalize();
             }
             return null;
           },

@@ -20,57 +20,87 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'es';
 
-  static String m0(n) => "${n} seleccionado";
+  static String m0(n) => "concluyó (${n})";
+
+  static String m1(n) => "concluyó ${n}";
+
+  static String m2(n) => "creado ${n}";
+
+  static String m3(list) =>
+      "esto eliminará \"${list}\" permanentemente y todas sus tareas. No puedes deshacer esta acción";
+
+  static String m4(task) =>
+      "esto eliminará \"${task}\" permanentemente. No puedes deshacer esta acción";
+
+  static String m5(n) => "${n} seleccionado";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
-        "active": MessageLookupByLibrary.simpleMessage("activa"),
-        "addDueDate":
-            MessageLookupByLibrary.simpleMessage("añadir fecha límite"),
-        "addNote": MessageLookupByLibrary.simpleMessage("añadir la nota"),
-        "addSubtask": MessageLookupByLibrary.simpleMessage("add subtask"),
-        "addTodo": MessageLookupByLibrary.simpleMessage("agregar tarea"),
-        "all": MessageLookupByLibrary.simpleMessage("todos"),
+        "addDescription":
+            MessageLookupByLibrary.simpleMessage("añadir descripción"),
+        "addDueDate": MessageLookupByLibrary.simpleMessage(
+            "Agregar fecha de vencimiento"),
+        "addList": MessageLookupByLibrary.simpleMessage("Nueva lista"),
+        "addSubtask": MessageLookupByLibrary.simpleMessage("agregar subtarea"),
+        "addTodo": MessageLookupByLibrary.simpleMessage("añadir tarea"),
+        "allTodo": MessageLookupByLibrary.simpleMessage("todas las tareas"),
+        "browse": MessageLookupByLibrary.simpleMessage("navegar"),
         "cancel": MessageLookupByLibrary.simpleMessage("cancelar"),
-        "complete": MessageLookupByLibrary.simpleMessage("completa"),
-        "completedAt": MessageLookupByLibrary.simpleMessage("terminada"),
-        "createdAt": MessageLookupByLibrary.simpleMessage("creada"),
-        "dark": MessageLookupByLibrary.simpleMessage("dark"),
+        "clear": MessageLookupByLibrary.simpleMessage("borrar"),
+        "complete": m0,
+        "completedAt": m1,
+        "createdAt": m2,
+        "dark": MessageLookupByLibrary.simpleMessage("oscuro"),
         "delete": MessageLookupByLibrary.simpleMessage("eliminar"),
-        "deleteAlertContent": MessageLookupByLibrary.simpleMessage(
-            "¿Está seguro de que desea eliminar esta tarea de forma permanente?"),
-        "deleteAlertTitle":
+        "deleteListAlertBody": m3,
+        "deleteListAlertTitle":
+            MessageLookupByLibrary.simpleMessage("¿eliminar list?"),
+        "deleteTaskAlertBody": m4,
+        "deleteTaskAlertTitle":
+            MessageLookupByLibrary.simpleMessage("¿eliminar tarea?"),
+        "deleteTaskTooltip":
             MessageLookupByLibrary.simpleMessage("eliminar tarea"),
-        "deleteTooltip": MessageLookupByLibrary.simpleMessage("eliminar tarea"),
+        "description": MessageLookupByLibrary.simpleMessage("descripción"),
         "deselectAll":
             MessageLookupByLibrary.simpleMessage("deseleccionar todo"),
-        "done": MessageLookupByLibrary.simpleMessage("guardar"),
-        "enterName": MessageLookupByLibrary.simpleMessage("Ingrese nombre"),
+        "editList": MessageLookupByLibrary.simpleMessage("Editar lista"),
+        "enterName": MessageLookupByLibrary.simpleMessage("Ingrese el nombre"),
         "error": MessageLookupByLibrary.simpleMessage("error"),
-        "feedback": MessageLookupByLibrary.simpleMessage("enviar feedback"),
-        "fillOutName": MessageLookupByLibrary.simpleMessage("llena este campo"),
-        "filter": MessageLookupByLibrary.simpleMessage("filtrar"),
-        "justNow": MessageLookupByLibrary.simpleMessage("en este momento"),
+        "feedback": MessageLookupByLibrary.simpleMessage("enviar comentarios"),
+        "fillOutThisFiled":
+            MessageLookupByLibrary.simpleMessage("rellene este campo"),
+        "hidComplete": MessageLookupByLibrary.simpleMessage("ocultar concluyó"),
+        "inboxLabel": MessageLookupByLibrary.simpleMessage("entrada"),
+        "inboxTitle":
+            MessageLookupByLibrary.simpleMessage("bandeja de entrada"),
+        "justNow": MessageLookupByLibrary.simpleMessage("justo ahora"),
         "language": MessageLookupByLibrary.simpleMessage("idioma"),
-        "light": MessageLookupByLibrary.simpleMessage("light"),
-        "nSelected": m0,
+        "light": MessageLookupByLibrary.simpleMessage("claro"),
+        "lists": MessageLookupByLibrary.simpleMessage("listas"),
+        "nSelected": m5,
+        "name": MessageLookupByLibrary.simpleMessage("nombre"),
+        "noResult": MessageLookupByLibrary.simpleMessage("sin resultado"),
         "noTodo": MessageLookupByLibrary.simpleMessage("sin tareas"),
-        "note": MessageLookupByLibrary.simpleMessage("nota"),
-        "ok": MessageLookupByLibrary.simpleMessage("ok"),
         "rate":
             MessageLookupByLibrary.simpleMessage("califícanos en Play Store"),
+        "recentSearches":
+            MessageLookupByLibrary.simpleMessage("búsquedas recientes"),
+        "rename": MessageLookupByLibrary.simpleMessage("renombrar"),
         "save": MessageLookupByLibrary.simpleMessage("guardar"),
-        "saved": MessageLookupByLibrary.simpleMessage("salvado"),
+        "saved": MessageLookupByLibrary.simpleMessage("guardado"),
+        "search": MessageLookupByLibrary.simpleMessage("buscar"),
         "selectAll": MessageLookupByLibrary.simpleMessage("seleccionar todo"),
-        "settings": MessageLookupByLibrary.simpleMessage("ajustes"),
+        "settings": MessageLookupByLibrary.simpleMessage("configuración"),
         "shareWithYourFriends":
-            MessageLookupByLibrary.simpleMessage("comparte con tu amigos"),
-        "system": MessageLookupByLibrary.simpleMessage("system"),
-        "theme": MessageLookupByLibrary.simpleMessage("theme"),
-        "today": MessageLookupByLibrary.simpleMessage("este Dia"),
+            MessageLookupByLibrary.simpleMessage("compartir con tu amigo"),
+        "showComplete":
+            MessageLookupByLibrary.simpleMessage("mostrar concluyó"),
+        "system": MessageLookupByLibrary.simpleMessage("sistema"),
+        "theme": MessageLookupByLibrary.simpleMessage("tema"),
+        "today": MessageLookupByLibrary.simpleMessage("hoy"),
         "todo": MessageLookupByLibrary.simpleMessage("tarea"),
         "todos": MessageLookupByLibrary.simpleMessage("tareas"),
         "tomorrow": MessageLookupByLibrary.simpleMessage("mañana"),
-        "yesterday": MessageLookupByLibrary.simpleMessage("el dia de ayer")
+        "yesterday": MessageLookupByLibrary.simpleMessage("ayer")
       };
 }

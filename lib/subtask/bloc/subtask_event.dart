@@ -3,34 +3,24 @@ import 'package:todo/subtask/model/subtask.dart';
 
 abstract class SubtaskEvent extends Equatable {}
 
-class FetchSubtasksEvent extends SubtaskEvent {
-  FetchSubtasksEvent();
+class SubtaskSubscriptionRequested extends SubtaskEvent {
   @override
   List<Object?> get props => [];
 }
 
-class AddSubtaskEvent extends SubtaskEvent {
+class SubtaskSavedEvent extends SubtaskEvent {
   final Subtask subtask;
 
-  AddSubtaskEvent({required this.subtask});
+  SubtaskSavedEvent({required this.subtask});
 
   @override
   List<Object?> get props => [subtask];
 }
 
-class UpdateSubtaskEvent extends SubtaskEvent {
-  final Subtask subtask;
-
-  UpdateSubtaskEvent({required this.subtask});
-
-  @override
-  List<Object?> get props => [subtask];
-}
-
-class DeleteSubtaskEvent extends SubtaskEvent {
+class SubtaskDeletedEvent extends SubtaskEvent {
   final int id;
 
-  DeleteSubtaskEvent({required this.id});
+  SubtaskDeletedEvent({required this.id});
 
   @override
   List<Object?> get props => [id];

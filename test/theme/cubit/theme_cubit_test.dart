@@ -1,54 +1,59 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter/material.dart';
-import 'package:mockito/annotations.dart';
-import 'package:mockito/mockito.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:mocktail/mocktail.dart';
+import 'package:todo/shared/data/user_preferences.dart';
 import 'package:todo/theme/cubit/theme_cubit.dart';
-import 'package:todo/theme/preferences/theme_preferences.dart';
-import 'theme_cubit_test.mocks.dart';
 
-@GenerateNiceMocks([MockSpec<ThemePreferences>()])
+class MockUserPreferences extends Mock implements UserPreferences {}
+
 void main() {
-  ThemePreferences preferences = MockThemePreferences();
+  late UserPreferences preferences;
+
+  setUp(() {
+    preferences = MockUserPreferences();
+    when(() => preferences.setTheme(ThemeMode.dark)).thenAnswer((_) async {});
+    when(() => preferences.setTheme(ThemeMode.light)).thenAnswer((_) async {});
+    when(() => preferences.setTheme(ThemeMode.system)).thenAnswer((_) async {});
+  });
 
   blocTest<ThemeCubit, ThemeMode>(
     "Change theme to dark",
-    build: () => ThemeCubit(preferences: preferences, theme: ThemeMode.light),
+    build: () => ThemeCubit(preferences),
     setUp: () {
-      when(preferences.stream).thenAnswer((_) => Stream.value(ThemeMode.dark));
+      when(() => preferences.getTheme()).thenAnswer((_) => ThemeMode.light);
     },
     act: (cubit) => cubit.changue(ThemeMode.dark),
     verify: (_) {
-      verify(preferences.stream);
-      verify(preferences.setTheme(ThemeMode.dark));
+      verify(() => preferences.setTheme(ThemeMode.dark)).called(1);
     },
     expect: () => <ThemeMode>[ThemeMode.dark],
   );
 
   blocTest<ThemeCubit, ThemeMode>(
     "Change theme to light",
-    build: () => ThemeCubit(preferences: preferences, theme: ThemeMode.dark),
-    setUp: () {
-      when(preferences.stream).thenAnswer((_) => Stream.value(ThemeMode.light));
-    },
+    build: () => ThemeCubit(
+      preferences,
+    ),
     act: (cubit) => cubit.changue(ThemeMode.light),
+    setUp: () {
+      when(() => preferences.getTheme()).thenAnswer((_) => ThemeMode.dark);
+    },
     verify: (_) {
-      verify(preferences.stream);
-      verify(preferences.setTheme(ThemeMode.light));
+      verify(() => preferences.setTheme(ThemeMode.light)).called(1);
     },
     expect: () => <ThemeMode>[ThemeMode.light],
   );
 
   blocTest<ThemeCubit, ThemeMode>(
     "Change theme to system",
-    build: () => ThemeCubit(preferences: preferences, theme: ThemeMode.dark),
+    build: () => ThemeCubit(preferences),
     setUp: () {
-      when(preferences.stream)
-          .thenAnswer((_) => Stream.value(ThemeMode.system));
+      when(() => preferences.getTheme()).thenAnswer((_) => ThemeMode.dark);
     },
     act: (cubit) => cubit.changue(ThemeMode.system),
     verify: (_) {
-      verify(preferences.stream);
-      verify(preferences.setTheme(ThemeMode.system));
+      verify(() => preferences.setTheme(ThemeMode.system)).called(1);
     },
     expect: () => <ThemeMode>[ThemeMode.system],
   );

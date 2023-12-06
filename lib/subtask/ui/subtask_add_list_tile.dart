@@ -20,15 +20,23 @@ class SubtaskAddListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<SubtaskInputBloc, SubtaskInputAddState>(
-      builder: (context, SubtaskInputAddState state) {
-        switch (state) {
-          case SubtaskInputAddState.enabled:
-            return SubtaskAddListTileEnabled(formKey: formKey, todoId: todoId);
-          case SubtaskInputAddState.disabled:
-            return const SubtaskAddListTileDisabled();
-        }
-      },
+    return BlocProvider(
+      create: (context) =>
+          SubtaskInputBloc(state: SubtaskInputAddState.disabled),
+      child: Builder(
+        builder: (context) =>
+            BlocBuilder<SubtaskInputBloc, SubtaskInputAddState>(
+          builder: (context, SubtaskInputAddState state) {
+            switch (state) {
+              case SubtaskInputAddState.enabled:
+                return SubtaskAddListTileEnabled(
+                    formKey: formKey, todoId: todoId);
+              case SubtaskInputAddState.disabled:
+                return const SubtaskAddListTileDisabled();
+            }
+          },
+        ),
+      ),
     );
   }
 }
