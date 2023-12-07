@@ -15,14 +15,17 @@ class TodoNewBottomSheet extends StatefulWidget {
 }
 
 class _TodoNewBottomSheetState extends State<TodoNewBottomSheet> {
-  final TextEditingController _titleController = TextEditingController();
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _descriptionController = TextEditingController();
   late FocusNode _focusNode;
+  late DateTime? dueDate;
 
   @override
   void initState() {
     super.initState();
     _focusNode = FocusNode();
     _focusNode.requestFocus();
+    dueDate = widget.dueDate;
   }
 
   @override
@@ -35,36 +38,63 @@ class _TodoNewBottomSheetState extends State<TodoNewBottomSheet> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              ListTile(
-                title: TextFormField(
-                  focusNode: _focusNode,
-                  controller: _titleController,
-                  decoration: InputDecoration(
-                    hintText:
-                        AppLocalizations.of(context).enterName.capitalize(),
-                    border: InputBorder.none,
-                  ),
-                  validator: (String? value) {
-                    if (value == null || value.isEmpty) {
-                      return AppLocalizations.of(context)
-                          .fillOutThisFiled
-                          .capitalize();
-                    }
-                    return null;
-                  },
-                  onFieldSubmitted: (_) => onSave(),
-                  onChanged: (a) {
-                    setState(() {});
-                  },
+              Padding(
+                padding: const EdgeInsets.only(left: 16, right: 16),
+                child: Column(
+                  children: [
+                    TextFormField(
+                      focusNode: _focusNode,
+                      controller: _nameController,
+                      decoration: InputDecoration(
+                        hintText:
+                            AppLocalizations.of(context).enterName.capitalize(),
+                        border: InputBorder.none,
+                        hintStyle: Theme.of(context).textTheme.titleMedium,
+                      ),
+                      validator: (String? value) {
+                        if (value == null || value.isEmpty) {
+                          return AppLocalizations.of(context)
+                              .fillOutThisFiled
+                              .capitalize();
+                        }
+                        return null;
+                      },
+                      onFieldSubmitted: (_) => onSave(),
+                      onChanged: (a) {
+                        setState(() {});
+                      },
+                    ),
+                    TextField(
+                      controller: _descriptionController,
+                      minLines: 1,
+                      maxLines: 10,
+                      decoration: InputDecoration(
+                        hintText: AppLocalizations.of(context)
+                            .description
+                            .capitalize(),
+                        border: InputBorder.none,
+                      ),
+                    ),
+                  ],
                 ),
-                trailing: IconButton(
-                  icon: Icon(
-                    Icons.send_rounded,
-                    color: _titleController.text != ""
-                        ? Theme.of(context).colorScheme.primary
-                        : Theme.of(context).disabledColor,
-                  ),
-                  onPressed: onSave,
+              ),
+              const Divider(),
+              Container(
+                padding: const EdgeInsets.only(
+                  top: 8,
+                  bottom: 8,
+                  right: 16,
+                  left: 16,
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Row(),
+                    FilledButton(
+                      onPressed: _nameController.text != '' ? onSave : null,
+                      child: const Icon(Icons.send_rounded),
+                    ),
+                  ],
                 ),
               ),
             ],
@@ -75,15 +105,17 @@ class _TodoNewBottomSheetState extends State<TodoNewBottomSheet> {
   }
 
   void onSave() {
-    if (_titleController.text != '') {
+    if (_nameController.text != '') {
       Todo todo = Todo(
-        name: _titleController.text,
-        dueDate: widget.dueDate,
+        name: _nameController.text,
+        description: _descriptionController.text,
+        dueDate: dueDate,
         listId: widget.listId,
       );
       context.read<TodoOverviewBloc>().add(TodoOverviewSaved(todo: todo));
       setState(() {
-        _titleController.text = '';
+        _nameController.text = '';
+        _descriptionController.text = '';
       });
       _focusNode.requestFocus();
     }
