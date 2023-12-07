@@ -1,16 +1,6 @@
-// Workspace settings
 {
-    // The following will hide the js and map files in the editor
-    "files.exclude": {          
-        "ios/": true,
-        "linux/": true,
-        ".idea/": true,
-        ".dart_tool/": true,
-        ".github/":false,
-        ".metadata": true,
-        "pubspec.lock": true,
-        "lista_de_tarefas.iml": true,
-        ".flutter-plugins":true,
-        ".flutter-plugins-dependencies":true
+    "editor.codeActionsOnSave": {
+        "editor.formatOnSave": true,
+        "source.organizeImports": true,
     },
 }
