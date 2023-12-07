@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todo/generated/l10n.dart';
-import 'package:todo/todo_edit/bloc/todo_edit_bloc.dart';
-import 'package:todo/todo_edit/bloc/todo_edit_state.dart';
 import 'package:todo/shared/extensions/string_extension.dart';
 import 'package:todo/shared/widget/error_dialog.dart';
+import 'package:todo/todo_edit/bloc/todo_edit_bloc.dart';
+import 'package:todo/todo_edit/bloc/todo_edit_state.dart';
 
 class DescriptionPage extends StatefulWidget {
   final String initialNote;

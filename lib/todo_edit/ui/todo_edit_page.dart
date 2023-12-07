@@ -4,6 +4,7 @@ import 'package:todo/generated/l10n.dart';
 import 'package:todo/home/cubit/home_cubit.dart';
 import 'package:todo/list_overview/bloc/list_overview_bloc.dart';
 import 'package:todo/shared/extensions/string_extension.dart';
+import 'package:todo/shared/widget/error_dialog.dart';
 import 'package:todo/subtask/bloc/subtask_bloc.dart';
 import 'package:todo/subtask/bloc/subtask_event.dart';
 import 'package:todo/subtask/bloc/subtask_state.dart';
@@ -12,15 +13,14 @@ import 'package:todo/subtask/ui/subtask_over_view_list_tile.dart';
 import 'package:todo/todo_edit/bloc/todo_edit_bloc.dart';
 import 'package:todo/todo_edit/bloc/todo_edit_event.dart';
 import 'package:todo/todo_edit/bloc/todo_edit_state.dart';
+import 'package:todo/todo_edit/ui/widget/description_list_tile.dart';
 import 'package:todo/todo_edit/ui/widget/due_date_list_tile/due_date_list_tile.dart';
 import 'package:todo/todo_edit/ui/widget/footer.dart';
-import 'package:todo/todo_edit/ui/widget/description_list_tile.dart';
 import 'package:todo/todo_edit/ui/widget/todo_delete_alert_dialog.dart';
 import 'package:todo/todo_edit/ui/widget/todo_list_tile/todo_list_tile.dart';
 import 'package:todo/todo_overview/bloc/bloc.dart';
 import 'package:todo/todo_overview/model/todo.dart';
 import 'package:todo/todo_overview/respository/todo_repository.dart';
-import 'package:todo/shared/widget/error_dialog.dart';
 
 class TodoEditPage extends StatelessWidget {
   final Todo todo;

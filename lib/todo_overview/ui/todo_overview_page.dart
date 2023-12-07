@@ -6,13 +6,13 @@ import 'package:todo/selectable_list/bloc/selectable_list_bloc.dart';
 import 'package:todo/selectable_list/bloc/selectable_list_event.dart';
 import 'package:todo/selectable_list/bloc/selectable_list_state.dart';
 import 'package:todo/shared/data/user_preferences.dart';
+import 'package:todo/shared/extensions/string_extension.dart';
 import 'package:todo/todo_overview/bloc/bloc.dart';
 import 'package:todo/todo_overview/model/filter.dart';
 import 'package:todo/todo_overview/model/todo.dart';
 import 'package:todo/todo_overview/ui/widget/app_bar.dart';
 import 'package:todo/todo_overview/ui/widget/todo_list_tile_selectable.dart';
 import 'package:todo/todo_overview/ui/widget/todo_new_button.dart';
-import 'package:todo/shared/extensions/string_extension.dart';
 
 class TodoOverviewPage extends StatelessWidget {
   final Listing list;

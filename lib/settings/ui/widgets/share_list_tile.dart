@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:todo/constants.dart';
 import 'package:todo/generated/l10n.dart';
 import 'package:todo/shared/extensions/string_extension.dart';
-import 'package:share_plus/share_plus.dart';
 
 class ShareListTile extends StatelessWidget {
   const ShareListTile({Key? key}) : super(key: key);

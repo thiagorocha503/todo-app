@@ -1,9 +1,10 @@
 import 'dart:async';
+
+import 'package:rxdart/rxdart.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:todo/database/database.dart';
 import 'package:todo/list_overview/data/interface.dart';
 import 'package:todo/list_overview/model/listing.dart';
-import 'package:rxdart/rxdart.dart';
 import 'package:todo/todo_overview/data/todo_database.dart';
 
 class ListingLocalDatabase implements IListingAPI {

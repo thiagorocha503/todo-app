@@ -1,21 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:todo/database/database.dart';
+import 'package:todo/history/bloc/bloc.dart';
 import 'package:todo/home/home_page.dart';
-import 'package:todo/locale/cubit/locale_cubit.dart';
 import 'package:todo/list_overview/bloc/bloc.dart';
 import 'package:todo/list_overview/data/listing_database.dart';
 import 'package:todo/list_overview/respository/listing_repository.dart';
+import 'package:todo/locale/cubit/locale_cubit.dart';
 import 'package:todo/shared/data/user_preferences.dart';
 import 'package:todo/subtask/data/subtask_database.dart';
 import 'package:todo/subtask/repository/subtask_repository.dart';
+import 'package:todo/theme/cubit/theme_cubit.dart';
 import 'package:todo/theme/ui/widget/color_schemes.dart';
 import 'package:todo/todo_overview/data/todo_database.dart';
 import 'package:todo/todo_overview/respository/todo_repository.dart';
-import 'package:todo/theme/cubit/theme_cubit.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:todo/history/bloc/bloc.dart';
+
 import 'generated/l10n.dart';
 
 class App extends StatelessWidget {
