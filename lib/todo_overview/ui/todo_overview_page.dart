@@ -153,7 +153,7 @@ class _ListingEditPageViewState extends State<ListingEditPageView> {
           return Visibility(
             visible: !state.enabled,
             child: TodoNewFloatingButton(
-              listId: widget.listing.id,
+              listing: widget.listing,
             ),
           );
         },
