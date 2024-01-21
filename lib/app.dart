@@ -1,3 +1,4 @@
+import 'package:dynamic_color/dynamic_color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -75,16 +76,20 @@ class App extends StatelessWidget {
             )
           ],
           child: BlocBuilder<ThemeCubit, ThemeMode>(
-              builder: (conttext, ThemeMode themeMode) {
-            return BlocBuilder<LocaleCubit, LocaleState>(
-              builder: (context, LocaleState state) {
-                return MaterialApp(
+            builder: (conttext, ThemeMode themeMode) =>
+                BlocBuilder<LocaleCubit, LocaleState>(
+              builder: (context, LocaleState state) => DynamicColorBuilder(
+                builder: (lightColorScheme, darkColorScheme) => MaterialApp(
                   debugShowCheckedModeBanner: false,
                   title: 'Tasks',
                   themeMode: themeMode,
                   home: const HomePage(),
-                  theme: ThemeData(colorScheme: lightColorScheme),
-                  darkTheme: ThemeData(colorScheme: darkColorScheme),
+                  theme: ThemeData(
+                    colorScheme: lightColorScheme ?? defaultLightColorScheme,
+                  ),
+                  darkTheme: ThemeData(
+                    colorScheme: darkColorScheme ?? defaultDarkColorScheme,
+                  ),
                   localizationsDelegates: const [
                     AppLocalizations.delegate,
                     GlobalMaterialLocalizations.delegate,
@@ -93,10 +98,10 @@ class App extends StatelessWidget {
                   ],
                   locale: Locale(state.locale.languageCode),
                   supportedLocales: AppLocalizations.delegate.supportedLocales,
-                );
-              },
-            );
-          }),
+                ),
+              ),
+            ),
+          ),
         ),
       ),
     );
