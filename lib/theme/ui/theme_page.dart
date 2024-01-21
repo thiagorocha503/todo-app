@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todo/generated/l10n.dart';
+import 'package:todo/shared/extensions/string_extension.dart';
 import 'package:todo/theme/cubit/theme_cubit.dart';
 import 'package:todo/theme/ui/widget/theme_list_tile_select.dart';
-import 'package:todo/util/string_extension.dart';
 
 class ThemeItem {
   final String name;
@@ -33,13 +33,6 @@ class ThemePage extends StatelessWidget {
     ];
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
-        centerTitle: true,
         title: Text(AppLocalizations.of(context).theme.capitalize()),
       ),
       body: BlocBuilder<ThemeCubit, ThemeMode>(

@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:todo/theme/preferences/theme_preferences.dart';
+import 'package:todo/shared/data/user_preferences.dart';
 
 class ThemeCubit extends Cubit<ThemeMode> {
-  ThemePreferences preferences;
-  ThemeCubit({required this.preferences, required ThemeMode theme})
-      : super(theme) {
-    preferences.stream.listen((theme) {
-      emit(theme);
-    });
-  }
+  final UserPreferences _preferences;
 
-  void changue(ThemeMode theme) {
-    preferences.setTheme(theme);
+  ThemeCubit(UserPreferences preferences)
+      : _preferences = preferences,
+        super(preferences.getTheme());
+
+  void changue(ThemeMode mode) async {
+    await _preferences.setTheme(mode);
+    emit(mode);
   }
 }

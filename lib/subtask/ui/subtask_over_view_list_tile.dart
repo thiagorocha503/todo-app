@@ -11,95 +11,97 @@ class SubtaskOverViewListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    BlocProvider.of<SubtaskBloc>(context).previusData;
     return BlocBuilder<SubtaskBloc, SubtaskState>(
-        buildWhen: (previous, current) =>
-            current is SubtasksLoadedState || current is SubtaskErrorState,
-        builder: (BuildContext context, SubtaskState state) {
-          return Column(
-            children: List.generate(state.subtasks.length, (int index) {
-              Subtask subtask = state.subtasks[index];
-              TextEditingController controller =
-                  TextEditingController(text: subtask.name);
-              FocusNode focusNodes = FocusNode();
-              focusNodes.addListener(() {
+      buildWhen: (previous, current) =>
+          current is SubtasksLoadedState || current is SubtaskErrorState,
+      builder: (BuildContext context, SubtaskState state) {
+        return Column(
+          children: List.generate(state.subtasks.length, (int index) {
+            Subtask subtask = state.subtasks[index];
+            TextEditingController controller =
+                TextEditingController(text: subtask.name);
+            FocusNode focusNodes = FocusNode();
+            focusNodes.addListener(
+              () {
                 if (!focusNodes.hasFocus) {
                   if (controller.text == "") {
                     controller.text = subtask.name;
                   } else {
                     context.read<SubtaskBloc>().add(
-                          UpdateSubtaskEvent(
+                          SubtaskSavedEvent(
                             subtask: subtask.copyWith(name: controller.text),
                           ),
                         );
                   }
                 }
-              });
-              return ListTile(
-                leading: Padding(
-                  padding: const EdgeInsets.only(left: 8.0),
-                  child: RoundCheckBox(
-                    isChecked: subtask.complete,
-                    size: 26,
-                    border: Border.all(
-                      color: subtask.complete
-                          ? Theme.of(context).colorScheme.primary
-                          : Theme.of(context).colorScheme.secondary,
-                      width: 2,
-                    ),
-                    uncheckedColor: Colors.transparent,
-                    checkedColor: Theme.of(context).colorScheme.primary,
-                    onTap: (bool? value) {
-                      if (value == null) {
-                        return;
-                      }
-                      context.read<SubtaskBloc>().add(
-                            UpdateSubtaskEvent(
-                              subtask: subtask.copyWith(
-                                complete: value,
-                              ),
-                            ),
-                          );
-                    },
+              },
+            );
+            return ListTile(
+              leading: Padding(
+                padding: const EdgeInsets.only(left: 8.0),
+                child: RoundCheckBox(
+                  isChecked: subtask.complete,
+                  size: 26,
+                  border: Border.all(
+                    color: subtask.complete
+                        ? Theme.of(context).colorScheme.primary
+                        : Theme.of(context).colorScheme.secondary,
+                    width: 2,
                   ),
-                ),
-                title: TextField(
-                  focusNode: focusNodes,
-                  controller: controller,
-                  style: TextStyle(
-                    color: subtask.complete ? Colors.grey : null,
-                    fontStyle:
-                        subtask.complete ? FontStyle.italic : FontStyle.normal,
-                    decoration:
-                        subtask.complete ? TextDecoration.lineThrough : null,
-                  ),
-                  onSubmitted: (String? value) {
+                  uncheckedColor: Colors.transparent,
+                  checkedColor: Theme.of(context).colorScheme.primary,
+                  onTap: (bool? value) {
                     if (value == null) {
                       return;
                     }
-                    if (value.isEmpty) {
-                      return;
-                    }
                     context.read<SubtaskBloc>().add(
-                          UpdateSubtaskEvent(
+                          SubtaskSavedEvent(
                             subtask: subtask.copyWith(
-                              name: controller.text,
+                              complete: value,
                             ),
                           ),
                         );
                   },
                 ),
-                trailing: IconButton(
-                  onPressed: () {
-                    context
-                        .read<SubtaskBloc>()
-                        .add(DeleteSubtaskEvent(id: state.subtasks[index].id));
-                  },
-                  icon: const Icon(Icons.clear),
+              ),
+              title: TextField(
+                focusNode: focusNodes,
+                controller: controller,
+                style: TextStyle(
+                  color: subtask.complete ? Colors.grey : null,
+                  fontStyle:
+                      subtask.complete ? FontStyle.italic : FontStyle.normal,
+                  decoration:
+                      subtask.complete ? TextDecoration.lineThrough : null,
                 ),
-              );
-            }),
-          );
-        });
+                onSubmitted: (String? value) {
+                  if (value == null) {
+                    return;
+                  }
+                  if (value.isEmpty) {
+                    return;
+                  }
+                  context.read<SubtaskBloc>().add(
+                        SubtaskSavedEvent(
+                          subtask: subtask.copyWith(
+                            name: controller.text,
+                          ),
+                        ),
+                      );
+                },
+              ),
+              trailing: IconButton(
+                onPressed: () {
+                  context
+                      .read<SubtaskBloc>()
+                      .add(SubtaskDeletedEvent(id: state.subtasks[index].id!));
+                },
+                icon: const Icon(Icons.clear),
+              ),
+            );
+          }),
+        );
+      },
+    );
   }
 }

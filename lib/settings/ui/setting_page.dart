@@ -1,11 +1,11 @@
-import 'package:flutter/material.dart';
 import 'dart:io' show Platform;
+
+import 'package:flutter/material.dart';
 import 'package:package_info_plus/package_info_plus.dart';
-import 'package:todo/constants/app_about.dart' as constants;
+import 'package:todo/constants.dart';
 import 'package:todo/generated/l10n.dart';
 import 'package:todo/settings/ui/widgets/widgets.dart';
-
-import 'package:todo/util/string_extension.dart';
+import 'package:todo/shared/extensions/string_extension.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
@@ -28,11 +28,6 @@ class _SettingsPageState extends State<SettingsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        centerTitle: true,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios),
-          onPressed: () => Navigator.pop(context),
-        ),
         title: Text(
           AppLocalizations.of(context).settings.capitalize(),
         ),
@@ -54,9 +49,9 @@ class _SettingsPageState extends State<SettingsPage> {
                       "assets/img/todo.png",
                       height: 80,
                     ),
-                    applicationName: constants.APP_NAME.capitalize(),
+                    applicationName: appName.capitalize(),
                     applicationVersion: version,
-                    applicationLegalese: constants.APP_LEGALESE.capitalize(),
+                    applicationLegalese: appLegalese.capitalize(),
                   ),
                 ],
               ),

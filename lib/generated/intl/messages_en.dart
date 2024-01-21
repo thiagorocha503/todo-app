@@ -20,49 +20,76 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'en';
 
-  static String m0(n) => "${n} selected";
+  static String m0(n) => "complete (${n})";
+
+  static String m1(n) => "completed ${n}";
+
+  static String m2(n) => "created ${n}";
+
+  static String m3(list) =>
+      "this will delete \"${list}\" permanently and all its tasks. You cannot undo this action";
+
+  static String m4(task) =>
+      "this will delete \'${task}\' permanently. You cannot undo this action";
+
+  static String m5(n) => "${n} selected";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
-        "active": MessageLookupByLibrary.simpleMessage("active"),
+        "addDescription": MessageLookupByLibrary.simpleMessage("add note"),
         "addDueDate": MessageLookupByLibrary.simpleMessage("Add due date"),
-        "addNote": MessageLookupByLibrary.simpleMessage("add note"),
+        "addList": MessageLookupByLibrary.simpleMessage("New list"),
         "addSubtask": MessageLookupByLibrary.simpleMessage("add subtask"),
         "addTodo": MessageLookupByLibrary.simpleMessage("add task"),
-        "all": MessageLookupByLibrary.simpleMessage("all"),
+        "allTodo": MessageLookupByLibrary.simpleMessage("all tasks"),
+        "browse": MessageLookupByLibrary.simpleMessage("browse"),
         "cancel": MessageLookupByLibrary.simpleMessage("cancel"),
-        "complete": MessageLookupByLibrary.simpleMessage("done"),
-        "completedAt": MessageLookupByLibrary.simpleMessage("completed"),
-        "createdAt": MessageLookupByLibrary.simpleMessage("created"),
+        "clear": MessageLookupByLibrary.simpleMessage("clear"),
+        "complete": m0,
+        "completedAt": m1,
+        "createdAt": m2,
         "dark": MessageLookupByLibrary.simpleMessage("dark"),
         "delete": MessageLookupByLibrary.simpleMessage("delete"),
-        "deleteAlertContent": MessageLookupByLibrary.simpleMessage(
-            "are you sure you want to delete this task?"),
-        "deleteAlertTitle": MessageLookupByLibrary.simpleMessage("delete task"),
-        "deleteTooltip": MessageLookupByLibrary.simpleMessage("delete task"),
+        "deleteListAlertBody": m3,
+        "deleteListAlertTitle":
+            MessageLookupByLibrary.simpleMessage("delete list?"),
+        "deleteTaskAlertBody": m4,
+        "deleteTaskAlertTitle":
+            MessageLookupByLibrary.simpleMessage("delete task?"),
+        "deleteTaskTooltip":
+            MessageLookupByLibrary.simpleMessage("delete task"),
+        "description": MessageLookupByLibrary.simpleMessage("description"),
         "deselectAll": MessageLookupByLibrary.simpleMessage("deselect all"),
-        "done": MessageLookupByLibrary.simpleMessage("done"),
+        "editList": MessageLookupByLibrary.simpleMessage("Edit list"),
         "enterName": MessageLookupByLibrary.simpleMessage("Enter name"),
         "error": MessageLookupByLibrary.simpleMessage("error"),
         "feedback": MessageLookupByLibrary.simpleMessage("send feedBack"),
-        "fillOutName":
+        "fillOutThisFiled":
             MessageLookupByLibrary.simpleMessage("fill out this field"),
-        "filter": MessageLookupByLibrary.simpleMessage("filter"),
+        "hidComplete": MessageLookupByLibrary.simpleMessage("hide complete"),
+        "inboxLabel": MessageLookupByLibrary.simpleMessage("inbox"),
+        "inboxTitle": MessageLookupByLibrary.simpleMessage("inbox"),
         "justNow": MessageLookupByLibrary.simpleMessage("just now"),
         "language": MessageLookupByLibrary.simpleMessage("language"),
         "light": MessageLookupByLibrary.simpleMessage("light"),
-        "nSelected": m0,
+        "lists": MessageLookupByLibrary.simpleMessage("lists"),
+        "nSelected": m5,
+        "name": MessageLookupByLibrary.simpleMessage("name"),
+        "noResult": MessageLookupByLibrary.simpleMessage("no result"),
         "noTodo": MessageLookupByLibrary.simpleMessage("no tasks"),
-        "note": MessageLookupByLibrary.simpleMessage("note"),
-        "ok": MessageLookupByLibrary.simpleMessage("ok"),
         "rate":
             MessageLookupByLibrary.simpleMessage("rate us on the Play Store"),
+        "recentSearches":
+            MessageLookupByLibrary.simpleMessage("recent searches"),
+        "rename": MessageLookupByLibrary.simpleMessage("rename"),
         "save": MessageLookupByLibrary.simpleMessage("save"),
         "saved": MessageLookupByLibrary.simpleMessage("saved"),
+        "search": MessageLookupByLibrary.simpleMessage("search"),
         "selectAll": MessageLookupByLibrary.simpleMessage("select all"),
         "settings": MessageLookupByLibrary.simpleMessage("settings"),
         "shareWithYourFriends":
             MessageLookupByLibrary.simpleMessage("share with your friend"),
+        "showComplete": MessageLookupByLibrary.simpleMessage("show complete"),
         "system": MessageLookupByLibrary.simpleMessage("system"),
         "theme": MessageLookupByLibrary.simpleMessage("theme"),
         "today": MessageLookupByLibrary.simpleMessage("today"),

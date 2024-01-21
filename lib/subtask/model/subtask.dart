@@ -12,13 +12,13 @@ String subtaskToJson(Subtask data) => json.encode(data.toJson());
 
 class Subtask extends Equatable {
   const Subtask({
-    required this.id,
+    this.id,
     required this.name,
     required this.complete,
     required this.todoId,
   });
 
-  final int id;
+  final int? id;
   final String name;
   final bool complete;
   final int todoId;
@@ -40,14 +40,14 @@ class Subtask extends Equatable {
         id: json["id"],
         name: json["name"].toString(),
         complete: json["complete"] == 1 ? true : false,
-        todoId: json["todo_id"],
+        todoId: json["task_id"],
       );
 
   Map<String, dynamic> toJson() => {
         "id": id,
         "name": name,
         "complete": complete == true ? 1 : 0,
-        "todo_id": todoId,
+        "task_id": todoId,
       };
 
   @override

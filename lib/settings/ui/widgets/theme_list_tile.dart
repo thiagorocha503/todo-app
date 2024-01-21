@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todo/generated/l10n.dart';
+import 'package:todo/shared/extensions/string_extension.dart';
 import 'package:todo/theme/cubit/theme_cubit.dart';
 import 'package:todo/theme/ui/theme_page.dart';
-import 'package:todo/util/string_extension.dart';
 
 class ThemeListTile extends StatelessWidget {
   const ThemeListTile({Key? key}) : super(key: key);

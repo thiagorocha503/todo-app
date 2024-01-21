@@ -1,84 +1,52 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:todo/shared/model/wrapped.dart';
 import 'package:todo/todo_edit/bloc/todo_edit_event.dart';
 import 'package:todo/todo_edit/bloc/todo_edit_state.dart';
-import 'package:todo/todo_over_view/bloc/todo_overview_bloc.dart';
-import 'package:todo/todo_over_view/bloc/todo_overview_event.dart';
-import 'package:todo/todo_over_view/model/todo.dart';
-import 'package:todo/todo_over_view/repository/repository.dart';
+import 'package:todo/todo_overview/respository/todo_repository.dart';
 
 class TodoEditBloc extends Bloc<TodoEditEvent, TodoEditState> {
-  Todo todo;
-  final ITodoRepository repository;
-  final TodoOverviewBloc bloc;
+  final TodoRepository repository;
 
-  TodoEditBloc(this.todo, this.repository, this.bloc)
-      : super(TodoEditLoaded(
-          todo: todo,
-        )) {
+  TodoEditBloc(
+    super.initialState,
+    this.repository,
+  ) {
     on<TodoEditTitleChanged>(_onChandedTitle);
     on<TodoEditCompleteDateChanged>(_onCompleteChanged);
     on<TodoEditDueDateChanged>(_onChandedDueDate);
-    on<TodoEditNoteChanged>(_onNoteChanged);
+    on<TodoEditDescriptionChanged>(_onDescriptionChanged);
   }
 
   Future<void> _onChandedTitle(TodoEditTitleChanged event, Emitter emit) async {
-    update(
-      todo.copyWith(
+    await repository.save(
+      state.todo.copyWith(
         name: event.title,
-        createdDate: todo.createdDate,
-        completeDate: todo.completeDate,
-        dueDate: todo.dueDate,
       ),
-      emit,
     );
   }
 
   Future<void> _onChandedDueDate(
       TodoEditDueDateChanged event, Emitter emit) async {
-    update(
-      todo.copyWith(
-        createdDate: todo.createdDate,
-        completeDate: todo.completeDate,
-        dueDate: event.dueDate,
+    await repository.save(
+      state.todo.copyWith(
+        dueDate: Wrapped.value(event.dueDate),
       ),
-      emit,
     );
   }
 
   Future<void> _onCompleteChanged(
       TodoEditCompleteDateChanged event, Emitter emit) async {
-    update(
-        todo.copyWith(
-          dueDate: todo.dueDate,
-          createdDate: todo.createdDate,
-          completeDate: event.date,
-        ),
-        emit);
+    await repository.save(
+      state.todo.copyWith(
+        completedAt: Wrapped.value(event.date),
+      ),
+    );
   }
 
-  Future<void> _onNoteChanged(TodoEditNoteChanged event, Emitter emit) async {
-    if (todo.note == event.note) {
-      return;
-    }
-    update(
-        todo.copyWith(
-          note: event.note,
-          dueDate: todo.dueDate,
-          createdDate: todo.createdDate,
-          completeDate: todo.completeDate,
-        ),
-        emit);
-  }
-
-  Future<void> update(Todo newTodo, Emitter emit) async {
-    try {
-      repository.update(newTodo);
-      // updates
-      todo = newTodo;
-      bloc.add(TodoOverviewFetchEvent());
-      emit(TodoEditLoaded(todo: newTodo));
-    } on Exception catch (error) {
-      emit(TodoEditError(todo: todo, message: error.toString()));
-    }
+  Future<void> _onDescriptionChanged(
+      TodoEditDescriptionChanged event, Emitter emit) async {
+    await repository.save(state.todo.copyWith(
+      description: event.description,
+    ));
   }
 }
