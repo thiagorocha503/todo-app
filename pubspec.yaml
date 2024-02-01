@@ -47,7 +47,7 @@ dependencies:
   provider: ^6.0.5
   roundcheckbox: ^2.0.5
   rxdart: ^0.27.7
-  share_plus: ^7.0.2
+  share_plus: ^7.2.2
   shared_preferences: ^2.1.1
   sqflite: ^2.2.8
   sqflite_common_ffi: ^2.2.5
