@@ -40,7 +40,7 @@ dependencies:
   fluttertoast: ^8.2.1
   intl: ^0.18.1
   launch_review: ^3.0.1
-  mocktail: ^1.0.1
+  mocktail: ^1.0.3
   package_info_plus: ^3.1.2
   path: ^1.8.2
   path_provider: ^2.0.14
