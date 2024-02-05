@@ -17,7 +17,7 @@ jobs:
            channel: 'stable'
       - run: flutter doctor
       - run: flutter pub get
-      # Analyze our Dart code
+      - run: flutter pub run intl_utils:generate
       - run: flutter analyze
       - run: flutter test
       # - run: flutter build apk --debug
