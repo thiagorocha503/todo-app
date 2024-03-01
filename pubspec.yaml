@@ -52,7 +52,7 @@ dependencies:
   shared_preferences: ^2.1.1
   sqflite: ^2.3.2
   sqflite_common_ffi: ^2.3.2+1
-  url_launcher: ^6.2.4
+  url_launcher: ^6.2.5
 
 dev_dependencies:
   bloc_test: ^9.1.6
