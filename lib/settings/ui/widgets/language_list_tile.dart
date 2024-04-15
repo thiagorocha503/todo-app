@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
+import 'package:todo/constants.dart';
 import 'package:todo/generated/l10n.dart';
 import 'package:todo/locale/cubit/locale_cubit.dart';
 import 'package:todo/locale/ui/language_page.dart';
@@ -15,28 +16,16 @@ class LanguageListTile extends StatelessWidget {
       title: Text(
         AppLocalizations.of(context).language,
       ),
-      subtitle: Text(getCurrentLanguage(context)),
+      subtitle: Text(
+          languages[context.read<LocaleCubit>().state.locale.languageCode] ??
+              "none"),
       onTap: () {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: ((context) => LanguagePage())),
+          MaterialPageRoute(builder: (context) => const LanguagePage()),
         );
       },
       trailing: const Icon(Icons.arrow_forward_ios_rounded),
     );
-  }
-
-  String getCurrentLanguage(BuildContext context) {
-    String lang = context.read<LocaleCubit>().state.locale.languageCode;
-    switch (lang) {
-      case "en":
-        return "english";
-      case "pt":
-        return "português";
-      case "es":
-        return "espanõl";
-      default:
-        return "";
-    }
   }
 }

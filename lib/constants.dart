@@ -9,3 +9,8 @@ const String historyPreferences = "todo_history_key";
 const String localeLanguageCode = "todo_language_code";
 const String themeModePreferences = "todo_theme_mode_key";
 const String showCompletePreferences = "todo_show_complete";
+const Map<String, String> languages = {
+  "en": "English",
+  "es": "Espanõl",
+  "pt": "Português",
+};
