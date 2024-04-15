@@ -6,7 +6,7 @@ import 'package:todo/theme/cubit/theme_cubit.dart';
 import 'package:todo/theme/ui/theme_page.dart';
 
 class ThemeListTile extends StatelessWidget {
-  const ThemeListTile({Key? key}) : super(key: key);
+  const ThemeListTile({super.key});
 
   @override
   Widget build(BuildContext context) {

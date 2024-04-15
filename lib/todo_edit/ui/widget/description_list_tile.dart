@@ -9,10 +9,10 @@ class DescriptionListTile extends StatelessWidget {
   final String note;
   final Function(String value) onChange;
   const DescriptionListTile({
-    Key? key,
+    super.key,
     required this.note,
     required this.onChange,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

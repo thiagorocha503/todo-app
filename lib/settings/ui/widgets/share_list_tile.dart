@@ -5,7 +5,7 @@ import 'package:todo/generated/l10n.dart';
 import 'package:todo/shared/extensions/string_extension.dart';
 
 class ShareListTile extends StatelessWidget {
-  const ShareListTile({Key? key}) : super(key: key);
+  const ShareListTile({super.key});
 
   @override
   Widget build(BuildContext context) {

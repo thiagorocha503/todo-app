@@ -5,7 +5,7 @@ import 'package:todo/shared/extensions/string_extension.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class FeedbackListTile extends StatelessWidget {
-  const FeedbackListTile({Key? key}) : super(key: key);
+  const FeedbackListTile({super.key});
 
   @override
   Widget build(BuildContext context) {

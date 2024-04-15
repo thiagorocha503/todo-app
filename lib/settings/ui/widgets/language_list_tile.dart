@@ -7,7 +7,7 @@ import 'package:todo/locale/ui/language_page.dart';
 import 'package:todo/shared/extensions/string_extension.dart';
 
 class LanguageListTile extends StatelessWidget {
-  const LanguageListTile({Key? key}) : super(key: key);
+  const LanguageListTile({super.key});
 
   @override
   Widget build(BuildContext context) {
