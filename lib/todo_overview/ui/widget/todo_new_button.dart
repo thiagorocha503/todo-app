@@ -9,8 +9,7 @@ import 'package:todo/todo_overview/ui/widget/todo_new_bottom_sheet.dart';
 class TodoNewFloatingButton extends StatelessWidget {
   final Listing? listing;
   final DateTime? dueDate;
-  const TodoNewFloatingButton({Key? key, this.listing, this.dueDate})
-      : super(key: key);
+  const TodoNewFloatingButton({super.key, this.listing, this.dueDate});
 
   @override
   Widget build(BuildContext context) {

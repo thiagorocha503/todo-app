@@ -11,11 +11,11 @@ class DueDateListTile extends StatefulWidget {
   final DateTime? completeDate;
   final Function(DateTime? date) onTapped;
   const DueDateListTile({
-    Key? key,
+    super.key,
     required this.dueDate,
     required this.completeDate,
     required this.onTapped,
-  }) : super(key: key);
+  });
 
   @override
   State<DueDateListTile> createState() => _DueDateListTileState();

@@ -10,8 +10,7 @@ class DescriptionPage extends StatefulWidget {
   final String initialNote;
   final Function(String value) onSave;
   const DescriptionPage(
-      {required this.initialNote, Key? key, required this.onSave})
-      : super(key: key);
+      {required this.initialNote, super.key, required this.onSave});
 
   @override
   State<DescriptionPage> createState() => _DescriptionPageState();

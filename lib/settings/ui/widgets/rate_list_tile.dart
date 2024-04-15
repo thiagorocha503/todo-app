@@ -4,7 +4,7 @@ import 'package:todo/generated/l10n.dart';
 import 'package:todo/shared/extensions/string_extension.dart';
 
 class RateListTile extends StatelessWidget {
-  const RateListTile({Key? key}) : super(key: key);
+  const RateListTile({super.key});
 
   @override
   Widget build(BuildContext context) {
