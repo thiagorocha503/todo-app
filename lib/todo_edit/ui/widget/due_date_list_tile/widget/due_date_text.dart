@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:todo/generated/l10n.dart';
 import 'package:todo/shared/date_formatter.dart';
 import 'package:todo/shared/extension/datetime_extension.dart';
-import 'package:todo/shared/extensions/string_extension.dart';
+import 'package:todo/shared/extension/string_extension.dart';
 
 class DueDateText extends StatelessWidget {
   final DateTime? dueDate;

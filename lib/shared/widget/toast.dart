@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:todo/shared/extensions/string_extension.dart';
+import 'package:todo/shared/extension/string_extension.dart';
 
 class AppToast {
   static showToast(String message) {

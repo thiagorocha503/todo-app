@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:todo/generated/l10n.dart';
 import 'package:todo/locale/cubit/locale_cubit.dart';
 import 'package:todo/locale/ui/language_page.dart';
-import 'package:todo/shared/extensions/string_extension.dart';
+import 'package:todo/shared/extension/string_extension.dart';
 
 class LanguageListTile extends StatelessWidget {
   const LanguageListTile({super.key});

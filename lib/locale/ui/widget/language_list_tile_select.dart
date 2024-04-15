@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todo/locale/cubit/locale_cubit.dart';
-import 'package:todo/shared/extensions/string_extension.dart';
+import 'package:todo/shared/extension/string_extension.dart';
 
 class LanguageListTileSelect extends StatelessWidget {
   final String code;

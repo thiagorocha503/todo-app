@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todo/generated/l10n.dart';
-import 'package:todo/shared/extensions/string_extension.dart';
+import 'package:todo/shared/extension/string_extension.dart';
 import 'package:todo/subtask/ui/subtask_add_list_tile.dart';
 
 class SubtaskAddListTileDisabled extends StatelessWidget {

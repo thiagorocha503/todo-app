@@ -4,7 +4,7 @@ import 'package:todo/generated/l10n.dart';
 import 'package:todo/list_overview/bloc/list_overview_bloc.dart';
 import 'package:todo/list_overview/bloc/list_overview_event.dart';
 import 'package:todo/list_overview/model/listing.dart';
-import 'package:todo/shared/extensions/string_extension.dart';
+import 'package:todo/shared/extension/string_extension.dart';
 
 class EditListingDialog extends StatefulWidget {
   final Listing initialListing;

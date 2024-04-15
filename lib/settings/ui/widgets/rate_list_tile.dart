@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:launch_review/launch_review.dart';
 import 'package:todo/generated/l10n.dart';
-import 'package:todo/shared/extensions/string_extension.dart';
+import 'package:todo/shared/extension/string_extension.dart';
 
 class RateListTile extends StatelessWidget {
   const RateListTile({super.key});

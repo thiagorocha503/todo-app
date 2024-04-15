@@ -5,7 +5,7 @@ import 'package:package_info_plus/package_info_plus.dart';
 import 'package:todo/constants.dart';
 import 'package:todo/generated/l10n.dart';
 import 'package:todo/settings/ui/widgets/widgets.dart';
-import 'package:todo/shared/extensions/string_extension.dart';
+import 'package:todo/shared/extension/string_extension.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});

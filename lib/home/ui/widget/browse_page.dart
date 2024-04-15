@@ -7,7 +7,7 @@ import 'package:todo/list_overview/model/listing.dart';
 import 'package:todo/list_overview/ui/widget/edit_listing_dialog.dart';
 import 'package:todo/list_overview/ui/widget/listing_list_tile.dart';
 import 'package:todo/settings/ui/setting_page.dart';
-import 'package:todo/shared/extensions/string_extension.dart';
+import 'package:todo/shared/extension/string_extension.dart';
 
 class BrowsePage extends StatefulWidget {
   const BrowsePage({super.key});

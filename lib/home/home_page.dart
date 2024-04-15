@@ -9,7 +9,7 @@ import 'package:todo/home/ui/widget/browse_page.dart';
 import 'package:todo/home/ui/widget/inbox_page.dart';
 import 'package:todo/home/ui/widget/search_page.dart';
 import 'package:todo/home/ui/widget/today_tab.dart';
-import 'package:todo/shared/extensions/string_extension.dart';
+import 'package:todo/shared/extension/string_extension.dart';
 
 class PersistentTabItem {
   final Widget tab;

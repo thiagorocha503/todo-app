@@ -6,7 +6,7 @@ import 'package:todo/selectable_list/bloc/selectable_list_bloc.dart';
 import 'package:todo/selectable_list/bloc/selectable_list_event.dart';
 import 'package:todo/selectable_list/bloc/selectable_list_state.dart';
 import 'package:todo/shared/data/user_preferences.dart';
-import 'package:todo/shared/extensions/string_extension.dart';
+import 'package:todo/shared/extension/string_extension.dart';
 import 'package:todo/todo_overview/bloc/bloc.dart';
 import 'package:todo/todo_overview/model/filter.dart';
 import 'package:todo/todo_overview/model/todo.dart';
