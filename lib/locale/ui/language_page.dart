@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:todo/generated/l10n.dart';
 import 'package:todo/locale/ui/widget/language_list_tile_select.dart';
-import 'package:todo/shared/extension/string_extension.dart';
 
 class LanguageItem {
   final String name;
@@ -23,7 +22,7 @@ class LanguagePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          AppLocalizations.of(context).language.capitalize(),
+          AppLocalizations.of(context).language,
         ),
       ),
       body: SafeArea(

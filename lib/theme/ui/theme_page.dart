@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todo/generated/l10n.dart';
-import 'package:todo/shared/extension/string_extension.dart';
 import 'package:todo/theme/cubit/theme_cubit.dart';
 import 'package:todo/theme/ui/widget/theme_list_tile_select.dart';
 
@@ -33,7 +32,7 @@ class ThemePage extends StatelessWidget {
     ];
     return Scaffold(
       appBar: AppBar(
-        title: Text(AppLocalizations.of(context).theme.capitalize()),
+        title: Text(AppLocalizations.of(context).theme),
       ),
       body: BlocBuilder<ThemeCubit, ThemeMode>(
         builder: (context, appTheme) {

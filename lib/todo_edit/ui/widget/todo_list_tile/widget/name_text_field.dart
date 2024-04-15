@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:todo/generated/l10n.dart';
-import 'package:todo/shared/extension/string_extension.dart';
 
 class NameTextField extends StatelessWidget {
   final TextEditingController controller;
@@ -30,7 +29,7 @@ class NameTextField extends StatelessWidget {
         color: checked ? Colors.grey : null,
       ),
       decoration: InputDecoration(
-        hintText: AppLocalizations.of(context).addTodo.capitalize(),
+        hintText: AppLocalizations.of(context).addTodo,
         border: InputBorder.none,
       ),
     );

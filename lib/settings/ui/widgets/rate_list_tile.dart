@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:launch_review/launch_review.dart';
 import 'package:todo/generated/l10n.dart';
-import 'package:todo/shared/extension/string_extension.dart';
 
 class RateListTile extends StatelessWidget {
   const RateListTile({super.key});
@@ -11,7 +10,7 @@ class RateListTile extends StatelessWidget {
     return ListTile(
       leading: const Icon(Icons.shop),
       title: Text(
-        AppLocalizations.of(context).rate.capitalize(),
+        AppLocalizations.of(context).rate,
       ),
       onTap: () {
         onStore();

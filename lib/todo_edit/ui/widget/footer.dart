@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:todo/generated/l10n.dart';
 import 'package:todo/shared/date_formatter.dart';
-import 'package:todo/shared/extension/string_extension.dart';
 
 class Footer extends StatelessWidget {
   final DateTime? createdAt;
@@ -17,15 +16,12 @@ class Footer extends StatelessWidget {
         children: [
           if (createdAt != null)
             Text(
-              AppLocalizations.of(context)
-                  .createdAt(
-                    DateFormatter(
-                      AppLocalizations.of(context),
-                      Localizations.localeOf(context),
-                    ).getVerboseDateRepresentation(
-                        createdAt!.toLocal(), context),
-                  )
-                  .capitalize(),
+              AppLocalizations.of(context).createdAt(
+                DateFormatter(
+                  AppLocalizations.of(context),
+                  Localizations.localeOf(context),
+                ).getVerboseDateRepresentation(createdAt!.toLocal(), context),
+              ),
               style: Theme.of(context).textTheme.bodyLarge,
             ),
           if (completeAt != null)

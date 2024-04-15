@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todo/generated/l10n.dart';
-import 'package:todo/shared/extension/string_extension.dart';
 import 'package:todo/todo_overview/bloc/bloc.dart';
 import 'package:todo/todo_overview/model/filter.dart';
 import 'package:todo/todo_overview/ui/widget/todo_list_tile.dart';
@@ -44,13 +43,13 @@ class _InboxPageViewState extends State<InboxPageView>
     super.build(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text(AppLocalizations.of(context).inboxTitle.capitalize()),
+        title: Text(AppLocalizations.of(context).inboxTitle),
       ),
       body: BlocBuilder<TodoOverviewBloc, TodoOverviewState>(
         builder: (context, state) {
           if (state.todos.isEmpty) {
             return Center(
-              child: Text(AppLocalizations.of(context).noTodo.capitalize()),
+              child: Text(AppLocalizations.of(context).noTodo),
             );
           }
 

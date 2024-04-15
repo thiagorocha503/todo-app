@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todo/generated/l10n.dart';
-import 'package:todo/shared/extension/string_extension.dart';
 import 'package:todo/todo_edit/bloc/todo_edit_bloc.dart';
 import 'package:todo/todo_edit/ui/widget/description_page.dart';
 
@@ -40,9 +39,7 @@ class DescriptionListTile extends StatelessWidget {
           height: height,
           width: double.infinity,
           child: Text(
-            note == ""
-                ? AppLocalizations.of(context).addDescription.capitalize()
-                : note,
+            note == "" ? AppLocalizations.of(context).addDescription : note,
             overflow: TextOverflow.ellipsis,
             maxLines: 8,
           ),

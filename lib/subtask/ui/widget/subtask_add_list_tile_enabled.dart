@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:roundcheckbox/roundcheckbox.dart';
 import 'package:todo/generated/l10n.dart';
-import 'package:todo/shared/extension/string_extension.dart';
 import 'package:todo/subtask/bloc/subtask_bloc.dart';
 import 'package:todo/subtask/bloc/subtask_event.dart';
 import 'package:todo/subtask/model/subtask.dart';
@@ -48,7 +47,7 @@ class SubtaskAddListTileEnabled extends StatelessWidget {
           textInputAction: TextInputAction.done,
           decoration: InputDecoration(
             border: InputBorder.none,
-            hintText: AppLocalizations.of(context).addSubtask.capitalize(),
+            hintText: AppLocalizations.of(context).addSubtask,
           ),
           onFieldSubmitted: (String? value) {
             if (formKey.currentState!.validate()) {
@@ -68,7 +67,7 @@ class SubtaskAddListTileEnabled extends StatelessWidget {
           },
           validator: (String? value) {
             if (value?.isEmpty ?? true) {
-              return AppLocalizations.of(context).fillOutThisFiled.capitalize();
+              return AppLocalizations.of(context).fillOutThisFiled;
             }
             return null;
           },

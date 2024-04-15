@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:todo/generated/l10n.dart';
 import 'package:todo/shared/date_formatter.dart';
 import 'package:todo/shared/extension/datetime_extension.dart';
-import 'package:todo/shared/extension/string_extension.dart';
 
 class DueDateText extends StatelessWidget {
   final DateTime? dueDate;
@@ -20,7 +19,7 @@ class DueDateText extends StatelessWidget {
     if (date == null) {
       return GestureDetector(
         onTap: onTap,
-        child: Text(AppLocalizations.of(context).addDueDate.capitalize()),
+        child: Text(AppLocalizations.of(context).addDueDate),
       );
     }
 

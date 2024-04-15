@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:todo/generated/l10n.dart';
-import 'package:todo/shared/extension/string_extension.dart';
 
 class ListingDeleteAlertDialog extends StatelessWidget {
   final String name;
@@ -13,15 +12,15 @@ class ListingDeleteAlertDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return AlertDialog(
       title: Text(
-        AppLocalizations.of(context).deleteListAlertTitle.capitalize(),
+        AppLocalizations.of(context).deleteListAlertTitle,
       ),
       content: Text(
-        AppLocalizations.of(context).deleteListAlertBody(name).capitalize(),
+        AppLocalizations.of(context).deleteListAlertBody(name),
       ),
       actions: [
         TextButton(
           child: Text(
-            AppLocalizations.of(context).cancel.capitalize(),
+            AppLocalizations.of(context).cancel,
           ),
           onPressed: () {
             Navigator.pop(context, false);
@@ -32,7 +31,7 @@ class ListingDeleteAlertDialog extends StatelessWidget {
             Navigator.pop(context, true);
           },
           child: Text(
-            AppLocalizations.of(context).delete.capitalize(),
+            AppLocalizations.of(context).delete,
           ),
         )
       ],

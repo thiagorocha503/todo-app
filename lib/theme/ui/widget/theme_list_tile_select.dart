@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:todo/shared/extension/string_extension.dart';
 import 'package:todo/theme/cubit/theme_cubit.dart';
 import 'package:todo/theme/ui/theme_page.dart';
 
@@ -16,7 +15,7 @@ class ThemeListTileSelect extends StatelessWidget {
       ),
       child: ListTile(
         title: Text(
-          themeItem.name.capitalize(),
+          themeItem.name,
           style: Theme.of(context).textTheme.titleMedium,
         ),
         trailing: context.read<ThemeCubit>().state == themeItem.value

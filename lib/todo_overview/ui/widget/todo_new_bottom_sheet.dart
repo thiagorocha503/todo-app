@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todo/generated/l10n.dart';
 import 'package:todo/list_overview/bloc/bloc.dart';
 import 'package:todo/list_overview/model/listing.dart';
-import 'package:todo/shared/extension/string_extension.dart';
 import 'package:todo/todo_overview/bloc/bloc.dart';
 import 'package:todo/todo_overview/model/todo.dart';
 
@@ -50,16 +49,13 @@ class _TodoNewBottomSheetState extends State<TodoNewBottomSheet> {
                       focusNode: _focusNode,
                       controller: _nameController,
                       decoration: InputDecoration(
-                        hintText:
-                            AppLocalizations.of(context).enterName.capitalize(),
+                        hintText: AppLocalizations.of(context).enterName,
                         border: InputBorder.none,
                         hintStyle: Theme.of(context).textTheme.titleMedium,
                       ),
                       validator: (String? value) {
                         if (value == null || value.isEmpty) {
-                          return AppLocalizations.of(context)
-                              .fillOutThisFiled
-                              .capitalize();
+                          return AppLocalizations.of(context).fillOutThisFiled;
                         }
                         return null;
                       },
@@ -73,9 +69,7 @@ class _TodoNewBottomSheetState extends State<TodoNewBottomSheet> {
                       minLines: 1,
                       maxLines: 10,
                       decoration: InputDecoration(
-                        hintText: AppLocalizations.of(context)
-                            .description
-                            .capitalize(),
+                        hintText: AppLocalizations.of(context).description,
                         border: InputBorder.none,
                       ),
                     ),
@@ -127,8 +121,7 @@ class _TodoNewBottomSheetState extends State<TodoNewBottomSheet> {
                                             value: list,
                                             label: list?.name ??
                                                 AppLocalizations.of(context)
-                                                    .inboxTitle
-                                                    .capitalize(),
+                                                    .inboxTitle,
                                             leadingIcon: Icon(
                                               list?.id == null
                                                   ? Icons.inbox

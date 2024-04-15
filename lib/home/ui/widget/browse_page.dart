@@ -7,7 +7,6 @@ import 'package:todo/list_overview/model/listing.dart';
 import 'package:todo/list_overview/ui/widget/edit_listing_dialog.dart';
 import 'package:todo/list_overview/ui/widget/listing_list_tile.dart';
 import 'package:todo/settings/ui/setting_page.dart';
-import 'package:todo/shared/extension/string_extension.dart';
 
 class BrowsePage extends StatefulWidget {
   const BrowsePage({super.key});
@@ -23,7 +22,7 @@ class _BrowsePageState extends State<BrowsePage> {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
-        title: Text(AppLocalizations.of(context).browse.capitalize()),
+        title: Text(AppLocalizations.of(context).browse),
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 16.0),
@@ -63,7 +62,7 @@ class _BrowsePageState extends State<BrowsePage> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          AppLocalizations.of(context).lists.capitalize(),
+                          AppLocalizations.of(context).lists,
                           style: Theme.of(context).textTheme.headlineSmall,
                         ),
                         IconButton(

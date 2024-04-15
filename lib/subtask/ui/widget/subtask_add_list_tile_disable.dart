@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todo/generated/l10n.dart';
-import 'package:todo/shared/extension/string_extension.dart';
 import 'package:todo/subtask/ui/subtask_add_list_tile.dart';
 
 class SubtaskAddListTileDisabled extends StatelessWidget {
@@ -29,7 +28,7 @@ class SubtaskAddListTileDisabled extends StatelessWidget {
           context.read<SubtaskInputBloc>().change(SubtaskInputAddState.enabled);
         },
         child: Text(
-          AppLocalizations.of(context).addSubtask.capitalize(),
+          AppLocalizations.of(context).addSubtask,
           style: TextStyle(
             color: Theme.of(context).colorScheme.primary,
             fontSize: 16,

@@ -9,7 +9,6 @@ import 'package:todo/list_overview/ui/widget/listing_delete_alert_dialog.dart';
 import 'package:todo/selectable_list/bloc/selectable_list_bloc.dart';
 import 'package:todo/selectable_list/bloc/selectable_list_event.dart';
 import 'package:todo/selectable_list/bloc/selectable_list_state.dart';
-import 'package:todo/shared/extension/string_extension.dart';
 import 'package:todo/shared/model/wrapped.dart';
 import 'package:todo/todo_overview/bloc/bloc.dart';
 
@@ -51,12 +50,8 @@ class TodoOverviewAppBar extends StatelessWidget {
                       PopupMenuItem(
                         child: Text(
                           isSelectedAll
-                              ? AppLocalizations.of(context)
-                                  .deselectAll
-                                  .capitalize()
-                              : AppLocalizations.of(context)
-                                  .selectAll
-                                  .capitalize(),
+                              ? AppLocalizations.of(context).deselectAll
+                              : AppLocalizations.of(context).selectAll,
                         ),
                         onTap: () {
                           if (isSelectedAll) {
@@ -73,7 +68,7 @@ class TodoOverviewAppBar extends StatelessWidget {
                       PopupMenuItem(
                         enabled: n > 0,
                         child: Text(
-                          AppLocalizations.of(context).delete.capitalize(),
+                          AppLocalizations.of(context).delete,
                         ),
                         onTap: () {
                           List<int> ids = [];
@@ -108,7 +103,7 @@ class TodoOverviewAppBar extends StatelessWidget {
                     .where((e) => e.id == initialList?.id)
                     .firstOrNull;
                 if (list == null) {
-                  title = AppLocalizations.of(context).inboxTitle.capitalize();
+                  title = AppLocalizations.of(context).inboxTitle;
                 } else {
                   title = list.name;
                 }
@@ -122,9 +117,7 @@ class TodoOverviewAppBar extends StatelessWidget {
                           if (list != null) ...[
                             PopupMenuItem(
                               child: Text(
-                                AppLocalizations.of(context)
-                                    .rename
-                                    .capitalize(),
+                                AppLocalizations.of(context).rename,
                               ),
                               onTap: () async {
                                 context.read<HomeCubit>().hideNavigation();
@@ -146,12 +139,8 @@ class TodoOverviewAppBar extends StatelessWidget {
                           PopupMenuItem(
                             child: Text(
                               todoOverviewState.filter.showComplete ?? false
-                                  ? AppLocalizations.of(context)
-                                      .hidComplete
-                                      .capitalize()
-                                  : AppLocalizations.of(context)
-                                      .showComplete
-                                      .capitalize(),
+                                  ? AppLocalizations.of(context).hidComplete
+                                  : AppLocalizations.of(context).showComplete,
                             ),
                             onTap: () {
                               bool complete =
@@ -174,9 +163,7 @@ class TodoOverviewAppBar extends StatelessWidget {
                           if (list != null) ...[
                             PopupMenuItem(
                               child: Text(
-                                AppLocalizations.of(context)
-                                    .delete
-                                    .capitalize(),
+                                AppLocalizations.of(context).delete,
                               ),
                               onTap: () {
                                 showDialog(

@@ -4,7 +4,6 @@ import 'package:provider/provider.dart';
 import 'package:todo/generated/l10n.dart';
 import 'package:todo/locale/cubit/locale_cubit.dart';
 import 'package:todo/locale/ui/language_page.dart';
-import 'package:todo/shared/extension/string_extension.dart';
 
 class LanguageListTile extends StatelessWidget {
   const LanguageListTile({super.key});
@@ -14,9 +13,9 @@ class LanguageListTile extends StatelessWidget {
     return ListTile(
       leading: const Icon(Icons.language),
       title: Text(
-        AppLocalizations.of(context).language.capitalize(),
+        AppLocalizations.of(context).language,
       ),
-      subtitle: Text(getCurrentLanguage(context).capitalize()),
+      subtitle: Text(getCurrentLanguage(context)),
       onTap: () {
         Navigator.push(
           context,

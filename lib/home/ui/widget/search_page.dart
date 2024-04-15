@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todo/generated/l10n.dart';
 import 'package:todo/history/bloc/bloc.dart';
-import 'package:todo/shared/extension/string_extension.dart';
 import 'package:todo/todo_overview/bloc/bloc.dart';
 import 'package:todo/todo_overview/model/filter.dart';
 import 'package:todo/todo_overview/model/todo.dart';
@@ -56,8 +55,7 @@ class _SearchPageViewState extends State<SearchPageView>
                     child: Semantics(
                       child: SearchBar(
                         leading: const Icon(Icons.search),
-                        hintText:
-                            AppLocalizations.of(context).search.capitalize(),
+                        hintText: AppLocalizations.of(context).search,
                         shadowColor:
                             const MaterialStatePropertyAll(Colors.transparent),
                       ),
@@ -75,7 +73,7 @@ class _SearchPageViewState extends State<SearchPageView>
                             padding: const EdgeInsets.only(
                                 left: 16, top: 8, bottom: 8),
                             child: Text(
-                              AppLocalizations.of(context).allTodo.capitalize(),
+                              AppLocalizations.of(context).allTodo,
                               style: Theme.of(context).textTheme.labelLarge,
                             ),
                           ),
@@ -166,7 +164,7 @@ class SearchView extends SearchDelegate {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      AppLocalizations.of(context).recentSearches.capitalize(),
+                      AppLocalizations.of(context).recentSearches,
                       style: Theme.of(context).textTheme.labelLarge,
                     ),
                     TextButton(
@@ -174,7 +172,7 @@ class SearchView extends SearchDelegate {
                         context.read<HistoricBloc>().add(HistoryCleaned());
                       },
                       child: Text(
-                        AppLocalizations.of(context).clear.capitalize(),
+                        AppLocalizations.of(context).clear,
                       ),
                     )
                   ],
@@ -271,7 +269,7 @@ class SearchView extends SearchDelegate {
         if (state.todos.isEmpty) {
           return Center(
             child: Text(
-              AppLocalizations.of(context).noResult.capitalize(),
+              AppLocalizations.of(context).noResult,
               style: Theme.of(context).textTheme.labelLarge,
             ),
           );
@@ -281,7 +279,7 @@ class SearchView extends SearchDelegate {
             const Divider(height: 1),
             ListTile(
               title: Text(
-                AppLocalizations.of(context).todos.capitalize(),
+                AppLocalizations.of(context).todos,
                 style: Theme.of(context).textTheme.labelLarge,
               ),
             ),

@@ -6,7 +6,6 @@ import 'package:todo/selectable_list/bloc/selectable_list_bloc.dart';
 import 'package:todo/selectable_list/bloc/selectable_list_event.dart';
 import 'package:todo/selectable_list/bloc/selectable_list_state.dart';
 import 'package:todo/shared/data/user_preferences.dart';
-import 'package:todo/shared/extension/string_extension.dart';
 import 'package:todo/todo_overview/bloc/bloc.dart';
 import 'package:todo/todo_overview/model/filter.dart';
 import 'package:todo/todo_overview/model/todo.dart';
@@ -79,7 +78,7 @@ class _ListingEditPageViewState extends State<ListingEditPageView> {
         builder: (context, state) {
           if (state.todos.isEmpty) {
             return Center(
-              child: Text(AppLocalizations.of(context).noTodo.capitalize()),
+              child: Text(AppLocalizations.of(context).noTodo),
             );
           }
           List<Todo> notComplete =
@@ -113,8 +112,7 @@ class _ListingEditPageViewState extends State<ListingEditPageView> {
                         initiallyExpanded: isExpanded,
                         title: Text(
                           AppLocalizations.of(context)
-                              .complete(complete.length)
-                              .capitalize(),
+                              .complete(complete.length),
                           style: Theme.of(context).textTheme.titleMedium,
                         ),
                         onExpansionChanged: (value) {

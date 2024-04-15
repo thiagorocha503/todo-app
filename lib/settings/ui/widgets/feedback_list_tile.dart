@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:todo/constants.dart';
 import 'package:todo/generated/l10n.dart';
-import 'package:todo/shared/extension/string_extension.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class FeedbackListTile extends StatelessWidget {
@@ -12,7 +11,7 @@ class FeedbackListTile extends StatelessWidget {
     return ListTile(
       leading: const Icon(Icons.feedback),
       title: Text(
-        AppLocalizations.of(context).feedback.capitalize(),
+        AppLocalizations.of(context).feedback,
       ),
       onTap: () {
         onContact();

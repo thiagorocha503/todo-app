@@ -5,7 +5,6 @@ import 'package:package_info_plus/package_info_plus.dart';
 import 'package:todo/constants.dart';
 import 'package:todo/generated/l10n.dart';
 import 'package:todo/settings/ui/widgets/widgets.dart';
-import 'package:todo/shared/extension/string_extension.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
@@ -29,7 +28,7 @@ class _SettingsPageState extends State<SettingsPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          AppLocalizations.of(context).settings.capitalize(),
+          AppLocalizations.of(context).settings,
         ),
       ),
       body: SafeArea(
@@ -49,9 +48,9 @@ class _SettingsPageState extends State<SettingsPage> {
                       "assets/img/todo.png",
                       height: 80,
                     ),
-                    applicationName: appName.capitalize(),
+                    applicationName: appName,
                     applicationVersion: version,
-                    applicationLegalese: appLegalese.capitalize(),
+                    applicationLegalese: appLegalese,
                   ),
                 ],
               ),

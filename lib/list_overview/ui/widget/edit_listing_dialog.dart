@@ -4,7 +4,6 @@ import 'package:todo/generated/l10n.dart';
 import 'package:todo/list_overview/bloc/list_overview_bloc.dart';
 import 'package:todo/list_overview/bloc/list_overview_event.dart';
 import 'package:todo/list_overview/model/listing.dart';
-import 'package:todo/shared/extension/string_extension.dart';
 
 class EditListingDialog extends StatefulWidget {
   final Listing initialListing;
@@ -32,8 +31,8 @@ class _EditListingDialogState extends State<EditListingDialog> {
       appBar: AppBar(
         title: Text(
           widget.initialListing.id == null
-              ? AppLocalizations.of(context).addList.capitalize()
-              : AppLocalizations.of(context).editList.capitalize(),
+              ? AppLocalizations.of(context).addList
+              : AppLocalizations.of(context).editList,
         ),
         actions: [
           Padding(
@@ -41,7 +40,7 @@ class _EditListingDialogState extends State<EditListingDialog> {
             child: TextButton(
               onPressed: onSave,
               child: Text(
-                AppLocalizations.of(context).save.capitalize(),
+                AppLocalizations.of(context).save,
               ),
             ),
           ),
@@ -60,16 +59,14 @@ class _EditListingDialogState extends State<EditListingDialog> {
                   decoration: InputDecoration(
                     border: const OutlineInputBorder(),
                     prefixIcon: const Icon(Icons.menu),
-                    hintText: AppLocalizations.of(context).name.capitalize(),
+                    hintText: AppLocalizations.of(context).name,
                   ),
                   validator: (value) {
                     if (value == null) {
                       return null;
                     }
                     if (value.isEmpty) {
-                      return AppLocalizations.of(context)
-                          .fillOutThisFiled
-                          .capitalize();
+                      return AppLocalizations.of(context).fillOutThisFiled;
                     }
                     return null;
                   },

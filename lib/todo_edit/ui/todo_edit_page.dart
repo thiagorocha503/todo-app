@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todo/generated/l10n.dart';
 import 'package:todo/home/cubit/home_cubit.dart';
 import 'package:todo/list_overview/bloc/list_overview_bloc.dart';
-import 'package:todo/shared/extension/string_extension.dart';
 import 'package:todo/shared/widget/error_dialog.dart';
 import 'package:todo/subtask/bloc/subtask_bloc.dart';
 import 'package:todo/subtask/bloc/subtask_event.dart';
@@ -108,7 +107,7 @@ class _TodoEditPageViewState extends State<TodoEditPageView> {
                 int? id = state.todo.listId;
                 String title;
                 if (id == null) {
-                  title = AppLocalizations.of(context).inboxTitle.capitalize();
+                  title = AppLocalizations.of(context).inboxTitle;
                 } else {
                   title = (context
                               .read<ListingOverviewBloc>()
@@ -117,7 +116,7 @@ class _TodoEditPageViewState extends State<TodoEditPageView> {
                               .where((e) => e.id == widget.todo.listId)
                               .firstOrNull)
                           ?.name ??
-                      AppLocalizations.of(context).inboxTitle.capitalize();
+                      AppLocalizations.of(context).inboxTitle;
                 }
                 return AppBar(
                   leading: IconButton(

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:todo/generated/l10n.dart';
-import 'package:todo/shared/extension/string_extension.dart';
 
 class ErrorDialog extends StatelessWidget {
   final String message;
@@ -9,7 +8,7 @@ class ErrorDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text(AppLocalizations.of(context).error.capitalize()),
+      title: Text(AppLocalizations.of(context).error),
       content: Text(message),
       actions: [
         ElevatedButton(

@@ -9,7 +9,6 @@ import 'package:todo/home/ui/widget/browse_page.dart';
 import 'package:todo/home/ui/widget/inbox_page.dart';
 import 'package:todo/home/ui/widget/search_page.dart';
 import 'package:todo/home/ui/widget/today_tab.dart';
-import 'package:todo/shared/extension/string_extension.dart';
 
 class PersistentTabItem {
   final Widget tab;
@@ -124,21 +123,21 @@ class _HomePageViewState extends State<HomePageView> {
                 NavigationDestination(
                   icon: const Icon(Icons.calendar_today_outlined),
                   selectedIcon: const Icon(Icons.calendar_today),
-                  label: AppLocalizations.of(context).today.capitalize(),
+                  label: AppLocalizations.of(context).today,
                 ),
                 NavigationDestination(
                   icon: const Icon(Icons.inbox_outlined),
                   selectedIcon: const Icon(Icons.inbox),
-                  label: AppLocalizations.of(context).inboxLabel.capitalize(),
+                  label: AppLocalizations.of(context).inboxLabel,
                 ),
                 NavigationDestination(
                   icon: const Icon(Icons.search),
-                  label: AppLocalizations.of(context).search.capitalize(),
+                  label: AppLocalizations.of(context).search,
                 ),
                 NavigationDestination(
                   icon: const Icon(Icons.menu_outlined),
                   selectedIcon: const Icon(Icons.menu),
-                  label: AppLocalizations.of(context).browse.capitalize(),
+                  label: AppLocalizations.of(context).browse,
                 )
               ],
             ),
