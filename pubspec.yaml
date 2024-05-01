@@ -37,7 +37,7 @@ dependencies:
   flutter_bloc: ^8.1.5
   flutter_localizations:
     sdk: flutter
-  fluttertoast: ^8.2.1
+  fluttertoast: ^8.2.5
   intl: ^0.18.1
   intl_utils: ^2.8.7
   launch_review: ^3.0.1
