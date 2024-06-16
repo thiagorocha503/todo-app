@@ -57,7 +57,7 @@ class _SearchPageViewState extends State<SearchPageView>
                         leading: const Icon(Icons.search),
                         hintText: AppLocalizations.of(context).search,
                         shadowColor:
-                            const MaterialStatePropertyAll(Colors.transparent),
+                            const WidgetStatePropertyAll(Colors.transparent),
                       ),
                     ),
                   ),
@@ -104,7 +104,7 @@ class SearchView extends SearchDelegate {
   ThemeData appBarTheme(BuildContext context) {
     return super.appBarTheme(context).copyWith(
           appBarTheme: super.appBarTheme(context).appBarTheme.copyWith(
-                backgroundColor: Theme.of(context).colorScheme.background,
+                backgroundColor: Theme.of(context).colorScheme.surface,
                 elevation: 0.0,
                 toolbarHeight: 72.0,
               ),

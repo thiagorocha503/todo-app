@@ -14,7 +14,7 @@ import 'package:todo/shared/data/user_preferences.dart';
 import 'package:todo/subtask/data/subtask_database.dart';
 import 'package:todo/subtask/repository/subtask_repository.dart';
 import 'package:todo/theme/cubit/theme_cubit.dart';
-import 'package:todo/theme/ui/widget/color_schemes.dart';
+import 'package:todo/theme/ui/widget/theme.dart';
 import 'package:todo/todo_overview/data/todo_database.dart';
 import 'package:todo/todo_overview/respository/todo_repository.dart';
 
@@ -85,10 +85,11 @@ class App extends StatelessWidget {
                   themeMode: themeMode,
                   home: const HomePage(),
                   theme: ThemeData(
-                    colorScheme: lightColorScheme ?? defaultLightColorScheme,
+                    colorScheme:
+                        lightColorScheme ?? MaterialTheme.lightScheme(),
                   ),
                   darkTheme: ThemeData(
-                    colorScheme: darkColorScheme ?? defaultDarkColorScheme,
+                    colorScheme: darkColorScheme ?? MaterialTheme.darkScheme(),
                   ),
                   localizationsDelegates: const [
                     AppLocalizations.delegate,
