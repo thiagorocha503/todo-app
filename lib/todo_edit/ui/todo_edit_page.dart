@@ -145,6 +145,9 @@ class _TodoEditPageViewState extends State<TodoEditPageView> {
                                 return;
                               }
                               if (value) {
+                                if (!context.mounted) {
+                                  return;
+                                }
                                 Navigator.pop(context);
                                 context.read<TodoOverviewBloc>().add(
                                       TodoOverviewDeleted(
