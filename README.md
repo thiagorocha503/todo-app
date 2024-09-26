@@ -26,7 +26,11 @@ cd todo-app
 ```sh
 flutter pub get
 ```
-4. For production environments
+4. Generate boilerplate code for localization
+```
+ flutter pub run intl_utils:generate
+```
+5. For production environments
 ```sh
 flutter run
 ```
