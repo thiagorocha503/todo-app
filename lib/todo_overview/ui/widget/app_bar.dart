@@ -179,6 +179,9 @@ class TodoOverviewAppBar extends StatelessWidget {
                                       return;
                                     }
                                     if (value) {
+                                      if (!context.mounted) {
+                                        return;
+                                      }
                                       Navigator.pop(context);
                                       context.read<ListingOverviewBloc>().add(
                                             ListingOverviewListingDeleted(

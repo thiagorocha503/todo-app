@@ -82,8 +82,8 @@ class _TodoEditPageViewState extends State<TodoEditPageView> {
   Widget build(BuildContext context) {
     return PopScope(
       canPop: true,
-      onPopInvoked: (bool poped) {
-        if (poped) {
+      onPopInvokedWithResult: (bool didPop, Object? result) {
+        if (didPop) {
           context.read<HomeCubit>().showNavigation();
         }
       },
@@ -145,6 +145,9 @@ class _TodoEditPageViewState extends State<TodoEditPageView> {
                                 return;
                               }
                               if (value) {
+                                if (!context.mounted) {
+                                  return;
+                                }
                                 Navigator.pop(context);
                                 context.read<TodoOverviewBloc>().add(
                                       TodoOverviewDeleted(

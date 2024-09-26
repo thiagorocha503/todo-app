@@ -68,7 +68,7 @@ class _HomePageViewState extends State<HomePageView> {
   Widget build(BuildContext context) {
     return PopScope(
       canPop: false,
-      onPopInvoked: (didPop) {
+      onPopInvokedWithResult: (bool didPop, Object? result) {
         if (didPop) {
           return;
         }
