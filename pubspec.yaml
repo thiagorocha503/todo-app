@@ -50,7 +50,7 @@ dependencies:
   share_plus: ^10.0.2
   shared_preferences: ^2.3.2
   sqflite: ^2.3.3
-  sqflite_common_ffi: ^2.3.3
+  sqflite_common_ffi: ^2.3.4
   url_launcher: ^6.3.0
 
 
