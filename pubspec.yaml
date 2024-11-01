@@ -47,7 +47,7 @@ dependencies:
   path_provider: ^2.1.4
   roundcheckbox: ^2.0.5
   rxdart: ^0.28.0
-  share_plus: ^10.0.2
+  share_plus: ^10.1.1
   shared_preferences: ^2.3.2
   sqflite: ^2.3.3
   sqflite_common_ffi: ^2.3.3
