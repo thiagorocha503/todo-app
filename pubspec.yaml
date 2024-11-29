@@ -49,7 +49,7 @@ dependencies:
   rxdart: ^0.28.0
   share_plus: ^10.1.1
   shared_preferences: ^2.3.2
-  sqflite: ^2.3.3
+  sqflite: ^2.4.1
   sqflite_common_ffi: ^2.3.4
   url_launcher: ^6.3.0
 
