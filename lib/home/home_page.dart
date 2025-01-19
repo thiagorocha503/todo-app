@@ -105,6 +105,8 @@ class _HomePageViewState extends State<HomePageView> {
           builder: (context, state) => Visibility(
             visible: state.show,
             child: NavigationBar(
+              elevation: 3,
+              surfaceTintColor: Theme.of(context).colorScheme.primary,
               selectedIndex: state.tab.index,
               onDestinationSelected: (int index) {
                 int selectedTab = context.read<HomeCubit>().state.tab.index;
