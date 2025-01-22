@@ -90,8 +90,8 @@ class Todo extends Equatable {
         name,
         description,
         createdAt,
-        completedAt,
+        completedAt?.toIso8601String(),
         listId,
-        updatedAt
+        updatedAt?.toIso8601String()
       ];
 }

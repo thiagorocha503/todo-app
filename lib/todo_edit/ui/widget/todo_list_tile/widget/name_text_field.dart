@@ -1,26 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todo/generated/l10n.dart';
+import 'package:todo/todo_edit/bloc/todo_edit_bloc.dart';
+import 'package:todo/todo_edit/bloc/todo_edit_event.dart';
 
 class NameTextField extends StatelessWidget {
-  final TextEditingController controller;
-  final FocusNode? focusNode;
-  final bool checked;
-
-  NameTextField({
+  const NameTextField({
     super.key,
-    required this.controller,
-    required this.checked,
-    this.focusNode,
   });
-
-  final FocusNode focusNodes = FocusNode();
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
-      focusNode: focusNode,
-      controller: controller,
+    bool checked = context.watch<TodoEditBloc>().state.todo.completedAt != null
+        ? true
+        : false;
+    return TextFormField(
+      initialValue: context.watch<TodoEditBloc>().state.todo.name,
       textInputAction: TextInputAction.done,
+      onChanged: (value) {
+        context.read<TodoEditBloc>().add(TodoEditTitleChanged(title: value));
+      },
       style: TextStyle(
         fontWeight: FontWeight.w500,
         fontSize: 24,

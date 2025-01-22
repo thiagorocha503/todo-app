@@ -1,14 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:roundcheckbox/roundcheckbox.dart';
+import 'package:todo/todo_edit/bloc/todo_edit_bloc.dart';
+import 'package:todo/todo_edit/bloc/todo_edit_event.dart';
 
 class TaskCheckbox extends StatelessWidget {
-  final bool checked;
-  final Function(bool value) onTap;
-
-  const TaskCheckbox({super.key, required this.checked, required this.onTap});
+  const TaskCheckbox({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
+    bool checked = context.watch<TodoEditBloc>().state.todo.completedAt != null
+        ? true
+        : false;
     return RoundCheckBox(
       size: 36,
       border: Border.all(
@@ -25,7 +30,13 @@ class TaskCheckbox extends StatelessWidget {
         if (value == null) {
           return;
         }
-        onTap(value);
+        DateTime? date;
+        if (value) {
+          date = DateTime.now();
+        }
+        context
+            .read<TodoEditBloc>()
+            .add(TodoEditCompleteDateChanged(date: date));
       },
     );
   }

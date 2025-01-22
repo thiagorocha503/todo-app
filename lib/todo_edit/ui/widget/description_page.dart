@@ -4,40 +4,42 @@ import 'package:todo/generated/l10n.dart';
 import 'package:todo/shared/widget/error_dialog.dart';
 import 'package:todo/todo_edit/bloc/todo_edit_bloc.dart';
 import 'package:todo/todo_edit/bloc/todo_edit_state.dart';
+import 'package:todo/todo_edit/ui/widget/description_list_tile.dart';
 
 class DescriptionPage extends StatefulWidget {
-  final String initialNote;
-  final Function(String value) onSave;
-  const DescriptionPage(
-      {required this.initialNote, super.key, required this.onSave});
+  final Function(String text) onChange;
+  const DescriptionPage({super.key, required this.onChange});
 
   @override
   State<DescriptionPage> createState() => _DescriptionPageState();
 }
 
 class _DescriptionPageState extends State<DescriptionPage> {
-  late TextEditingController controller;
-  late FocusNode _focusNode;
+  final TextEditingController _descriptinController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
-    _focusNode = FocusNode();
-    controller = TextEditingController(text: widget.initialNote);
-    _focusNode.requestFocus();
+    _descriptinController.text = context.read<DescriptinCubit>().state;
   }
 
   @override
   Widget build(BuildContext context) {
+    context.read<DescriptinCubit>().state;
     return BlocListener<TodoEditBloc, TodoEditState>(
       listener: (context, state) {
         if (state is TodoEditError) {
+          debugPrint("pop");
           showDialog(
             context: context,
             builder: (context) => ErrorDialog(
               message: state.message,
             ),
           );
+        }
+        if (state is TodoEditLoaded) {
+          debugPrint("pop");
+          Navigator.pop(context);
         }
       },
       child: Scaffold(
@@ -47,11 +49,15 @@ class _DescriptionPageState extends State<DescriptionPage> {
               padding: const EdgeInsets.only(right: 16.0),
               child: TextButton(
                 onPressed: () {
-                  if (controller.text != widget.initialNote &&
-                      controller.text != "") {
-                    widget.onSave(controller.text);
+                  if (_descriptinController.text != "" &&
+                      _descriptinController.text !=
+                          context.read<TodoEditBloc>().state.todo.description) {
+                    context
+                        .read<DescriptinCubit>()
+                        .change(_descriptinController.text);
+                    widget.onChange(_descriptinController.text);
+                    Navigator.pop(context);
                   }
-                  Navigator.pop(context);
                 },
                 child: Text(
                   AppLocalizations.of(context).save,
@@ -60,9 +66,8 @@ class _DescriptionPageState extends State<DescriptionPage> {
             ),
           ],
         ),
-        body: TextField(
-          focusNode: _focusNode,
-          controller: controller,
+        body: TextFormField(
+          controller: _descriptinController,
           maxLines: null,
           decoration: const InputDecoration(
             border: InputBorder.none,
@@ -71,11 +76,5 @@ class _DescriptionPageState extends State<DescriptionPage> {
         ),
       ),
     );
-  }
-
-  @override
-  void dispose() {
-    _focusNode.dispose();
-    super.dispose();
   }
 }

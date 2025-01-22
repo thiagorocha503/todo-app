@@ -1,41 +1,41 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todo/generated/l10n.dart';
 import 'package:todo/shared/date_formatter.dart';
 import 'package:todo/shared/extension/datetime_extension.dart';
+import 'package:todo/todo_edit/bloc/todo_edit_bloc.dart';
+import 'package:todo/todo_edit/ui/widget/due_date_list_tile/due_date_list_tile.dart';
 
 class DueDateText extends StatelessWidget {
-  final DateTime? dueDate;
-  final DateTime? completeDate;
   final Function() onTap;
-  const DueDateText(
-      {required this.dueDate,
-      super.key,
-      required this.onTap,
-      required this.completeDate});
+  const DueDateText({
+    super.key,
+    required this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {
-    DateTime? date = dueDate;
-    if (date == null) {
+    DateTime? dueDate = context.read<DueDateCubit>().state;
+    DateTime? completeAt = context.read<TodoEditBloc>().state.todo.completedAt;
+    if (dueDate == null) {
       return GestureDetector(
         onTap: onTap,
         child: Text(AppLocalizations.of(context).addDueDate),
       );
     }
-
     return GestureDetector(
       onTap: onTap,
       child: Text(
-        getText(context, date),
+        getText(context, dueDate),
         style: TextStyle(
-          color: completeDate != null
+          color: completeAt != null
               ? Theme.of(context).colorScheme.primary
-              : isLate(date.toLocal())
+              : isLate(dueDate.toLocal())
                   ? Theme.of(context).colorScheme.error
                   : Theme.of(context).colorScheme.primary,
-          decoration: completeDate != null
+          decoration: completeAt != null
               ? TextDecoration.none
-              : isLate(date.toLocal())
+              : isLate(dueDate.toLocal())
                   ? TextDecoration.lineThrough
                   : TextDecoration.none,
         ),
