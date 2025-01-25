@@ -10,6 +10,8 @@ import 'package:todo/list_overview/bloc/bloc.dart';
 import 'package:todo/list_overview/data/listing_database.dart';
 import 'package:todo/list_overview/respository/listing_repository.dart';
 import 'package:todo/locale/cubit/locale_cubit.dart';
+import 'package:todo/selectable_list/bloc/selectable_list_bloc.dart';
+import 'package:todo/selectable_list/bloc/selectable_list_state.dart';
 import 'package:todo/shared/data/user_preferences.dart';
 import 'package:todo/subtask/data/subtask_database.dart';
 import 'package:todo/subtask/repository/subtask_repository.dart';
@@ -73,6 +75,11 @@ class App extends StatelessWidget {
               )..add(
                   ListingOverviewListSubscriptionRequested(),
                 ),
+            ),
+            BlocProvider<SelectableListBloc>(
+              create: (context) => SelectableListBloc(
+                const SelectableListState(enabled: false, itens: []),
+              ),
             )
           ],
           child: BlocBuilder<ThemeCubit, ThemeMode>(

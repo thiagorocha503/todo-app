@@ -38,11 +38,6 @@ class TodoOverviewPage extends StatelessWidget {
             preferences: RepositoryProvider.of(context),
           )..add(TodoOverviewSubscriptionRequested()),
         ),
-        BlocProvider<SelectableListBloc>(
-          create: (context) => SelectableListBloc(
-            const SelectableListState(enabled: false, itens: []),
-          ),
-        )
       ],
       child: ListingEditPageView(
         listing: list,
@@ -156,6 +151,7 @@ class _ListingEditPageViewState extends State<ListingEditPageView> {
           );
         },
       ),
+      // ),
     );
   }
 }

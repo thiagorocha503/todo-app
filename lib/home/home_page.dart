@@ -9,6 +9,8 @@ import 'package:todo/home/ui/widget/browse_page.dart';
 import 'package:todo/home/ui/widget/inbox_page.dart';
 import 'package:todo/home/ui/widget/search_page.dart';
 import 'package:todo/home/ui/widget/today_tab.dart';
+import 'package:todo/selectable_list/bloc/selectable_list_bloc.dart';
+import 'package:todo/selectable_list/bloc/selectable_list_event.dart';
 
 class PersistentTabItem {
   final Widget tab;
@@ -68,11 +70,17 @@ class _HomePageViewState extends State<HomePageView> {
   Widget build(BuildContext context) {
     return PopScope(
       canPop: false,
-      onPopInvokedWithResult: (bool didPop, Object? result) {
+      onPopInvokedWithResult: (bool didPop, Object? result) async {
         if (didPop) {
           return;
         }
         int selectedTab = context.read<HomeCubit>().state.tab.index;
+        bool isSelectMode = context.read<SelectableListBloc>().state.enabled;
+        if (isSelectMode) {
+          context.read<SelectableListBloc>().add(SelectableListCanceled());
+          context.read<HomeCubit>().showNavigation();
+          return;
+        }
         if (tabs[selectedTab].navigatorkey?.currentState?.canPop() ?? false) {
           tabs[selectedTab].navigatorkey?.currentState?.pop();
           return;
