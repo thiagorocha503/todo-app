@@ -9,8 +9,9 @@ import 'package:todo/list_overview/ui/widget/listing_delete_alert_dialog.dart';
 import 'package:todo/selectable_list/bloc/selectable_list_bloc.dart';
 import 'package:todo/selectable_list/bloc/selectable_list_event.dart';
 import 'package:todo/selectable_list/bloc/selectable_list_state.dart';
-import 'package:todo/shared/model/wrapped.dart';
+import 'package:todo/shared/data/user_preferences.dart';
 import 'package:todo/todo_overview/bloc/bloc.dart';
+import 'package:todo/todo_overview/model/filter.dart';
 
 class TodoOverviewAppBar extends StatelessWidget {
   final Listing? initialList;
@@ -137,16 +138,26 @@ class TodoOverviewAppBar extends StatelessWidget {
                             )
                           ],
                           PopupMenuItem(
-                            child: Text(
-                              todoOverviewState.filter.showComplete ?? false
-                                  ? AppLocalizations.of(context).hidComplete
-                                  : AppLocalizations.of(context).showComplete,
-                            ),
+                            child: switch (
+                                todoOverviewState.filter.status.status) {
+                              TodosStatus.all =>
+                                Text(AppLocalizations.of(context).hidComplete),
+                              // code should not be executed
+                              TodosStatus.completedOnly =>
+                                Text(AppLocalizations.of(context).showComplete),
+                              TodosStatus.activeOnly =>
+                                Text(AppLocalizations.of(context).showComplete),
+                            },
                             onTap: () {
-                              bool complete =
-                                  todoOverviewState.filter.showComplete ??
-                                      false;
-
+                              TodosStatus filter =
+                                  todoOverviewState.filter.status.status;
+                              UserPreferences rep =
+                                  RepositoryProvider.of(context);
+                              if (filter == TodosStatus.all) {
+                                rep.setShowComplete(false);
+                              } else {
+                                rep.setShowComplete(true);
+                              }
                               context.read<TodoOverviewBloc>().add(
                                     TodoOverviewFilterChange(
                                       filter: context
@@ -154,8 +165,12 @@ class TodoOverviewAppBar extends StatelessWidget {
                                           .state
                                           .filter
                                           .copyWith(
-                                              showComplete:
-                                                  Wrapped.value(!complete)),
+                                              status: filter == TodosStatus.all
+                                                  ? TodoStatusCriteria(
+                                                      status: TodosStatus
+                                                          .activeOnly)
+                                                  : TodoStatusCriteria(
+                                                      status: TodosStatus.all)),
                                     ),
                                   );
                             },

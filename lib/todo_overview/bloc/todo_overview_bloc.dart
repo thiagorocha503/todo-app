@@ -1,6 +1,4 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:todo/shared/data/user_preferences.dart';
-import 'package:todo/shared/extension/datetime_extension.dart';
 import 'package:todo/todo_overview/model/filter.dart';
 import 'package:todo/todo_overview/model/todo.dart';
 import 'package:todo/todo_overview/respository/todo_repository.dart';
@@ -9,13 +7,10 @@ import './bloc.dart';
 
 class TodoOverviewBloc extends Bloc<TodoOverViewEvent, TodoOverviewState> {
   final TodoRepository _repository;
-  final UserPreferences _preferences;
   TodoOverviewBloc(
     super.initialState, {
     required TodoRepository repository,
-    required UserPreferences preferences,
-  })  : _preferences = preferences,
-        _repository = repository {
+  }) : _repository = repository {
     on<TodoOverviewSubscriptionRequested>(onSubscriptionRequested);
     on<TodoOverviewSaved>(_onSavedTodo);
     on<TodoOverviewDeleted>(_onDeleteTodos);
@@ -43,41 +38,12 @@ class TodoOverviewBloc extends Bloc<TodoOverViewEvent, TodoOverviewState> {
   }
 
   List<Todo> filter(List<Todo> todos, TodoFilter filter) {
-    if (filter.listing != null) {
-      todos = todos.where((todo) => todo.listId == filter.listing!.id).toList();
-    }
-
-    DateTime? filterDueDate = filter.dueDate;
-    if (filterDueDate != null) {
-      todos = todos.where((todo) {
-        DateTime? dueDate = todo.dueDate;
-        if (dueDate == null) {
-          return false;
-        }
-        return dueDate.compareDateTo(filterDueDate) == 0;
-      }).toList();
-    }
-    if (filter.query != null) {
-      if (filter.query == "") {
-        return [];
-      }
-      RegExp regExp = RegExp(
-        "( ||\\w+)${filter.query}( ||\\w+)",
-        multiLine: true,
-        caseSensitive: false,
-      );
-      todos = todos
-          .where((todo) => regExp.allMatches(todo.name).toList().isNotEmpty)
-          .toList();
-    }
-    bool? showComplete = filter.showComplete;
-    if (showComplete != null) {
-      _preferences.setShowComplete(showComplete);
-      if (!showComplete) {
-        todos = todos.where((e) => e.completedAt == null).toList();
-      }
-    }
-    return List.from(todos);
+    List<Todo> newList = todos;
+    newList = filter.listing?.meet(newList) ?? newList;
+    newList = filter.status.meet(newList);
+    newList = filter.dueDate?.meet(newList) ?? newList;
+    newList = filter.query?.meet(newList) ?? newList;
+    return newList;
   }
 
   Future<void> _onFilterChanged(

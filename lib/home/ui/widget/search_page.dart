@@ -16,10 +16,13 @@ class SearchPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider<TodoOverviewBloc>(
       create: (context) => TodoOverviewBloc(
-          const TodoOverviewLoadedState(filter: TodoFilter(), todos: []),
-          repository: RepositoryProvider.of(context),
-          preferences: RepositoryProvider.of(context))
-        ..add(TodoOverviewSubscriptionRequested()),
+        TodoOverviewLoadedState(
+            filter: TodoFilter(
+              status: TodoStatusCriteria(status: TodosStatus.all),
+            ),
+            todos: []),
+        repository: RepositoryProvider.of(context),
+      )..add(TodoOverviewSubscriptionRequested()),
       child: const SearchPageView(),
     );
   }
@@ -199,16 +202,21 @@ class SearchView extends SearchDelegate {
       );
     }
     TodoOverviewBloc bloc = TodoOverviewBloc(
-        const TodoOverviewLoadedState(
-          filter: TodoFilter(
-            query: "",
-          ),
-          todos: [],
+      TodoOverviewLoadedState(
+        filter: TodoFilter(
+          status: TodoStatusCriteria(status: TodosStatus.activeOnly),
+          query: TodoQueryCriteria(query: ''),
         ),
-        repository: RepositoryProvider.of(context),
-        preferences: RepositoryProvider.of(context))
+        todos: [],
+      ),
+      repository: RepositoryProvider.of(context),
+    )
       ..add(TodoOverviewSubscriptionRequested())
-      ..add(TodoOverviewFilterChange(filter: TodoFilter(query: query)));
+      ..add(TodoOverviewFilterChange(
+          filter: TodoFilter(
+        query: TodoQueryCriteria(query: query),
+        status: TodoStatusCriteria(status: TodosStatus.all),
+      )));
     return BlocBuilder<TodoOverviewBloc, TodoOverviewState>(
       bloc: bloc,
       builder: (context, state) {
@@ -239,8 +247,11 @@ class SearchView extends SearchDelegate {
                 itemCount: state.todos.length,
                 itemBuilder: (context, index) {
                   Todo todo = state.todos[index];
-                  return TodoListTile(
-                    todo: todo,
+                  return BlocProvider.value(
+                    value: bloc,
+                    child: TodoListTile(
+                      todo: todo,
+                    ),
                   );
                 },
               ),
@@ -257,12 +268,18 @@ class SearchView extends SearchDelegate {
       context.read<HistoricBloc>().add(HistoryAdded(query: query));
     }
     TodoOverviewBloc bloc = TodoOverviewBloc(
-      const TodoOverviewLoadedState(filter: TodoFilter(), todos: []),
+      TodoOverviewLoadedState(
+          filter: TodoFilter(
+            status: TodoStatusCriteria(status: TodosStatus.all),
+          ),
+          todos: []),
       repository: RepositoryProvider.of(context),
-      preferences: RepositoryProvider.of(context),
     )
       ..add(TodoOverviewSubscriptionRequested())
-      ..add(TodoOverviewFilterChange(filter: TodoFilter(query: query)));
+      ..add(TodoOverviewFilterChange(
+          filter: TodoFilter(
+              status: TodoStatusCriteria(status: TodosStatus.all),
+              query: TodoQueryCriteria(query: query))));
     return BlocBuilder<TodoOverviewBloc, TodoOverviewState>(
       bloc: bloc,
       builder: (context, state) {

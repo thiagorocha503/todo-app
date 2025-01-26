@@ -15,12 +15,13 @@ class InboxPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider<TodoOverviewBloc>(
       create: (context) => TodoOverviewBloc(
-        const TodoOverviewLoadedState(
+        TodoOverviewLoadedState(
           todos: [],
-          filter: TodoFilter(listing: null),
+          filter: TodoFilter(
+              listing: TodoListingCriteria(id: null),
+              status: TodoStatusCriteria(status: TodosStatus.activeOnly)),
         ),
         repository: RepositoryProvider.of(context),
-        preferences: RepositoryProvider.of(context),
       )..add(TodoOverviewSubscriptionRequested()),
       child: const InboxPageView(),
     );

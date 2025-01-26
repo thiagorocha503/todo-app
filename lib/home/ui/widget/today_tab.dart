@@ -17,10 +17,11 @@ class TodayPage extends StatelessWidget {
       create: (context) => TodoOverviewBloc(
         TodoOverviewLoadedState(
           todos: const [],
-          filter: TodoFilter(dueDate: DateTime.now().toUtc()),
+          filter: TodoFilter(
+              status: TodoStatusCriteria(status: TodosStatus.activeOnly),
+              dueDate: TodoDueDateCriteria(dueDate: DateTime.now().toUtc())),
         ),
         repository: RepositoryProvider.of(context),
-        preferences: RepositoryProvider.of(context),
       )..add(TodoOverviewSubscriptionRequested()),
       child: const TodayPageView(),
     );

@@ -29,13 +29,16 @@ class TodoOverviewPage extends StatelessWidget {
             TodoOverviewLoadingState(
               todos: const [],
               filter: TodoFilter(
-                listing: list,
-                showComplete: RepositoryProvider.of<UserPreferences>(context)
-                    .getShowComplete(),
+                listing: TodoListingCriteria(id: list.id),
+                status: TodoStatusCriteria(
+                  status: RepositoryProvider.of<UserPreferences>(context)
+                          .getShowComplete()
+                      ? TodosStatus.all
+                      : TodosStatus.activeOnly,
+                ),
               ),
             ),
             repository: RepositoryProvider.of(context),
-            preferences: RepositoryProvider.of(context),
           )..add(TodoOverviewSubscriptionRequested()),
         ),
       ],
@@ -97,7 +100,8 @@ class _ListingEditPageViewState extends State<ListingEditPageView> {
                   endIndent: 16,
                 )
               ],
-              if (complete.isNotEmpty && (state.filter.showComplete ?? false))
+              if (complete.isNotEmpty &&
+                  (state.filter.status.status == TodosStatus.all))
                 StatefulBuilder(
                   builder: (context, setState) {
                     return Theme(
