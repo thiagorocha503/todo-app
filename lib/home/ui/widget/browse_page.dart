@@ -5,7 +5,7 @@ import 'package:todo/home/cubit/home_cubit.dart';
 import 'package:todo/list_overview/bloc/bloc.dart';
 import 'package:todo/list_overview/model/listing.dart';
 import 'package:todo/list_overview/ui/widget/edit_listing_dialog.dart';
-import 'package:todo/list_overview/ui/widget/listing_list_tile.dart';
+import 'package:todo/list_overview/ui/widget/listing_list_view.dart';
 import 'package:todo/settings/ui/setting_page.dart';
 
 class BrowsePage extends StatefulWidget {
@@ -83,15 +83,9 @@ class _BrowsePageState extends State<BrowsePage> {
                       ],
                     ),
                     children: [
-                      ListView.builder(
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
+                      ListingListView(
                         itemCount: state.list.length,
-                        itemBuilder: (context, index) {
-                          return ListingListTile(
-                            list: state.list[index],
-                          );
-                        },
+                        listing: state.list,
                       ),
                     ],
                   ),
