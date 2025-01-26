@@ -13,9 +13,9 @@ import 'package:todo/todo_overview/ui/widget/app_bar.dart';
 import 'package:todo/todo_overview/ui/widget/todo_list_tile_selectable.dart';
 import 'package:todo/todo_overview/ui/widget/todo_new_button.dart';
 
-class TodoOverviewPage extends StatelessWidget {
+class ListingDetailsPage extends StatelessWidget {
   final Listing list;
-  const TodoOverviewPage({
+  const ListingDetailsPage({
     super.key,
     required this.list,
   });
@@ -42,25 +42,25 @@ class TodoOverviewPage extends StatelessWidget {
           )..add(TodoOverviewSubscriptionRequested()),
         ),
       ],
-      child: ListingEditPageView(
+      child: ListingDetailsPageView(
         listing: list,
       ),
     );
   }
 }
 
-class ListingEditPageView extends StatefulWidget {
+class ListingDetailsPageView extends StatefulWidget {
   final Listing listing;
-  const ListingEditPageView({
+  const ListingDetailsPageView({
     super.key,
     required this.listing,
   });
 
   @override
-  State<ListingEditPageView> createState() => _ListingEditPageViewState();
+  State<ListingDetailsPageView> createState() => _ListingDetailsPageViewState();
 }
 
-class _ListingEditPageViewState extends State<ListingEditPageView> {
+class _ListingDetailsPageViewState extends State<ListingDetailsPageView> {
   bool isExpanded = true;
   @override
   Widget build(BuildContext context) {

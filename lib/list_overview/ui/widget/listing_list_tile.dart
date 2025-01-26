@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:todo/list_overview/model/listing.dart';
-import 'package:todo/todo_overview/ui/todo_overview_page.dart';
+import 'package:todo/todo_overview/ui/listing_details_page.dart';
 
 class ListingListTile extends StatefulWidget {
   final Listing list;
@@ -29,7 +29,7 @@ class _ListingListTileState extends State<ListingListTile> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => TodoOverviewPage(
+            builder: (context) => ListingDetailsPage(
               list: widget.list,
             ),
           ),
