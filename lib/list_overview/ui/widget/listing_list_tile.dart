@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:todo/list_overview/model/listing.dart';
-import 'package:todo/todo_overview/ui/listing_details_page.dart';
+import 'package:todo/list_overview/ui/listing_details_page.dart';
 
 class ListingListTile extends StatefulWidget {
   final Listing list;
