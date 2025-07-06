@@ -1,6 +1,10 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
-import 'package:launch_review/launch_review.dart';
+import 'package:store_redirect/store_redirect.dart';
+import 'package:todo/constants.dart';
 import 'package:todo/generated/l10n.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class RateListTile extends StatelessWidget {
   const RateListTile({super.key});
@@ -19,6 +23,16 @@ class RateListTile extends StatelessWidget {
   }
 
   void onStore() async {
-    LaunchReview.launch();
+    if (Platform.isAndroid) {
+      StoreRedirect.redirect(androidAppId: androidAppId);
+      return;
+    }
+    String url = androidAPPLink;
+    Uri uri = Uri.parse(url);
+    if (await canLaunchUrl(uri)) {
+      await launchUrl(uri);
+    } else {
+      throw 'Could not launch $url';
+    }
   }
 }
