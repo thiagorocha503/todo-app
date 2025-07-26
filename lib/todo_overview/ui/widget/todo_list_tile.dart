@@ -5,6 +5,7 @@ import 'package:todo/todo_edit/ui/todo_edit_page.dart';
 import 'package:todo/todo_overview/bloc/bloc.dart';
 import 'package:todo/todo_overview/model/todo.dart';
 import 'package:todo/todo_overview/ui/widget/todo_checkbox.dart';
+import 'package:todo/todo_overview/ui/widget/todo_list_tile_title.dart';
 import 'package:todo/todo_overview/ui/widget/todo_list_view_subtitle.dart';
 
 class TodoListTile extends StatefulWidget {
@@ -23,21 +24,10 @@ class _TodoListTileState extends State<TodoListTile> {
   Widget build(BuildContext context) {
     return ListTile(
       leading: TodoCheckbox(todo: widget.todo),
-      title: Text(
-        widget.todo.name,
-        style: TextStyle(
-          fontStyle: widget.todo.completedAt == null
-              ? FontStyle.normal
-              : FontStyle.italic,
-          decoration: widget.todo.completedAt == null
-              ? TextDecoration.none
-              : TextDecoration.lineThrough,
-        ),
-      ),
+      title: TodoListTileTitle(todo: widget.todo),
       subtitle: TodoListTileSubtitle(todo: widget.todo),
       onTap: () {
         TodoOverviewBloc bloc = context.read();
-
         context.read<HomeCubit>().hideNavigation();
         Navigator.push(
           context,
