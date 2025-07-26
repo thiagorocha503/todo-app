@@ -34,12 +34,19 @@ class _TodoNewBottomSheetState extends State<TodoNewBottomSheet> {
   @override
   Widget build(BuildContext context) {
     return Builder(builder: (context) {
+      final mediaQuery = MediaQuery.of(context);
+      final maxHeight = mediaQuery.size.height * 0.9;
       return Padding(
         padding: EdgeInsets.only(
           bottom: MediaQuery.of(context).viewInsets.bottom,
+          top: 4,
+          left: 4,
+          right: 4,
         ),
-        child: SingleChildScrollView(
+        child: ConstrainedBox(
+          constraints: BoxConstraints(maxHeight: maxHeight),
           child: Column(
+            mainAxisSize: MainAxisSize.min,
             children: [
               Padding(
                 padding: const EdgeInsets.only(left: 16, right: 16),
