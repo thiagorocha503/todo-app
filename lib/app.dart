@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:todo/database/database.dart';
+import 'package:todo/database/database_service.dart';
 import 'package:todo/history/bloc/bloc.dart';
 import 'package:todo/home/home_page.dart';
 import 'package:todo/list_overview/bloc/bloc.dart';

@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:rxdart/rxdart.dart';
 import 'package:sqflite/sqflite.dart';
-import 'package:todo/database/database.dart';
+import 'package:todo/database/database_service.dart';
 import 'package:todo/todo_overview/data/interface.dart';
 import 'package:todo/todo_overview/model/todo.dart';
 

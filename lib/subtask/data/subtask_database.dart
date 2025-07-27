@@ -1,6 +1,6 @@
 import 'package:rxdart/rxdart.dart';
 import 'package:sqflite/sqlite_api.dart';
-import 'package:todo/database/database.dart';
+import 'package:todo/database/database_service.dart';
 import 'package:todo/subtask/data/interface.dart';
 import 'package:todo/subtask/model/subtask.dart';
 
