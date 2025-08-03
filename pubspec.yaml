@@ -39,7 +39,7 @@ dependencies:
   flutter_bloc: ^9.1.0
   fluttertoast: ^8.2.12
   intl: ^0.20.2
-  intl_utils: ^2.8.10
+  intl_utils: ^2.8.11
   mockito: ^5.4.2
   mocktail: ^1.0.3
   package_info_plus: ^8.3.0
