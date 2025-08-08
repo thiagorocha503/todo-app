@@ -20,6 +20,6 @@ class ShareListTile extends StatelessWidget {
   }
 
   void onShare() {
-    Share.share(androidAPPLink);
+    SharePlus.instance.share(ShareParams(uri: Uri.tryParse(androidAPPLink)));
   }
 }
