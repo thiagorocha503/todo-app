@@ -4,6 +4,7 @@ import 'package:todo/generated/l10n.dart';
 import 'package:todo/history/bloc/bloc.dart';
 import 'package:todo/todo_overview/bloc/bloc.dart';
 import 'package:todo/todo_overview/model/filter.dart';
+import 'package:todo/todo_overview/model/filter/filter.dart';
 import 'package:todo/todo_overview/model/todo.dart';
 import 'package:todo/todo_overview/ui/widget/todo_list_tile.dart';
 

@@ -1,5 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todo/todo_overview/model/filter.dart';
+import 'package:todo/todo_overview/model/filter/and_criteria.dart';
+import 'package:todo/todo_overview/model/filter/filter.dart';
 import 'package:todo/todo_overview/model/todo.dart';
 import 'package:todo/todo_overview/respository/todo_repository.dart';
 
@@ -38,12 +40,19 @@ class TodoOverviewBloc extends Bloc<TodoOverViewEvent, TodoOverviewState> {
   }
 
   List<Todo> filter(List<Todo> todos, TodoFilter filter) {
-    List<Todo> newList = todos;
-    newList = filter.listing?.meet(newList) ?? newList;
-    newList = filter.status.meet(newList);
-    newList = filter.dueDate?.meet(newList) ?? newList;
-    newList = filter.query?.meet(newList) ?? newList;
-    return newList;
+    List<TodoCriteria> criterias = [];
+    if (filter.listing != null) {
+      criterias.add(filter.listing!);
+    }
+    if (filter.dueDate != null) {
+      criterias.add(filter.dueDate!);
+    }
+    if (filter.query != null) {
+      criterias.add(filter.query!);
+    }
+    criterias.add(filter.status);
+    AndCriteria andFilter = AndCriteria(criterias);
+    return todos.where((todo) => andFilter.matches(todo)).toList();
   }
 
   Future<void> _onFilterChanged(

@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todo/generated/l10n.dart';
 import 'package:todo/todo_overview/bloc/bloc.dart';
 import 'package:todo/todo_overview/model/filter.dart';
+import 'package:todo/todo_overview/model/filter/filter.dart';
+import 'package:todo/todo_overview/model/filter/todo_due_date_criteria.dart';
 import 'package:todo/todo_overview/ui/widget/todo_list_tile.dart';
 import 'package:todo/todo_overview/ui/widget/todo_new_button.dart';
 
@@ -19,7 +21,7 @@ class TodayPage extends StatelessWidget {
           todos: const [],
           filter: TodoFilter(
               status: TodoStatusCriteria(status: TodosStatus.activeOnly),
-              dueDate: TodoDueDateCriteria(dueDate: DateTime.now().toUtc())),
+              dueDate: TodoDueDateEquals(dueDate: DateTime.now().toUtc())),
         ),
         repository: RepositoryProvider.of(context),
       )..add(TodoOverviewSubscriptionRequested()),
