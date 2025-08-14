@@ -87,8 +87,8 @@ class _SearchPageViewState extends State<SearchPageView>
   bool get wantKeepAlive => true;
 }
 
-class SearchView extends SearchDelegate {
-  SearchView({String? query});
+class TodoSearchDelegate extends SearchDelegate {
+  TodoSearchDelegate({String? query});
 
   @override
   ThemeData appBarTheme(BuildContext context) {

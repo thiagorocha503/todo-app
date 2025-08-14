@@ -46,7 +46,7 @@ class _TodoSearchBarState extends State<TodoSearchBar> {
           color: Theme.of(context).colorScheme.onSurfaceVariant,
         ),
         onTap: () {
-          showSearch(context: context, delegate: SearchView());
+          showSearch(context: context, delegate: TodoSearchDelegate());
           _focusNode.unfocus();
         },
       ),
