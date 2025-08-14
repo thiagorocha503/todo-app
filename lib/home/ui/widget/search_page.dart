@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todo/generated/l10n.dart';
 import 'package:todo/history/bloc/bloc.dart';
+import 'package:todo/home/ui/widget/todo_search_bar.dart';
 import 'package:todo/todo_overview/bloc/bloc.dart';
 import 'package:todo/todo_overview/model/filter.dart';
 import 'package:todo/todo_overview/model/filter/filter.dart';
@@ -49,23 +50,8 @@ class _SearchPageViewState extends State<SearchPageView>
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
-                padding: const EdgeInsets.only(left: 16, right: 16),
-                child: GestureDetector(
-                  onTap: () {
-                    showSearch(context: context, delegate: SearchView());
-                  },
-                  child: AbsorbPointer(
-                    absorbing: true,
-                    child: Semantics(
-                      child: SearchBar(
-                        leading: const Icon(Icons.search),
-                        hintText: AppLocalizations.of(context).search,
-                        shadowColor:
-                            const WidgetStatePropertyAll(Colors.transparent),
-                      ),
-                    ),
-                  ),
-                ),
+                padding: const EdgeInsets.only(left: 16, right: 16.0),
+                child: TodoSearchBar(),
               ),
               Expanded(
                 child: BlocBuilder<TodoOverviewBloc, TodoOverviewState>(
