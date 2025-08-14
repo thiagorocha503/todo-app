@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:todo/generated/l10n.dart';
-import 'package:todo/home/ui/widget/search_page.dart';
+import 'package:todo/home/ui/widget/todo_search_delegate.dart';
 
 class TodoSearchBar extends StatefulWidget {
   const TodoSearchBar({super.key});
