@@ -216,17 +216,18 @@ class _TodoEditPageViewState extends State<TodoEditPageView> {
       ),
     ).then(
       (value) {
-        if (value != null) {
-          if (!context.mounted) {
-            return;
-          }
-          Navigator.pop(context);
-          context.read<TodoOverviewBloc>().add(
-                TodoOverviewDeleted(
-                  ids: [widget.todo.id ?? 0],
-                ),
-              );
+        if (!context.mounted) {
+          return;
         }
+        if (!value) {
+          return;
+        }
+        Navigator.pop(context);
+        context.read<TodoOverviewBloc>().add(
+              TodoOverviewDeleted(
+                ids: [widget.todo.id ?? 0],
+              ),
+            );
       },
     );
   }
