@@ -35,7 +35,7 @@ dependencies:
     sdk: flutter
   cupertino_icons: ^1.0.2
   dynamic_color: ^1.8.1
-  equatable: ^2.0.7
+  equatable: ^2.0.8
   flutter_bloc: ^9.1.0
   fluttertoast: ^9.0.0
   intl: ^0.20.2
