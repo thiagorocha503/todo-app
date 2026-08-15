@@ -1,3 +1,5 @@
+**/generated/
+lib/l10n/
 # Miscellaneous
 *.class
 *.log
