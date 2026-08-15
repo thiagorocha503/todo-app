@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todo/app_localizations.dart';
+import 'package:todo/constants/keys.dart';
 import 'package:todo/subtask/bloc/subtask_bloc.dart';
 import 'package:todo/subtask/bloc/subtask_event.dart';
 import 'package:todo/subtask/repository/repository.dart';
@@ -89,6 +90,7 @@ class TodoEditPageView extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(right: 16),
               child: IconButton(
+                key: const Key(TODO_DELETE_ICON_BUTTON),
                 onPressed: () {
                   showDialog(
                     context: context,
