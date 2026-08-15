@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:todo/app_localizations.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:todo/constants/keys.dart';
 import 'package:todo/todo_edit/ui/todo_edit_page.dart';
 import 'package:todo/todo_over_view/bloc/todo_overview_bloc.dart';
 import 'package:todo/todo_over_view/bloc/todo_overview_event.dart';
@@ -36,6 +37,7 @@ class TodoOverviewListView extends StatelessWidget {
       itemBuilder: (BuildContext context, int index) {
         Todo todo = todos[index];
         return TodoOverviewListTile(
+          key: Key("$TODO_LIST_TILE_ITEM-${todo.id}"),
           todo: todos[index],
           onTap: () {
             Navigator.push(
