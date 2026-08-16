@@ -3,4 +3,7 @@
         "editor.formatOnSave": "explicit",
         "source.organizeImports": "explicit"
     },
+    "cSpell.words": [
+        "criterias"
+    ],
 }
