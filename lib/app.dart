@@ -83,7 +83,7 @@ class App extends StatelessWidget {
             )
           ],
           child: BlocBuilder<ThemeCubit, ThemeMode>(
-            builder: (conttext, ThemeMode themeMode) =>
+            builder: (context, ThemeMode themeMode) =>
                 BlocBuilder<LocaleCubit, LocaleState>(
               builder: (context, LocaleState state) => DynamicColorBuilder(
                 builder: (lightColorScheme, darkColorScheme) => MaterialApp(
