@@ -78,7 +78,7 @@ class App extends StatelessWidget {
             ),
             BlocProvider<SelectableListBloc>(
               create: (context) => SelectableListBloc(
-                const SelectableListState(enabled: false, itens: []),
+                const SelectableListState(enabled: false, items: []),
               ),
             )
           ],

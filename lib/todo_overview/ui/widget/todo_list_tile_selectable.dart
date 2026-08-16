@@ -68,7 +68,7 @@ class TodoListTileSelectable extends StatelessWidget {
   Widget buildLeading(BuildContext context, SelectableListState state) {
     if (state.enabled) {
       return Checkbox(
-        value: state.itens.firstWhere((e) => e.id == todo.id).selected,
+        value: state.items.firstWhere((e) => e.id == todo.id).selected,
         onChanged: (a) {
           context
               .read<SelectableListBloc>()

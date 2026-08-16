@@ -30,13 +30,13 @@ class SelectableListDeselectedAllItem extends SelectableListEvent {
   List<Object?> get props => [];
 }
 
-class SelectableListUpdateItens extends SelectableListEvent {
-  final List<int> itens;
+class SelectableListUpdateItems extends SelectableListEvent {
+  final List<int> items;
 
-  SelectableListUpdateItens({required this.itens});
+  SelectableListUpdateItems({required this.items});
 
   @override
-  List<Object?> get props => [itens];
+  List<Object?> get props => [items];
 }
 
 class SelectableListCanceled extends SelectableListEvent {

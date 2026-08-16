@@ -9,15 +9,15 @@ class SelectableListBloc
   SelectableListBloc(super.initialState) {
     on<SelectableListDeselectedAllItem>((event, emit) {
       emit(state.copyWith(
-          itens: state.itens.map((e) => e.copyWith(selected: false)).toList()));
+          items: state.items.map((e) => e.copyWith(selected: false)).toList()));
     });
     on<SelectableListSelectedAllItem>((event, emit) {
       emit(state.copyWith(
-          itens: state.itens.map((e) => e.copyWith(selected: true)).toList()));
+          items: state.items.map((e) => e.copyWith(selected: true)).toList()));
     });
-    on<SelectableListUpdateItens>((event, emit) {
+    on<SelectableListUpdateItems>((event, emit) {
       emit(state.copyWith(
-          itens: event.itens
+          items: event.items
               .map((e) => SelectableListItem(id: e, selected: false))
               .toList()));
     });
@@ -26,7 +26,7 @@ class SelectableListBloc
         state.copyWith(
           enabled: false,
           // reset selectins
-          itens: state.itens.map((e) => e.copyWith(selected: false)).toList(),
+          items: state.items.map((e) => e.copyWith(selected: false)).toList(),
         ),
       );
     });
@@ -35,13 +35,13 @@ class SelectableListBloc
       if (state.enabled) {
         try {
           SelectableListItem oldItem =
-              state.itens.firstWhere((e) => e.id == event.id);
+              state.items.firstWhere((e) => e.id == event.id);
 
           SelectableListItem newItem =
               oldItem.copyWith(id: oldItem.id, selected: !oldItem.selected);
           emit(
             state.copyWith(
-                itens: List.from(state.itens)
+                items: List.from(state.items)
                   ..remove(oldItem)
                   ..add(newItem)),
           );
@@ -53,14 +53,14 @@ class SelectableListBloc
     on<SelectableListLongPressedItem>((event, emit) {
       if (!state.enabled) {
         try {
-          SelectableListItem oldItem = state.itens.firstWhere((e) {
+          SelectableListItem oldItem = state.items.firstWhere((e) {
             return e.id == event.id;
           });
 
           emit(
             state.copyWith(
                 enabled: true,
-                itens: List.from(state.itens)
+                items: List.from(state.items)
                   ..remove(oldItem)
                   ..add(oldItem.copyWith(selected: true))),
           );

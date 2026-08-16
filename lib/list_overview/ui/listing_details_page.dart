@@ -85,8 +85,8 @@ class _ListingDetailsPageViewState extends State<ListingDetailsPageView> {
           List<Todo> complete =
               state.todos.where((e) => e.completedAt != null).toList();
           context.read<SelectableListBloc>().add(
-                SelectableListUpdateItens(
-                  itens: state.todos.map((todo) => todo.id!).toList(),
+                SelectableListUpdateItems(
+                  items: state.todos.map((todo) => todo.id!).toList(),
                 ),
               );
           return ListView(

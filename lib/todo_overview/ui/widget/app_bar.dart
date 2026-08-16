@@ -25,7 +25,7 @@ class TodoOverviewAppBar extends StatelessWidget {
     return BlocBuilder<SelectableListBloc, SelectableListState>(
       builder: (context, state) {
         if (state.enabled) {
-          int n = state.itens.fold(
+          int n = state.items.fold(
               0,
               (previousValue, item) =>
                   item.selected ? previousValue + 1 : previousValue);
@@ -46,7 +46,7 @@ class TodoOverviewAppBar extends StatelessWidget {
                 child: PopupMenuButton(
                   child: const Icon(Icons.more_vert),
                   itemBuilder: (context) {
-                    bool isSelectedAll = n == state.itens.length;
+                    bool isSelectedAll = n == state.items.length;
                     return [
                       PopupMenuItem(
                         child: Text(
@@ -73,7 +73,7 @@ class TodoOverviewAppBar extends StatelessWidget {
                         ),
                         onTap: () {
                           List<int> ids = [];
-                          for (var item in state.itens) {
+                          for (var item in state.items) {
                             if (item.selected) {
                               ids.add(item.id);
                             }
