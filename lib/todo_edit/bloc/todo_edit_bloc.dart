@@ -2,7 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todo/shared/model/wrapped.dart';
 import 'package:todo/todo_edit/bloc/todo_edit_event.dart';
 import 'package:todo/todo_edit/bloc/todo_edit_state.dart';
-import 'package:todo/todo_overview/respository/todo_repository.dart';
+import 'package:todo/todo_overview/repository/todo_repository.dart';
 
 class TodoEditBloc extends Bloc<TodoEditEvent, TodoEditState> {
   final TodoRepository repository;

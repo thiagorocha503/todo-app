@@ -8,7 +8,7 @@ import 'package:todo/history/bloc/bloc.dart';
 import 'package:todo/home/home_page.dart';
 import 'package:todo/list_overview/bloc/bloc.dart';
 import 'package:todo/list_overview/data/listing_database.dart';
-import 'package:todo/list_overview/respository/listing_repository.dart';
+import 'package:todo/list_overview/repository/listing_repository.dart';
 import 'package:todo/locale/cubit/locale_cubit.dart';
 import 'package:todo/selectable_list/bloc/selectable_list_bloc.dart';
 import 'package:todo/selectable_list/bloc/selectable_list_state.dart';
@@ -18,7 +18,7 @@ import 'package:todo/subtask/repository/subtask_repository.dart';
 import 'package:todo/theme/cubit/theme_cubit.dart';
 import 'package:todo/theme/ui/widget/theme.dart';
 import 'package:todo/todo_overview/data/todo_database.dart';
-import 'package:todo/todo_overview/respository/todo_repository.dart';
+import 'package:todo/todo_overview/repository/todo_repository.dart';
 
 import 'generated/l10n.dart';
 
@@ -36,8 +36,8 @@ class App extends StatelessWidget {
         RepositoryProvider<UserPreferences>(
           create: (_) => UserPreferences(preferences),
         ),
-        RepositoryProvider<ListingRespository>(
-          create: (_) => ListingRespository(
+        RepositoryProvider<ListingRepository>(
+          create: (_) => ListingRepository(
             ListingLocalDatabase(DatabaseService.getInstance(), todoDB),
           ),
         ),

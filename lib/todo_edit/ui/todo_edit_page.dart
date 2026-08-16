@@ -19,7 +19,7 @@ import 'package:todo/todo_edit/ui/widget/todo_delete_alert_dialog.dart';
 import 'package:todo/todo_edit/ui/widget/todo_list_tile/todo_list_tile.dart';
 import 'package:todo/todo_overview/bloc/bloc.dart';
 import 'package:todo/todo_overview/model/todo.dart';
-import 'package:todo/todo_overview/respository/todo_repository.dart';
+import 'package:todo/todo_overview/repository/todo_repository.dart';
 
 class MyWidget extends StatelessWidget {
   const MyWidget({super.key});

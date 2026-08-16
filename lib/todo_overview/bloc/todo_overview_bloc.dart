@@ -3,7 +3,7 @@ import 'package:todo/todo_overview/model/filter.dart';
 import 'package:todo/todo_overview/model/filter/and_criteria.dart';
 import 'package:todo/todo_overview/model/filter/filter.dart';
 import 'package:todo/todo_overview/model/todo.dart';
-import 'package:todo/todo_overview/respository/todo_repository.dart';
+import 'package:todo/todo_overview/repository/todo_repository.dart';
 
 import './bloc.dart';
 
