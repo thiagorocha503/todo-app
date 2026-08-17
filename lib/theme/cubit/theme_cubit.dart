@@ -6,10 +6,10 @@ class ThemeCubit extends Cubit<ThemeMode> {
   final UserPreferences _preferences;
 
   ThemeCubit(UserPreferences preferences)
-      : _preferences = preferences,
-        super(preferences.getTheme());
+    : _preferences = preferences,
+      super(preferences.getTheme());
 
-  void changue(ThemeMode mode) async {
+  void changeTheme(ThemeMode mode) async {
     await _preferences.setTheme(mode);
     emit(mode);
   }

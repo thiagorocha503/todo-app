@@ -23,7 +23,7 @@ void main() {
     setUp: () {
       when(() => preferences.getTheme()).thenAnswer((_) => ThemeMode.light);
     },
-    act: (cubit) => cubit.changue(ThemeMode.dark),
+    act: (cubit) => cubit.changeTheme(ThemeMode.dark),
     verify: (_) {
       verify(() => preferences.setTheme(ThemeMode.dark)).called(1);
     },
@@ -32,10 +32,8 @@ void main() {
 
   blocTest<ThemeCubit, ThemeMode>(
     "Change theme to light",
-    build: () => ThemeCubit(
-      preferences,
-    ),
-    act: (cubit) => cubit.changue(ThemeMode.light),
+    build: () => ThemeCubit(preferences),
+    act: (cubit) => cubit.changeTheme(ThemeMode.light),
     setUp: () {
       when(() => preferences.getTheme()).thenAnswer((_) => ThemeMode.dark);
     },
@@ -51,7 +49,7 @@ void main() {
     setUp: () {
       when(() => preferences.getTheme()).thenAnswer((_) => ThemeMode.dark);
     },
-    act: (cubit) => cubit.changue(ThemeMode.system),
+    act: (cubit) => cubit.changeTheme(ThemeMode.system),
     verify: (_) {
       verify(() => preferences.setTheme(ThemeMode.system)).called(1);
     },

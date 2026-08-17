@@ -10,22 +10,17 @@ class ThemeListTileSelect extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Theme(
-      data: ThemeData(
-        splashColor: Colors.transparent,
-      ),
+      data: ThemeData(splashColor: Colors.transparent),
       child: ListTile(
         title: Text(
           themeItem.name,
           style: Theme.of(context).textTheme.titleMedium,
         ),
         trailing: context.read<ThemeCubit>().state == themeItem.value
-            ? Icon(
-                Icons.check,
-                color: Theme.of(context).colorScheme.primary,
-              )
+            ? Icon(Icons.check, color: Theme.of(context).colorScheme.primary)
             : null,
         onTap: () {
-          context.read<ThemeCubit>().changue(themeItem.value);
+          context.read<ThemeCubit>().changeTheme(themeItem.value);
         },
       ),
     );
