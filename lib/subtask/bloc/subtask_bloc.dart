@@ -6,11 +6,11 @@ import 'package:todo/subtask/repository/subtask_repository.dart';
 class SubtaskBloc extends Bloc<SubtaskEvent, SubtaskState> {
   final SubtaskRepository _repository;
 
-  SubtaskBloc(super.initialState, {required SubtaskRepository repository})
-      : _repository = repository {
+  SubtaskBloc(super.initialState, {required this._repository}) {
     on<SubtaskSubscriptionRequested>((event, emit) async {
       emit(
-          SubtasksLoadingState(subtasks: state.subtasks, taskId: state.taskId));
+        SubtasksLoadingState(subtasks: state.subtasks, taskId: state.taskId),
+      );
       await emit.forEach(
         _repository.getSubtasks(),
         onData: (data) {
@@ -26,26 +26,42 @@ class SubtaskBloc extends Bloc<SubtaskEvent, SubtaskState> {
   }
 
   Future<void> _mapSavedSubtask(
-      SubtaskSavedEvent event, Emitter<SubtaskState> emit) async {
+    SubtaskSavedEvent event,
+    Emitter<SubtaskState> emit,
+  ) async {
     try {
       emit(
-          SubtasksLoadingState(subtasks: state.subtasks, taskId: state.taskId));
+        SubtasksLoadingState(subtasks: state.subtasks, taskId: state.taskId),
+      );
       await _repository.save(event.subtask);
     } on Exception catch (error) {
-      emit(SubtaskErrorState(
-          subtasks: state.subtasks, error: error, taskId: state.taskId));
+      emit(
+        SubtaskErrorState(
+          subtasks: state.subtasks,
+          error: error,
+          taskId: state.taskId,
+        ),
+      );
     }
   }
 
   Future<void> _mapDeleteSubtask(
-      SubtaskDeletedEvent event, Emitter<SubtaskState> emit) async {
+    SubtaskDeletedEvent event,
+    Emitter<SubtaskState> emit,
+  ) async {
     try {
       emit(
-          SubtasksLoadingState(subtasks: state.subtasks, taskId: state.taskId));
+        SubtasksLoadingState(subtasks: state.subtasks, taskId: state.taskId),
+      );
       await _repository.delete(event.id);
     } on Exception catch (error) {
-      emit(SubtaskErrorState(
-          subtasks: state.subtasks, error: error, taskId: state.taskId));
+      emit(
+        SubtaskErrorState(
+          subtasks: state.subtasks,
+          error: error,
+          taskId: state.taskId,
+        ),
+      );
     }
   }
 }

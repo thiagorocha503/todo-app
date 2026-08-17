@@ -9,30 +9,23 @@ import './bloc.dart';
 
 class TodoOverviewBloc extends Bloc<TodoOverViewEvent, TodoOverviewState> {
   final TodoRepository _repository;
-  TodoOverviewBloc(
-    super.initialState, {
-    required TodoRepository repository,
-  }) : _repository = repository {
+  TodoOverviewBloc(super.initialState, {required this._repository}) {
     on<TodoOverviewSubscriptionRequested>(onSubscriptionRequested);
     on<TodoOverviewSaved>(_onSavedTodo);
     on<TodoOverviewDeleted>(_onDeleteTodos);
     on<TodoOverviewFilterChange>(_onFilterChanged);
   }
 
-  Future<void> onSubscriptionRequested(TodoOverviewSubscriptionRequested event,
-      Emitter<TodoOverviewState> emit) async {
-    emit(TodoOverviewLoadingState(
-      filter: state.filter,
-      todos: state.todos,
-    ));
+  Future<void> onSubscriptionRequested(
+    TodoOverviewSubscriptionRequested event,
+    Emitter<TodoOverviewState> emit,
+  ) async {
+    emit(TodoOverviewLoadingState(filter: state.filter, todos: state.todos));
     await emit.forEach(
       _repository.getTodos(),
       onData: (List<Todo> data) {
         return TodoOverviewLoadedState(
-          todos: filter(
-            data,
-            state.filter,
-          ),
+          todos: filter(data, state.filter),
           filter: state.filter,
         );
       },
@@ -56,13 +49,12 @@ class TodoOverviewBloc extends Bloc<TodoOverViewEvent, TodoOverviewState> {
   }
 
   Future<void> _onFilterChanged(
-      TodoOverviewFilterChange event, Emitter<TodoOverviewState> emit) async {
+    TodoOverviewFilterChange event,
+    Emitter<TodoOverviewState> emit,
+  ) async {
     emit(
       TodoOverviewLoadedState(
-        todos: filter(
-          _repository.getCurrentTodos(),
-          event.filter,
-        ),
+        todos: filter(_repository.getCurrentTodos(), event.filter),
         filter: event.filter,
       ),
     );
@@ -73,10 +65,7 @@ class TodoOverviewBloc extends Bloc<TodoOverViewEvent, TodoOverviewState> {
     Emitter<TodoOverviewState> emit,
   ) async {
     try {
-      emit(TodoOverviewLoadingState(
-        filter: state.filter,
-        todos: state.todos,
-      ));
+      emit(TodoOverviewLoadingState(filter: state.filter, todos: state.todos));
       await _repository.save(event.todo);
     } on Exception catch (error) {
       emit(
@@ -90,12 +79,11 @@ class TodoOverviewBloc extends Bloc<TodoOverViewEvent, TodoOverviewState> {
   }
 
   Future<void> _onDeleteTodos(
-      TodoOverviewDeleted event, Emitter<TodoOverviewState> emit) async {
+    TodoOverviewDeleted event,
+    Emitter<TodoOverviewState> emit,
+  ) async {
     try {
-      emit(TodoOverviewLoadingState(
-        filter: state.filter,
-        todos: state.todos,
-      ));
+      emit(TodoOverviewLoadingState(filter: state.filter, todos: state.todos));
       await _repository.delete(event.ids);
     } on Exception catch (error) {
       emit(
