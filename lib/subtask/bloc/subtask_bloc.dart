@@ -19,6 +19,13 @@ class SubtaskBloc extends Bloc<SubtaskEvent, SubtaskState> {
             subtasks: data.where((e) => e.todoId == state.taskId).toList(),
           );
         },
+        onError: (error, stackTrace) {
+          return SubtaskErrorState(
+            taskId: state.taskId,
+            subtasks: state.subtasks,
+            error: Exception(error),
+          );
+        },
       );
     });
     on<SubtaskSavedEvent>(_mapSavedSubtask);
