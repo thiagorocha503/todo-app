@@ -61,7 +61,7 @@ void main() {
       );
     });
     blocTest<ListingOverviewBloc, ListingOverviewState>(
-      'emits state with updated status and listing '
+      'emits ListingOverviewLoadedState '
       'when repository getListing stream emits new listing',
       build: buildBloc,
       act: (bloc) => bloc.add(ListingOverviewListSubscriptionRequested()),
@@ -85,7 +85,7 @@ void main() {
         ListingOverviewLoadingState(list: []),
         ListingOverviewErrorState(
           list: [],
-          error: Exception('Failed to fetch listing'),
+          error: Exception('Exception: Failed to fetch listing'),
         ),
       ],
     );

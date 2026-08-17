@@ -18,7 +18,7 @@ class ListingOverviewBloc
         onError: (error, stackTrace) {
           return ListingOverviewErrorState(
             list: state.list,
-            error: Exception('Failed to fetch listing'),
+            error: Exception(error),
           );
         },
       );
