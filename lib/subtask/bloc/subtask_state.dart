@@ -20,9 +20,12 @@ class SubtasksLoadingState extends SubtaskState {
 class SubtaskErrorState extends SubtaskState {
   final Exception error;
 
-  const SubtaskErrorState(
-      {required this.error, required super.subtasks, required super.taskId});
+  const SubtaskErrorState({
+    required this.error,
+    required super.subtasks,
+    required super.taskId,
+  });
 
   @override
-  List<Object?> get props => [super.subtasks, super.subtasks, error];
+  List<Object?> get props => [super.subtasks, super.subtasks, error.toString()];
 }
