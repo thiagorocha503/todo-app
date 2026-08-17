@@ -28,9 +28,7 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    TodoLocalDatabase todoDB = TodoLocalDatabase(
-      DatabaseService.getInstance(),
-    );
+    TodoLocalDatabase todoDB = TodoLocalDatabase(DatabaseService.getInstance());
     return MultiRepositoryProvider(
       providers: [
         RepositoryProvider<UserPreferences>(
@@ -42,15 +40,11 @@ class App extends StatelessWidget {
           ),
         ),
         RepositoryProvider<TodoRepository>(
-          create: (_) => TodoRepository(
-            todoDB,
-          ),
+          create: (_) => TodoRepository(todoDB),
         ),
         RepositoryProvider<SubtaskRepository>(
           create: (_) => SubtaskRepository(
-            SubtaskLocalDatabase(
-              DatabaseService.getInstance(),
-            ),
+            SubtaskLocalDatabase(DatabaseService.getInstance()),
           ),
         ),
       ],
@@ -69,46 +63,44 @@ class App extends StatelessWidget {
             ),
             BlocProvider<ListingOverviewBloc>(
               create: (_) => ListingOverviewBloc(
-                const ListingOverviewInitialState(list: []),
-                todoRepository: RepositoryProvider.of(context),
                 listRepository: RepositoryProvider.of(context),
-              )..add(
-                  ListingOverviewListSubscriptionRequested(),
-                ),
+              )..add(ListingOverviewListSubscriptionRequested()),
             ),
             BlocProvider<SelectableListBloc>(
               create: (context) => SelectableListBloc(
                 const SelectableListState(enabled: false, items: []),
               ),
-            )
+            ),
           ],
           child: BlocBuilder<ThemeCubit, ThemeMode>(
             builder: (context, ThemeMode themeMode) =>
                 BlocBuilder<LocaleCubit, LocaleState>(
-              builder: (context, LocaleState state) => DynamicColorBuilder(
-                builder: (lightColorScheme, darkColorScheme) => MaterialApp(
-                  debugShowCheckedModeBanner: false,
-                  title: 'Tasks',
-                  themeMode: themeMode,
-                  home: const HomePage(),
-                  theme: ThemeData(
-                    colorScheme:
-                        lightColorScheme ?? MaterialTheme.lightScheme(),
+                  builder: (context, LocaleState state) => DynamicColorBuilder(
+                    builder: (lightColorScheme, darkColorScheme) => MaterialApp(
+                      debugShowCheckedModeBanner: false,
+                      title: 'Tasks',
+                      themeMode: themeMode,
+                      home: const HomePage(),
+                      theme: ThemeData(
+                        colorScheme:
+                            lightColorScheme ?? MaterialTheme.lightScheme(),
+                      ),
+                      darkTheme: ThemeData(
+                        colorScheme:
+                            darkColorScheme ?? MaterialTheme.darkScheme(),
+                      ),
+                      localizationsDelegates: const [
+                        AppLocalizations.delegate,
+                        GlobalMaterialLocalizations.delegate,
+                        GlobalCupertinoLocalizations.delegate,
+                        GlobalWidgetsLocalizations.delegate,
+                      ],
+                      locale: Locale(state.locale.languageCode),
+                      supportedLocales:
+                          AppLocalizations.delegate.supportedLocales,
+                    ),
                   ),
-                  darkTheme: ThemeData(
-                    colorScheme: darkColorScheme ?? MaterialTheme.darkScheme(),
-                  ),
-                  localizationsDelegates: const [
-                    AppLocalizations.delegate,
-                    GlobalMaterialLocalizations.delegate,
-                    GlobalCupertinoLocalizations.delegate,
-                    GlobalWidgetsLocalizations.delegate,
-                  ],
-                  locale: Locale(state.locale.languageCode),
-                  supportedLocales: AppLocalizations.delegate.supportedLocales,
                 ),
-              ),
-            ),
           ),
         ),
       ),

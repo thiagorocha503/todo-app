@@ -1,21 +1,25 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todo/list_overview/bloc/bloc.dart';
 import 'package:todo/list_overview/repository/listing_repository.dart';
-import 'package:todo/todo_overview/repository/todo_repository.dart';
 
 class ListingOverviewBloc
     extends Bloc<ListingOverviewBlocEvent, ListingOverviewState> {
   final ListingRepository _listRepository;
-  ListingOverviewBloc(super.initialState,
-      {required ListingRepository listRepository,
-      required TodoRepository todoRepository})
-      : _listRepository = listRepository {
+
+  ListingOverviewBloc({required this._listRepository})
+    : super(ListingOverviewLoadedState(list: [])) {
     on<ListingOverviewListSubscriptionRequested>((event, emit) async {
       emit(ListingOverviewLoadingState(list: state.list));
       await emit.forEach(
         _listRepository.getListing(),
         onData: (data) {
           return ListingOverviewLoadedState(list: data);
+        },
+        onError: (error, stackTrace) {
+          return ListingOverviewErrorState(
+            list: state.list,
+            error: Exception('Failed to fetch listing'),
+          );
         },
       );
     });
