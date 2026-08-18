@@ -19,7 +19,7 @@ class LocaleCubit extends Cubit<LocaleState> {
     : _preferences = preferences,
       super(LocaleState(locale: preferences.getLocale()));
 
-  void change(Locale locale) async {
+  Future<void> change(Locale locale) async {
     await _preferences.setLocale(locale);
     emit(LocaleState(locale: locale));
   }
