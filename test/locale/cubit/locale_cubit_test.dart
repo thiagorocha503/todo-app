@@ -23,6 +23,15 @@ void main() {
   });
 
   group("LocaleCubit", () {
+    const initialLocale = Locale('en');
+
+    test('should initialize with locale from UserPreferences', () {
+      when(() => preferences.getLocale()).thenReturn(initialLocale);
+      final cubit = LocaleCubit(preferences);
+      expect(cubit.state, equals(const LocaleState(locale: initialLocale)));
+      verify(() => preferences.getLocale()).called(1);
+    });
+
     blocTest<LocaleCubit, LocaleState>(
       "Change locale to portugues",
       build: () => LocaleCubit(preferences),
