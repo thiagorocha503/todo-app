@@ -126,5 +126,23 @@ void main() {
         },
       );
     });
+
+    group("SubtaskTitleChangedEvent", () {
+      blocTest(
+        "emits new state with updated title",
+        build: buildBloc,
+        seed: () => SubtaskLoadedState(subtasks: mockSubtask, taskId: 1),
+        act: (bloc) {
+          bloc.add(SubtaskTitleChangedEvent(id: 2, title: "subtask A"));
+        },
+        verify: (_) {
+          verify(
+            () => subtaskRepository.save(
+              Subtask(id: 2, name: "subtask A", complete: false, todoId: 1),
+            ),
+          ).called(1);
+        },
+      );
+    });
   });
 }
