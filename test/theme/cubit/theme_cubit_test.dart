@@ -11,6 +11,8 @@ void main() {
   late UserPreferences preferences;
 
   group("theme cubit", () {
+    const initialTheme = ThemeMode.system;
+
     setUp(() {
       preferences = MockUserPreferences();
       when(() => preferences.setTheme(ThemeMode.dark)).thenAnswer((_) async {});
@@ -20,6 +22,15 @@ void main() {
       when(
         () => preferences.setTheme(ThemeMode.system),
       ).thenAnswer((_) async {});
+    });
+
+    test('should initialize with theme loaded from UserPreferences', () {
+      when(() => preferences.getTheme()).thenReturn(initialTheme);
+
+      final cubit = ThemeCubit(preferences);
+
+      expect(cubit.state, equals(initialTheme));
+      verify(() => preferences.getTheme()).called(1);
     });
 
     blocTest<ThemeCubit, ThemeMode>(
