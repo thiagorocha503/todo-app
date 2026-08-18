@@ -9,15 +9,15 @@ class LocaleState extends Equatable {
   const LocaleState({required this.locale});
 
   @override
-  List<Object?> get props => [locale.languageCode];
+  List<Object?> get props => [locale];
 }
 
 class LocaleCubit extends Cubit<LocaleState> {
   final UserPreferences _preferences;
 
   LocaleCubit(UserPreferences preferences)
-      : _preferences = preferences,
-        super(LocaleState(locale: preferences.getLocale()));
+    : _preferences = preferences,
+      super(LocaleState(locale: preferences.getLocale()));
 
   void change(Locale locale) async {
     await _preferences.setLocale(locale);
