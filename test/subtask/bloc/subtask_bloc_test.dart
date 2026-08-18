@@ -144,5 +144,23 @@ void main() {
         },
       );
     });
+
+    group("SubtaskCompletionToggledEvent", () {
+      blocTest(
+        "saves subtask with isCompleted updated",
+        build: buildBloc,
+        seed: () => SubtaskLoadedState(subtasks: mockSubtask, taskId: 1),
+        act: (bloc) {
+          bloc.add(SubtaskCompletionToggledEvent(id: 3, isCompleted: true));
+        },
+        verify: (_) {
+          verify(
+            () => subtaskRepository.save(
+              Subtask(id: 3, name: "subtask 3", complete: true, todoId: 1),
+            ),
+          ).called(1);
+        },
+      );
+    });
   });
 }
