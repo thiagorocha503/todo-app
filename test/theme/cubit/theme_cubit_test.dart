@@ -17,6 +17,10 @@ void main() {
       preferences = MockUserPreferences();
     });
 
+    setUpAll(() {
+      registerFallbackValue(ThemeMode.system);
+    });
+
     test('should initialize with theme loaded from UserPreferences', () {
       when(() => preferences.getTheme()).thenReturn(initialTheme);
 
@@ -29,9 +33,8 @@ void main() {
       blocTest<ThemeCubit, ThemeMode>(
         "Change theme to dark",
         build: () => ThemeCubit(preferences),
-
         setUp: () {
-          when(() => preferences.getTheme()).thenAnswer((_) => ThemeMode.dark);
+          when(() => preferences.getTheme()).thenAnswer((_) => ThemeMode.light);
           when(
             () => preferences.setTheme(ThemeMode.dark),
           ).thenAnswer((_) async {});
@@ -46,13 +49,13 @@ void main() {
       blocTest<ThemeCubit, ThemeMode>(
         "Change theme to light",
         build: () => ThemeCubit(preferences),
-        act: (cubit) => cubit.changeTheme(ThemeMode.light),
         setUp: () {
-          when(() => preferences.getTheme()).thenReturn(ThemeMode.light);
+          when(() => preferences.getTheme()).thenReturn(ThemeMode.dark);
           when(
             () => preferences.setTheme(ThemeMode.light),
           ).thenAnswer((_) async {});
         },
+        act: (cubit) => cubit.changeTheme(ThemeMode.light),
         verify: (_) {
           verify(() => preferences.setTheme(ThemeMode.light)).called(1);
         },
@@ -63,9 +66,7 @@ void main() {
         "Change theme to system",
         build: () => ThemeCubit(preferences),
         setUp: () {
-          when(
-            () => preferences.getTheme(),
-          ).thenAnswer((_) => ThemeMode.system);
+          when(() => preferences.getTheme()).thenAnswer((_) => ThemeMode.dark);
           when(
             () => preferences.setTheme(ThemeMode.system),
           ).thenAnswer((_) async {});
