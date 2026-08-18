@@ -77,6 +77,19 @@ void main() {
         },
         expect: () => <ThemeMode>[ThemeMode.system],
       );
+
+      blocTest<ThemeCubit, ThemeMode>(
+        'should not emit a new state or update preferences when changing to current active theme',
+        setUp: () {
+          when(() => preferences.getTheme()).thenReturn(ThemeMode.dark);
+        },
+        build: () => ThemeCubit(preferences),
+        act: (cubit) => cubit.changeTheme(ThemeMode.dark),
+        expect: () => const <ThemeMode>[],
+        verify: (_) {
+          verifyNever(() => preferences.setTheme(any()));
+        },
+      );
     });
   });
 }
