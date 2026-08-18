@@ -109,7 +109,7 @@ void main() {
         },
       );
     });
-    group('ListingOverviewListingAdded', () {
+    group('ListingOverviewListingDeleted', () {
       blocTest<ListingOverviewBloc, ListingOverviewState>(
         "deletes todo using repository",
         build: buildBloc,
