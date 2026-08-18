@@ -10,6 +10,7 @@ class ThemeCubit extends Cubit<ThemeMode> {
       super(preferences.getTheme());
 
   void changeTheme(ThemeMode mode) async {
+    if (state == mode) return;
     await _preferences.setTheme(mode);
     emit(mode);
   }
