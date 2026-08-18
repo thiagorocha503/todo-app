@@ -111,5 +111,22 @@ void main() {
         },
       );
     });
+
+    group("SubtaskDeletedEvent", () {
+      blocTest(
+        "deletes todo using repository",
+        build: buildBloc,
+        setUp: () {
+          when(() => subtaskRepository.delete(any())).thenAnswer((_) async {});
+        },
+        act: (bloc) {
+          bloc.add(SubtaskDeletedEvent(id: 2));
+        },
+        seed: () => SubtaskLoadedState(subtasks: mockSubtask, taskId: 1),
+        verify: (_) {
+          verify(() => subtaskRepository.delete(2)).called(1);
+        },
+      );
+    });
   });
 }
