@@ -47,10 +47,10 @@ class TodoEditPage extends StatelessWidget {
         ),
         BlocProvider(
           create: (_) => SubtaskBloc(
-            SubtasksLoadedState(subtasks: const [], taskId: todo.id!),
+            SubtaskLoadedState(subtasks: const [], taskId: todo.id!),
             repository: RepositoryProvider.of(context),
           )..add(SubtaskSubscriptionRequested()),
-        )
+        ),
       ],
       child: TodoEditPageView(todo: todo),
     );
@@ -87,16 +87,15 @@ class _TodoEditPageViewState extends State<TodoEditPageView> {
             if (state is TodoEditError) {
               showDialog(
                 context: context,
-                builder: (context) => ErrorDialog(
-                  message: state.message,
-                ),
+                builder: (context) => ErrorDialog(message: state.message),
               );
             }
           },
           child: Scaffold(
             appBar: PreferredSize(
               preferredSize: Size.fromHeight(
-                  Theme.of(context).appBarTheme.toolbarHeight ?? 56),
+                Theme.of(context).appBarTheme.toolbarHeight ?? 56,
+              ),
               child: BlocBuilder<TodoEditBloc, TodoEditState>(
                 builder: (context, state) {
                   return AppBar(
@@ -115,7 +114,7 @@ class _TodoEditPageViewState extends State<TodoEditPageView> {
                           onPressed: () => _onDeletePressed(context),
                           icon: const Icon(Icons.delete),
                         ),
-                      )
+                      ),
                     ],
                   );
                 },
@@ -134,9 +133,7 @@ class _TodoEditPageViewState extends State<TodoEditPageView> {
                             child: Column(
                               children: [
                                 const SubtaskOverViewListTile(),
-                                SubtaskAddListTile(
-                                  todoId: widget.todo.id!,
-                                ),
+                                SubtaskAddListTile(todoId: widget.todo.id!),
                               ],
                             ),
                           ),
@@ -146,9 +143,9 @@ class _TodoEditPageViewState extends State<TodoEditPageView> {
                                 .state
                                 .todo
                                 .dueDate,
-                            onChange: (v) => context
-                                .read<TodoEditBloc>()
-                                .add(TodoEditDueDateChanged(dueDate: v)),
+                            onChange: (v) => context.read<TodoEditBloc>().add(
+                              TodoEditDueDateChanged(dueDate: v),
+                            ),
                           ),
                           DescriptionListTile(
                             initialDescription: context
@@ -157,16 +154,17 @@ class _TodoEditPageViewState extends State<TodoEditPageView> {
                                 .todo
                                 .description,
                             onChange: (t) => context.read<TodoEditBloc>().add(
-                                  TodoEditDescriptionChanged(description: t),
-                                ),
+                              TodoEditDescriptionChanged(description: t),
+                            ),
                           ),
                         ],
                       ),
                     ),
                   ),
                   StreamBuilder(
-                    stream: RepositoryProvider.of<TodoRepository>(context)
-                        .getTodos(),
+                    stream: RepositoryProvider.of<TodoRepository>(
+                      context,
+                    ).getTodos(),
                     builder: (context, snapshot) {
                       if (snapshot.hasData) {
                         List<Todo>? todos = snapshot.data;
@@ -182,7 +180,7 @@ class _TodoEditPageViewState extends State<TodoEditPageView> {
                       }
                       return Container();
                     },
-                  )
+                  ),
                 ],
               ),
             ),
@@ -214,21 +212,17 @@ class _TodoEditPageViewState extends State<TodoEditPageView> {
       builder: (_) => TodoDeleteAlertDialog(
         name: context.read<TodoEditBloc>().state.todo.name,
       ),
-    ).then(
-      (value) {
-        if (!context.mounted) {
-          return;
-        }
-        if (!value) {
-          return;
-        }
-        Navigator.pop(context);
-        context.read<TodoOverviewBloc>().add(
-              TodoOverviewDeleted(
-                ids: [widget.todo.id ?? 0],
-              ),
-            );
-      },
-    );
+    ).then((value) {
+      if (!context.mounted) {
+        return;
+      }
+      if (!value) {
+        return;
+      }
+      Navigator.pop(context);
+      context.read<TodoOverviewBloc>().add(
+        TodoOverviewDeleted(ids: [widget.todo.id ?? 0]),
+      );
+    });
   }
 }

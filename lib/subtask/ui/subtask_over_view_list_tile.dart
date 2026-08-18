@@ -13,7 +13,7 @@ class SubtaskOverViewListTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<SubtaskBloc, SubtaskState>(
       buildWhen: (previous, current) =>
-          current is SubtasksLoadedState || current is SubtaskErrorState,
+          current is SubtaskLoadedState || current is SubtaskErrorState,
       builder: (BuildContext context, SubtaskState state) {
         return Column(
           children: List.generate(state.subtasks.length, (int index) {

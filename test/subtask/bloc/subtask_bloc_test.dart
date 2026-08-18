@@ -34,7 +34,7 @@ void main() {
 
     SubtaskBloc buildBloc() {
       return SubtaskBloc(
-        SubtasksLoadedState(subtasks: mockSubtask, taskId: 1),
+        SubtaskLoadedState(subtasks: mockSubtask, taskId: 1),
         repository: subtaskRepository,
       );
     }
@@ -44,7 +44,7 @@ void main() {
       test("has correct initial state", () {
         expect(
           buildBloc().state,
-          equals(SubtasksLoadedState(subtasks: mockSubtask, taskId: 1)),
+          equals(SubtaskLoadedState(subtasks: mockSubtask, taskId: 1)),
         );
       });
     });
@@ -66,7 +66,7 @@ void main() {
         act: (bloc) => bloc.add(SubtaskSubscriptionRequested()),
         expect: () => [
           SubtasksLoadingState(subtasks: mockSubtask, taskId: 1),
-          SubtasksLoadedState(subtasks: mockSubtask, taskId: 1),
+          SubtaskLoadedState(subtasks: mockSubtask, taskId: 1),
         ],
       );
 

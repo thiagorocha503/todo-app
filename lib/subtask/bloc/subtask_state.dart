@@ -9,8 +9,8 @@ abstract class SubtaskState extends Equatable {
   List<Object?> get props => [subtasks, taskId];
 }
 
-class SubtasksLoadedState extends SubtaskState {
-  const SubtasksLoadedState({required super.subtasks, required super.taskId});
+class SubtaskLoadedState extends SubtaskState {
+  const SubtaskLoadedState({required super.subtasks, required super.taskId});
 }
 
 class SubtasksLoadingState extends SubtaskState {

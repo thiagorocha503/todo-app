@@ -28,7 +28,7 @@ class SubtaskBloc extends Bloc<SubtaskEvent, SubtaskState> {
             }
             return left - right;
           });
-          return SubtasksLoadedState(taskId: state.taskId, subtasks: tasks);
+          return SubtaskLoadedState(taskId: state.taskId, subtasks: tasks);
         },
         onError: (error, stackTrace) {
           return SubtaskErrorState(
