@@ -30,6 +30,7 @@ void main() {
       when(
         () => subtaskRepository.getSubtasks(),
       ).thenAnswer((_) => Stream.value(mockSubtask));
+      when(() => subtaskRepository.save(any())).thenAnswer((_) async {});
     });
 
     SubtaskBloc buildBloc() {
@@ -96,9 +97,6 @@ void main() {
         "added subtask",
         build: buildBloc,
         seed: () => SubtaskLoadedState(subtasks: mockSubtask, taskId: 1),
-        setUp: () {
-          when(() => subtaskRepository.save(any())).thenAnswer((_) async {});
-        },
         act: (bloc) {
           bloc.add(SubtaskAddedEvent(title: "subtask 5", taskId: 1));
         },
