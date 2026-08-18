@@ -18,8 +18,6 @@ void main() {
 
   setUp(() {
     preferences = MockUserPreferences();
-    when(() => preferences.getLocale()).thenAnswer((_) => const Locale("en"));
-    when(() => preferences.setLocale(any())).thenAnswer((invocation) async {});
   });
 
   group("LocaleCubit", () {
@@ -31,15 +29,21 @@ void main() {
       expect(cubit.state, equals(const LocaleState(locale: initialLocale)));
       verify(() => preferences.getLocale()).called(1);
     });
-
-    blocTest<LocaleCubit, LocaleState>(
-      "Change locale to portugues",
-      build: () => LocaleCubit(preferences),
-      act: (cubit) => cubit.change(const Locale("pt")),
-      verify: (_) {
-        verify(() => preferences.setLocale(any())).called(1);
-      },
-      expect: () => <LocaleState>[const LocaleState(locale: Locale("pt"))],
-    );
+    group("change", () {
+      const newLocale = Locale('pt', 'BR');
+      blocTest<LocaleCubit, LocaleState>(
+        "should emit [LocaleState] with new locale and persist it to preferences",
+        build: () => LocaleCubit(preferences),
+        setUp: () {
+          when(() => preferences.getLocale()).thenReturn(initialLocale);
+          when(() => preferences.setLocale(newLocale)).thenAnswer((_) async {});
+        },
+        act: (cubit) => cubit.change(newLocale),
+        verify: (_) {
+          verify(() => preferences.setLocale(any())).called(1);
+        },
+        expect: () => <LocaleState>[const LocaleState(locale: newLocale)],
+      );
+    });
   });
 }
