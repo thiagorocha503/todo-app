@@ -17,11 +17,18 @@ class SubtaskBloc extends Bloc<SubtaskEvent, SubtaskState> {
       await emit.forEach(
         _repository.getSubtasks(),
         onData: (data) {
-          return SubtasksLoadedState(
-            taskId: state.taskId,
-            subtasks: data.where((e) => e.todoId == state.taskId).toList()
-              ..sort((a, b) => a.id! - b.id!),
-          );
+          List<Subtask> tasks = data
+              .where((e) => e.todoId == state.taskId)
+              .toList();
+          tasks.sort((a, b) {
+            int? left = a.id;
+            int? right = b.id;
+            if (left == null || right == null) {
+              return 0;
+            }
+            return left - right;
+          });
+          return SubtasksLoadedState(taskId: state.taskId, subtasks: tasks);
         },
         onError: (error, stackTrace) {
           return SubtaskErrorState(

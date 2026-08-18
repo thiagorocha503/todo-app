@@ -13,10 +13,10 @@ class SubtaskFake extends Fake implements Subtask {}
 
 void main() {
   const List<Subtask> mockSubtask = [
-    Subtask(name: "subtask 1", complete: false, todoId: 1),
-    Subtask(name: "subtask 2", complete: false, todoId: 1),
-    Subtask(name: "subtask 3", complete: false, todoId: 1),
-    Subtask(name: "subtask 4", complete: false, todoId: 1),
+    Subtask(id: 1, name: "subtask 1", complete: false, todoId: 1),
+    Subtask(id: 2, name: "subtask 2", complete: false, todoId: 1),
+    Subtask(id: 3, name: "subtask 3", complete: false, todoId: 1),
+    Subtask(id: 4, name: "subtask 4", complete: false, todoId: 1),
   ];
   group("subtaskbloc", () {
     late SubtaskRepository subtaskRepository;
