@@ -1,6 +1,9 @@
+import 'dart:async';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todo/subtask/bloc/subtask_event.dart';
 import 'package:todo/subtask/bloc/subtask_state.dart';
+import 'package:todo/subtask/model/subtask.dart';
 import 'package:todo/subtask/repository/subtask_repository.dart';
 
 class SubtaskBloc extends Bloc<SubtaskEvent, SubtaskState> {
@@ -16,7 +19,8 @@ class SubtaskBloc extends Bloc<SubtaskEvent, SubtaskState> {
         onData: (data) {
           return SubtasksLoadedState(
             taskId: state.taskId,
-            subtasks: data.where((e) => e.todoId == state.taskId).toList(),
+            subtasks: data.where((e) => e.todoId == state.taskId).toList()
+              ..sort((a, b) => a.id! - b.id!),
           );
         },
         onError: (error, stackTrace) {
@@ -28,19 +32,66 @@ class SubtaskBloc extends Bloc<SubtaskEvent, SubtaskState> {
         },
       );
     });
-    on<SubtaskSavedEvent>(_mapSavedSubtask);
+    on<SubtaskAddedEvent>(_maAddedSubtask);
     on<SubtaskDeletedEvent>(_mapDeleteSubtask);
+    on<SubtaskTitleChangedEvent>(_mapTitleChanged);
+    on<SubtaskCompletionToggledEvent>(_mapCompletionToggled);
   }
 
-  Future<void> _mapSavedSubtask(
-    SubtaskSavedEvent event,
+  Future<void> _mapTitleChanged(
+    SubtaskTitleChangedEvent event,
     Emitter<SubtaskState> emit,
   ) async {
     try {
       emit(
         SubtasksLoadingState(subtasks: state.subtasks, taskId: state.taskId),
       );
-      await _repository.save(event.subtask);
+      Subtask subtask = state.subtasks.firstWhere((subtask) {
+        return subtask.id == event.id;
+      });
+      await _repository.save(subtask.copyWith(name: event.title));
+    } on Exception catch (error) {
+      emit(
+        SubtaskErrorState(
+          subtasks: state.subtasks,
+          error: error,
+          taskId: state.taskId,
+        ),
+      );
+    }
+  }
+
+  Future<void> _mapCompletionToggled(
+    SubtaskCompletionToggledEvent event,
+    Emitter<SubtaskState> emit,
+  ) async {
+    try {
+      emit(
+        SubtasksLoadingState(subtasks: state.subtasks, taskId: state.taskId),
+      );
+      Subtask subtask = state.subtasks.firstWhere((subtask) {
+        return subtask.id == event.id;
+      });
+      await _repository.save(subtask.copyWith(complete: event.isCompleted));
+    } on Exception catch (error) {
+      emit(
+        SubtaskErrorState(
+          subtasks: state.subtasks,
+          error: error,
+          taskId: state.taskId,
+        ),
+      );
+    }
+  }
+
+  Future<void> _maAddedSubtask(
+    SubtaskAddedEvent event,
+    Emitter<SubtaskState> emit,
+  ) async {
+    try {
+      await _repository.save(
+        Subtask(name: event.title, complete: false, todoId: state.taskId),
+      );
     } on Exception catch (error) {
       emit(
         SubtaskErrorState(

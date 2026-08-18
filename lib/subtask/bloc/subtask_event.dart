@@ -1,5 +1,4 @@
 import 'package:equatable/equatable.dart';
-import 'package:todo/subtask/model/subtask.dart';
 
 abstract class SubtaskEvent extends Equatable {}
 
@@ -8,13 +7,13 @@ class SubtaskSubscriptionRequested extends SubtaskEvent {
   List<Object?> get props => [];
 }
 
-class SubtaskSavedEvent extends SubtaskEvent {
-  final Subtask subtask;
+class SubtaskAddedEvent extends SubtaskEvent {
+  final String title;
+  final int taskId;
 
-  SubtaskSavedEvent({required this.subtask});
-
+  SubtaskAddedEvent({required this.title, required this.taskId});
   @override
-  List<Object?> get props => [subtask];
+  List<Object?> get props => [title, taskId];
 }
 
 class SubtaskDeletedEvent extends SubtaskEvent {
@@ -24,4 +23,24 @@ class SubtaskDeletedEvent extends SubtaskEvent {
 
   @override
   List<Object?> get props => [id];
+}
+
+class SubtaskTitleChangedEvent extends SubtaskEvent {
+  final int? id;
+  final String title;
+
+  SubtaskTitleChangedEvent({required this.id, required this.title});
+
+  @override
+  List<Object?> get props => [id, title];
+}
+
+class SubtaskCompletionToggledEvent extends SubtaskEvent {
+  final int? id;
+  final bool isCompleted;
+
+  SubtaskCompletionToggledEvent({required this.id, required this.isCompleted});
+
+  @override
+  List<Object?> get props => [id, isCompleted];
 }

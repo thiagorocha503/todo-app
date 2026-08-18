@@ -18,24 +18,24 @@ class SubtaskOverViewListTile extends StatelessWidget {
         return Column(
           children: List.generate(state.subtasks.length, (int index) {
             Subtask subtask = state.subtasks[index];
-            TextEditingController controller =
-                TextEditingController(text: subtask.name);
-            FocusNode focusNodes = FocusNode();
-            focusNodes.addListener(
-              () {
-                if (!focusNodes.hasFocus) {
-                  if (controller.text == "") {
-                    controller.text = subtask.name;
-                  } else {
-                    context.read<SubtaskBloc>().add(
-                          SubtaskSavedEvent(
-                            subtask: subtask.copyWith(name: controller.text),
-                          ),
-                        );
-                  }
-                }
-              },
+            TextEditingController controller = TextEditingController(
+              text: subtask.name,
             );
+            FocusNode focusNodes = FocusNode();
+            focusNodes.addListener(() {
+              if (!focusNodes.hasFocus) {
+                if (controller.text == "") {
+                  controller.text = subtask.name;
+                } else {
+                  context.read<SubtaskBloc>().add(
+                    SubtaskTitleChangedEvent(
+                      id: subtask.id!,
+                      title: controller.text,
+                    ),
+                  );
+                }
+              }
+            });
             return ListTile(
               leading: Padding(
                 padding: const EdgeInsets.only(left: 8.0),
@@ -55,12 +55,11 @@ class SubtaskOverViewListTile extends StatelessWidget {
                       return;
                     }
                     context.read<SubtaskBloc>().add(
-                          SubtaskSavedEvent(
-                            subtask: subtask.copyWith(
-                              complete: value,
-                            ),
-                          ),
-                        );
+                      SubtaskCompletionToggledEvent(
+                        id: subtask.id,
+                        isCompleted: value,
+                      ),
+                    );
                   },
                 ),
               ),
@@ -69,10 +68,12 @@ class SubtaskOverViewListTile extends StatelessWidget {
                 controller: controller,
                 style: TextStyle(
                   color: subtask.complete ? Colors.grey : null,
-                  fontStyle:
-                      subtask.complete ? FontStyle.italic : FontStyle.normal,
-                  decoration:
-                      subtask.complete ? TextDecoration.lineThrough : null,
+                  fontStyle: subtask.complete
+                      ? FontStyle.italic
+                      : FontStyle.normal,
+                  decoration: subtask.complete
+                      ? TextDecoration.lineThrough
+                      : null,
                 ),
                 onSubmitted: (String? value) {
                   if (value == null) {
@@ -81,20 +82,22 @@ class SubtaskOverViewListTile extends StatelessWidget {
                   if (value.isEmpty) {
                     return;
                   }
+                  if (subtask.id == null) {
+                    return;
+                  }
                   context.read<SubtaskBloc>().add(
-                        SubtaskSavedEvent(
-                          subtask: subtask.copyWith(
-                            name: controller.text,
-                          ),
-                        ),
-                      );
+                    SubtaskTitleChangedEvent(
+                      id: subtask.id,
+                      title: controller.text,
+                    ),
+                  );
                 },
               ),
               trailing: IconButton(
                 onPressed: () {
-                  context
-                      .read<SubtaskBloc>()
-                      .add(SubtaskDeletedEvent(id: state.subtasks[index].id!));
+                  context.read<SubtaskBloc>().add(
+                    SubtaskDeletedEvent(id: state.subtasks[index].id!),
+                  );
                 },
                 icon: const Icon(Icons.clear),
               ),

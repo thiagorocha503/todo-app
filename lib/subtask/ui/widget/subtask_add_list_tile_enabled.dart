@@ -4,14 +4,16 @@ import 'package:roundcheckbox/roundcheckbox.dart';
 import 'package:todo/generated/l10n.dart';
 import 'package:todo/subtask/bloc/subtask_bloc.dart';
 import 'package:todo/subtask/bloc/subtask_event.dart';
-import 'package:todo/subtask/model/subtask.dart';
 import 'package:todo/subtask/ui/subtask_add_list_tile.dart';
 
 class SubtaskAddListTileEnabled extends StatelessWidget {
   final int todoId;
   final GlobalKey<FormState> formKey;
-  const SubtaskAddListTileEnabled(
-      {required this.formKey, required this.todoId, super.key});
+  const SubtaskAddListTileEnabled({
+    required this.formKey,
+    required this.todoId,
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -28,10 +30,7 @@ class SubtaskAddListTileEnabled extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.only(left: 8.0),
           child: RoundCheckBox(
-            border: Border.all(
-              color: Colors.grey,
-              width: 2,
-            ),
+            border: Border.all(color: Colors.grey, width: 2),
             size: 26,
             isChecked: false,
             onTap: (bool? value) {},
@@ -53,15 +52,8 @@ class SubtaskAddListTileEnabled extends StatelessWidget {
             if (formKey.currentState!.validate()) {
               FocusScope.of(context).requestFocus(focusNode);
               context.read<SubtaskBloc>().add(
-                    SubtaskSavedEvent(
-                      subtask: Subtask(
-                        complete: false,
-                        name: controller.text,
-                        todoId: todoId,
-                      ),
-                    ),
-                  );
-
+                SubtaskAddedEvent(title: controller.text, taskId: todoId),
+              );
               controller.text = "";
             }
           },
