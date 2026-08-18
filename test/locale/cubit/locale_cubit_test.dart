@@ -22,13 +22,15 @@ void main() {
     when(() => preferences.setLocale(any())).thenAnswer((invocation) async {});
   });
 
-  blocTest<LocaleCubit, LocaleState>(
-    "Change locale to portugues",
-    build: () => LocaleCubit(preferences),
-    act: (cubit) => cubit.change(const Locale("pt")),
-    verify: (_) {
-      verify(() => preferences.setLocale(any())).called(1);
-    },
-    expect: () => <LocaleState>[const LocaleState(locale: Locale("pt"))],
-  );
+  group("LocaleCubit", () {
+    blocTest<LocaleCubit, LocaleState>(
+      "Change locale to portugues",
+      build: () => LocaleCubit(preferences),
+      act: (cubit) => cubit.change(const Locale("pt")),
+      verify: (_) {
+        verify(() => preferences.setLocale(any())).called(1);
+      },
+      expect: () => <LocaleState>[const LocaleState(locale: Locale("pt"))],
+    );
+  });
 }
