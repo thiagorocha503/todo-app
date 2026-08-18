@@ -60,3 +60,5 @@ workflows:
           - thiagorocha503@gmail.com
       scripts:
         - jarsigner -verify -verbose -certs $FCI_BUILD_OUTPUT_DIR/*.aab
+      github:
+        allow_sharing: true
