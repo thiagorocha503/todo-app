@@ -18,7 +18,8 @@ void main() {
     Subtask(id: 3, name: "subtask 3", complete: false, todoId: 1),
     Subtask(id: 4, name: "subtask 4", complete: false, todoId: 1),
   ];
-  group("subtaskbloc", () {
+
+  group("SubtaskBloc", () {
     late SubtaskRepository subtaskRepository;
 
     setUpAll(() {
@@ -40,8 +41,8 @@ void main() {
       );
     }
 
-    group("construct", () {
-      test("work properly", () => expect(buildBloc, returnsNormally));
+    group("constructor", () {
+      test("works properly", () => expect(buildBloc, returnsNormally));
       test("has correct initial state", () {
         expect(
           buildBloc().state,
@@ -50,7 +51,7 @@ void main() {
       });
     });
 
-    group('ListingOverviewSubscriptionRequested', () {
+    group('SubtaskSubscriptionRequested', () {
       blocTest<SubtaskBloc, SubtaskState>(
         'starts listening to repository getSubtasks stream',
         build: buildBloc,
@@ -61,8 +62,8 @@ void main() {
       );
 
       blocTest<SubtaskBloc, SubtaskState>(
-        'emits SubtasksLoadedState '
-        'when repository getSubtasks stream emits new subtask',
+        'emits SubtaskLoadedState '
+        'when repository getSubtasks stream emits new subtasks',
         build: buildBloc,
         act: (bloc) => bloc.add(SubtaskSubscriptionRequested()),
         expect: () => [
@@ -73,7 +74,7 @@ void main() {
 
       blocTest<SubtaskBloc, SubtaskState>(
         'emits SubtaskErrorState '
-        'when repository getListing stream emits error',
+        'when repository getSubtasks stream emits error',
         build: buildBloc,
         setUp: () {
           when(() => subtaskRepository.getSubtasks()).thenAnswer(
@@ -94,7 +95,7 @@ void main() {
 
     group("SubtaskAddedEvent", () {
       blocTest(
-        "added subtask",
+        "saves new subtask to repository",
         build: buildBloc,
         seed: () => SubtaskLoadedState(subtasks: mockSubtask, taskId: 1),
         act: (bloc) {
@@ -112,7 +113,7 @@ void main() {
 
     group("SubtaskDeletedEvent", () {
       blocTest(
-        "deletes todo using repository",
+        "deletes subtask using repository",
         build: buildBloc,
         setUp: () {
           when(() => subtaskRepository.delete(any())).thenAnswer((_) async {});
@@ -129,7 +130,7 @@ void main() {
 
     group("SubtaskTitleChangedEvent", () {
       blocTest(
-        "emits new state with updated title",
+        "saves subtask with updated title to repository",
         build: buildBloc,
         seed: () => SubtaskLoadedState(subtasks: mockSubtask, taskId: 1),
         act: (bloc) {
@@ -147,7 +148,7 @@ void main() {
 
     group("SubtaskCompletionToggledEvent", () {
       blocTest(
-        "saves subtask with isCompleted updated",
+        "saves subtask with updated completion status",
         build: buildBloc,
         seed: () => SubtaskLoadedState(subtasks: mockSubtask, taskId: 1),
         act: (bloc) {
