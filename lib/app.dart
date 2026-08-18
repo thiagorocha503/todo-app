@@ -74,8 +74,8 @@ class App extends StatelessWidget {
           ],
           child: BlocBuilder<ThemeCubit, ThemeMode>(
             builder: (context, ThemeMode themeMode) =>
-                BlocBuilder<LocaleCubit, LocaleState>(
-                  builder: (context, LocaleState state) => DynamicColorBuilder(
+                BlocBuilder<LocaleCubit, Locale>(
+                  builder: (context, Locale state) => DynamicColorBuilder(
                     builder: (lightColorScheme, darkColorScheme) => MaterialApp(
                       debugShowCheckedModeBanner: false,
                       title: 'Tasks',
@@ -95,7 +95,7 @@ class App extends StatelessWidget {
                         GlobalCupertinoLocalizations.delegate,
                         GlobalWidgetsLocalizations.delegate,
                       ],
-                      locale: Locale(state.locale.languageCode),
+                      locale: Locale(state.languageCode),
                       supportedLocales:
                           AppLocalizations.delegate.supportedLocales,
                     ),

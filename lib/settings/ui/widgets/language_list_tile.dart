@@ -12,12 +12,10 @@ class LanguageListTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       leading: const Icon(Icons.language),
-      title: Text(
-        AppLocalizations.of(context).language,
-      ),
+      title: Text(AppLocalizations.of(context).language),
       subtitle: Text(
-          languages[context.read<LocaleCubit>().state.locale.languageCode] ??
-              "none"),
+        languages[context.read<LocaleCubit>().state.languageCode] ?? "none",
+      ),
       onTap: () {
         Navigator.push(
           context,

@@ -26,12 +26,12 @@ void main() {
     test('should initialize with locale from UserPreferences', () {
       when(() => preferences.getLocale()).thenReturn(initialLocale);
       final cubit = LocaleCubit(preferences);
-      expect(cubit.state, equals(const LocaleState(locale: initialLocale)));
+      expect(cubit.state, equals(initialLocale));
       verify(() => preferences.getLocale()).called(1);
     });
     group("change", () {
       const newLocale = Locale('pt', 'BR');
-      blocTest<LocaleCubit, LocaleState>(
+      blocTest<LocaleCubit, Locale>(
         "should emit [LocaleState] with new locale and persist it to preferences",
         build: () => LocaleCubit(preferences),
         setUp: () {
@@ -42,8 +42,24 @@ void main() {
         verify: (_) {
           verify(() => preferences.setLocale(any())).called(1);
         },
-        expect: () => <LocaleState>[const LocaleState(locale: newLocale)],
+        expect: () => <Locale>[newLocale],
       );
     });
+
+    blocTest<LocaleCubit, Locale>(
+      'should not emit a new state when changed to the current locale',
+      setUp: () {
+        when(() => preferences.getLocale()).thenReturn(initialLocale);
+        when(
+          () => preferences.setLocale(initialLocale),
+        ).thenAnswer((_) async {});
+      },
+      build: () => LocaleCubit(preferences),
+      act: (cubit) => cubit.change(initialLocale),
+      expect: () => const <Locale>[],
+      verify: (_) {
+        verifyNever(() => preferences.setLocale(initialLocale));
+      },
+    );
   });
 }
