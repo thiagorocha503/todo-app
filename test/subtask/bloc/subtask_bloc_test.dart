@@ -90,5 +90,26 @@ void main() {
         ],
       );
     });
+
+    group("SubtaskAddedEvent", () {
+      blocTest(
+        "added subtask",
+        build: buildBloc,
+        seed: () => SubtaskLoadedState(subtasks: mockSubtask, taskId: 1),
+        setUp: () {
+          when(() => subtaskRepository.save(any())).thenAnswer((_) async {});
+        },
+        act: (bloc) {
+          bloc.add(SubtaskAddedEvent(title: "subtask 5", taskId: 1));
+        },
+        verify: (_) {
+          verify(
+            () => subtaskRepository.save(
+              Subtask(name: "subtask 5", complete: false, todoId: 1),
+            ),
+          ).called(1);
+        },
+      );
+    });
   });
 }
