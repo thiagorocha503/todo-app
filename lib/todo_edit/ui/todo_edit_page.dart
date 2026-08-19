@@ -8,7 +8,7 @@ import 'package:todo/subtask/bloc/subtask_bloc.dart';
 import 'package:todo/subtask/bloc/subtask_event.dart';
 import 'package:todo/subtask/bloc/subtask_state.dart';
 import 'package:todo/subtask/ui/subtask_add_list_tile.dart';
-import 'package:todo/subtask/ui/subtask_over_view_list_tile.dart';
+import 'package:todo/subtask/ui/subtask_list.dart';
 import 'package:todo/todo_edit/bloc/todo_edit_bloc.dart';
 import 'package:todo/todo_edit/bloc/todo_edit_event.dart';
 import 'package:todo/todo_edit/bloc/todo_edit_state.dart';
@@ -132,7 +132,7 @@ class _TodoEditPageViewState extends State<TodoEditPageView> {
                             shadowColor: Colors.transparent,
                             child: Column(
                               children: [
-                                const SubtaskOverViewListTile(),
+                                const SubtaskList(),
                                 SubtaskAddListTile(todoId: widget.todo.id!),
                               ],
                             ),

@@ -6,8 +6,8 @@ import 'package:todo/subtask/bloc/subtask_event.dart';
 import 'package:todo/subtask/bloc/subtask_state.dart';
 import 'package:todo/subtask/model/subtask.dart';
 
-class SubtaskOverViewListTile extends StatelessWidget {
-  const SubtaskOverViewListTile({super.key});
+class SubtaskList extends StatelessWidget {
+  const SubtaskList({super.key});
 
   @override
   Widget build(BuildContext context) {
