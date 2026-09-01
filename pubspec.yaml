@@ -62,7 +62,7 @@ dev_dependencies:
   bloc_test: ^10.0.0
   build_runner: ^2.13.1
   flutter_lints: ^6.0.0
-  intl_utils: ^2.8.15
+  intl_utils: ^2.8.16
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
